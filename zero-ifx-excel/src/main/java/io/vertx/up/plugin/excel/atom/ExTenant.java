@@ -1,11 +1,11 @@
 package io.vertx.up.plugin.excel.atom;
 
-import io.horizon.atom.common.Kv;
+import io.horizon.atom.program.Kv;
 import io.horizon.eon.VString;
+import io.modello.atom.app.KGlobal;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.atom.typed.UTenant;
 import io.vertx.up.fn.Fn;
 import io.vertx.up.plugin.excel.ExcelClient;
 import io.vertx.up.plugin.excel.ExcelInfix;
@@ -24,10 +24,10 @@ import java.util.stream.Collectors;
  */
 public class ExTenant implements Serializable {
 
-    private final transient UTenant tenant;
+    private final transient KGlobal tenant;
 
     private ExTenant(final JsonObject tenantData) {
-        this.tenant = Ut.deserialize(tenantData, UTenant.class);
+        this.tenant = Ut.deserialize(tenantData, KGlobal.class);
     }
 
     public static ExTenant create(final JsonObject tenantData) {

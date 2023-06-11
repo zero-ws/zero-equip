@@ -1,6 +1,6 @@
 package io.vertx.up.plugin.excel.ranger;
 
-import io.horizon.atom.common.Refer;
+import io.horizon.atom.program.KRef;
 import io.modello.specification.meta.HMetaAtom;
 import io.vertx.up.plugin.excel.atom.ExRecord;
 import io.vertx.up.plugin.excel.atom.ExTable;
@@ -23,7 +23,7 @@ public class PureIn extends AbstractExIn {
     @Override
     public ExBound applyTable(final ExTable table, final Row row, final Cell cell, final Integer limitation) {
         /* Scan Field, Once scanning */
-        final Refer hod = new Refer();
+        final KRef hod = new KRef();
         ExFn.onRow(this.sheet, row.getRowNum() + 2, foundRow -> {
             /* Build Field Col */
             final ExBound bound = new ColBound(cell.getColumnIndex(), foundRow.getLastCellNum());
