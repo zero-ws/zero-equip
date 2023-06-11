@@ -1,5 +1,6 @@
 package io.vertx.up.secure.authorization;
 
+import io.vertx.boot.supply.Electy;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.MultiMap;
@@ -12,7 +13,6 @@ import io.vertx.up.commune.secure.Aegis;
 import io.vertx.up.commune.secure.Vis;
 import io.vertx.up.eon.KName;
 import io.vertx.up.eon.KWeb;
-import io.vertx.up.supply.Electy;
 
 import java.util.Objects;
 

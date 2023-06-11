@@ -1,13 +1,13 @@
 package io.vertx.up.plugin.stomp.websocket;
 
 import io.horizon.uca.cache.Cc;
+import io.vertx.boot.supply.Electy;
 import io.vertx.core.Vertx;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
 import io.vertx.ext.stomp.StompServerHandler;
 import io.vertx.ext.stomp.StompServerOptions;
 import io.vertx.up.commune.secure.Aegis;
 import io.vertx.up.secure.bridge.Bolt;
-import io.vertx.up.supply.Electy;
 import io.vertx.up.unity.RegexPath;
 
 import java.util.Objects;
