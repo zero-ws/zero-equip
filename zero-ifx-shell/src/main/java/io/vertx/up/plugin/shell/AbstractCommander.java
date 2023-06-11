@@ -8,7 +8,7 @@ import io.vertx.up.plugin.shell.atom.CommandAtom;
 import io.vertx.up.plugin.shell.atom.CommandInput;
 import io.vertx.up.plugin.shell.cv.em.TermStatus;
 import io.vertx.up.plugin.shell.refine.Sl;
-import io.vertx.up.runtime.ZeroSerializer;
+import io.vertx.up.runtime.ZeroType;
 import io.vertx.up.util.Ut;
 
 import java.io.File;
@@ -118,7 +118,7 @@ public abstract class AbstractCommander implements Commander {
         if (Ut.isNil(literal)) {
             return this.atom.getDefault(name);
         } else {
-            return (T) ZeroSerializer.getValue(clazzT, literal);
+            return (T) ZeroType.value(clazzT, literal);
         }
     }
 }

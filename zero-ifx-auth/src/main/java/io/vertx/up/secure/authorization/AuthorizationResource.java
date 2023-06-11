@@ -12,7 +12,7 @@ import io.vertx.up.commune.secure.Aegis;
 import io.vertx.up.commune.secure.Vis;
 import io.vertx.up.eon.KName;
 import io.vertx.up.eon.KWeb;
-import io.vertx.up.runtime.ZeroAnno;
+import io.vertx.up.supply.Electy;
 
 import java.util.Objects;
 
@@ -60,7 +60,7 @@ public interface AuthorizationResource {
          * New: request.path()
          * path() will remove all query string part
          */
-        metadata.put(KName.URI, ZeroAnno.recoveryUri(request.path(), request.method()));
+        metadata.put(KName.URI, Electy.uriRecovery(request.path(), request.method()));
         metadata.put(KName.URI_REQUEST, request.path());
         metadata.put(KName.METHOD, request.method().name());
         /*

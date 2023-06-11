@@ -6,8 +6,8 @@ import io.vertx.ext.auth.authentication.AuthenticationProvider;
 import io.vertx.ext.stomp.StompServerHandler;
 import io.vertx.ext.stomp.StompServerOptions;
 import io.vertx.up.commune.secure.Aegis;
-import io.vertx.up.runtime.ZeroAnno;
 import io.vertx.up.secure.bridge.Bolt;
+import io.vertx.up.supply.Electy;
 import io.vertx.up.unity.RegexPath;
 
 import java.util.Objects;
@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
  * @author <a href="http://www.origin-x.cn">Lang</a>
  */
 public class MixerAuthorize extends AbstractMixer {
-    private static final Cc<String, Set<Aegis>> CC_WALLS = ZeroAnno.getWalls();
+    private static final Cc<String, Set<Aegis>> CC_WALLS = Electy.ucaWall();
     private static final AtomicBoolean LOG_FOUND = new AtomicBoolean(Boolean.TRUE);
     private static final AtomicBoolean LOG_PROVIDER = new AtomicBoolean(Boolean.TRUE);
 

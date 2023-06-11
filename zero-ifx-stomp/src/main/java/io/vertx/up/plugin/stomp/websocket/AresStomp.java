@@ -10,7 +10,7 @@ import io.vertx.ext.web.Router;
 import io.vertx.up.commune.secure.Aegis;
 import io.vertx.up.extension.AbstractAres;
 import io.vertx.up.plugin.stomp.socket.ServerWsHandler;
-import io.vertx.up.runtime.ZeroOption;
+import io.vertx.up.supply.Electy;
 import io.vertx.up.util.Ut;
 
 import java.util.Objects;
@@ -28,7 +28,7 @@ public class AresStomp extends AbstractAres {
     @Override
     public void configure(final HttpServerOptions options) {
         super.configure(options);
-        final SockOptions sockOptions = ZeroOption.getSockOptions().get(options.getPort());
+        final SockOptions sockOptions = Electy.optionSock().get(options.getPort());
         Objects.requireNonNull(sockOptions);
         final HttpServerOptions configured = sockOptions.options();
         if (Objects.nonNull(configured)) {
@@ -49,7 +49,7 @@ public class AresStomp extends AbstractAres {
 
     @Override
     public void mount(final Router router, final JsonObject config) {
-        final SockOptions sockOptions = ZeroOption.getSockOptions().get(this.options.getPort());
+        final SockOptions sockOptions = Electy.optionSock().get(this.options.getPort());
         Objects.requireNonNull(sockOptions);
         final JsonObject stompJ = Ut.valueJObject(sockOptions.getConfig(), "stomp");
         final StompServerOptions stompOptions = new StompServerOptions(stompJ);
