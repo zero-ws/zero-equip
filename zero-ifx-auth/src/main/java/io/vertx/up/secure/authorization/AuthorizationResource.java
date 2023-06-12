@@ -30,10 +30,10 @@ public interface AuthorizationResource {
      * 1) Http Method: GET, DELETE, POST, PUT
      * 2) Uri Original
      * Here are some calculation results that has been provided by zero container such as following situation:
-     * When the registry uri is as : /api/test/:name
-     * In this situation the real path should be : /api/test/lang
-     * In this method the metadata -> uri will be provided by : /api/test/:name
-     *                    metadata -> requestUri will be provided by : /api/test/lang
+     * When the registry uri is as : /api/mock/:name
+     * In this situation the real path should be : /api/mock/lang
+     * In this method the metadata -> uri will be provided by : /api/mock/:name
+     *                    metadata -> requestUri will be provided by : /api/mock/lang
      * It's specific situation when you used path variable.
      *
      * 「Objective」

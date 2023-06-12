@@ -148,7 +148,7 @@ public interface ElasticSearchClient {
 
     Boolean deleteDocuments(String index, Set<String> ids);
 
-    /* full test search API */
+    /* full mock search API */
 
     /**
      * get search result from ElasticSearch by search text

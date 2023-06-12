@@ -11,7 +11,7 @@ import org.junit.Test;
 public class Neo4jGTc extends Neo4jQuiz {
     @Test
     public void testReady(final TestContext context) {
-        final Neo4jGs gs = this.create("case5-graphic-test.json");
+        final Neo4jGs gs = this.create("case5-graphic-mock.json");
         final Neo4jClient client = Neo4jInfix.getClient().connect(gs.getName());
         // client.edgeCreate(gs.getEdges());
         // client.nodeCreate(gs.getNodes()).compose(created -> client.edgeCreate(gs.getEdges())).compose(client::closeAsync);
