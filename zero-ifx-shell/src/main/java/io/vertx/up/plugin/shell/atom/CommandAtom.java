@@ -1,15 +1,15 @@
 package io.vertx.up.plugin.shell.atom;
 
-import com.fasterxml.jackson.databind.ClassDeserializer;
-import com.fasterxml.jackson.databind.ClassSerializer;
-import com.fasterxml.jackson.databind.JsonObjectDeserializer;
-import com.fasterxml.jackson.databind.JsonObjectSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.vertx.core.json.JsonObject;
 import io.vertx.up.plugin.shell.Commander;
 import io.vertx.up.plugin.shell.cv.em.CommandType;
 import io.vertx.up.util.Ut;
+import io.zerows.jackson.databind.ClassDeserializer;
+import io.zerows.jackson.databind.ClassSerializer;
+import io.zerows.jackson.databind.JsonObjectDeserializer;
+import io.zerows.jackson.databind.JsonObjectSerializer;
 import org.apache.commons.cli.Options;
 
 import java.io.Serializable;
