@@ -119,7 +119,7 @@ class N4JNode {
          */
         final List<String> kv = new ArrayList<>();
         properties.forEach(property -> kv.add("CREATE CONSTRAINT ON (" + alias + ":" + graph + ") " +
-            "ASSERT " + alias + "." + property + " __ UNIQUE"));
+            "ASSERT " + alias + "." + property + " IS UNIQUE"));
         return kv;
     }
 }
