@@ -75,7 +75,7 @@ public class AuthenticateBuiltInProvider implements AuthenticationProvider {
              *    - 401 ( the executor is handler and throw out WebException )
              *    - XXX ( Throw out internal error )
              * 2. The internal method `userVerified` will be system level
-             *    following code will be business level
+             *    following code will be income level
              *    - check = true:  Success
              *    - check = false: 401 ( Business Validated Failure )
              *

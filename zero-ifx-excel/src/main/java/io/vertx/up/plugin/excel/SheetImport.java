@@ -94,7 +94,7 @@ class SheetImport {
         T reference = null;
         if (Objects.nonNull(table.classPojo()) && Objects.nonNull(table.classDao())) {
             /*
-             * First, find the record by unique filters that defined in business here.
+             * First, find the record by unique filters that defined in income here.
              */
             final JsonObject filters = table.whereUnique(data);
             LOGGER.debug("[ Έξοδος ]  Table: {1}, Filters: {0}", filters.encode(), table.getName());
