@@ -10,7 +10,7 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.InternalAggregations;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 
@@ -75,8 +75,8 @@ class ElasticQr {
         result.put("hits", hits);
 
         final JsonArray aggregations = new JsonArray();
-        final Aggregations aggres = response.getAggregations();
-        final Terms customAggregation = aggres.get(Aggregations.AGGREGATIONS_FIELD);
+        final InternalAggregations aggres = response.getAggregations();
+        final Terms customAggregation = aggres.get(InternalAggregations.AGGREGATIONS_FIELD);
         customAggregation.getBuckets()
             .forEach(item -> aggregations.add(new JsonObject()
                 .put("key", item.getKeyAsString())

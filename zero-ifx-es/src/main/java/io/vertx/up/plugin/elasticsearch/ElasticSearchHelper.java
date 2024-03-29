@@ -25,7 +25,7 @@ import org.elasticsearch.index.query.MatchPhraseQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.InternalAggregations;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 
@@ -204,7 +204,7 @@ public class ElasticSearchHelper {
             builder.query(finalCond);
             LOGGER.debug("[ ZERO ] Final query condition with precision: {0}", finalCond.toString());
         }
-        return builder.aggregation(AggregationBuilders.terms(Aggregations.AGGREGATIONS_FIELD).field("_index"))
+        return builder.aggregation(AggregationBuilders.terms(InternalAggregations.AGGREGATIONS_FIELD).field("_index"))
             .highlighter(new HighlightBuilder().field("*").preTags("<strong>").postTags("</strong>").highlighterType("unified"))
             .from(Math.max(0, from))
             .size(Math.max(10, size))
