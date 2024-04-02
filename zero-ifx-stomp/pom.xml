@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>zero-ifx-stomp</artifactId>
-    <name>Zero Infix / WebSocket ( Stomp )</name>
+    <name>Zero.Plugins.Infix.WebSocket.Stomp</name>
     <dependencies>
         <dependency>
             <groupId>io.vertx</groupId>

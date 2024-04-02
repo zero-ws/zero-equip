@@ -10,5 +10,5 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>zero-ifx-ftp</artifactId>
-    <name>Zero Infix / File Transfer Service</name>
+    <name>Zero.Plugins.Infix.Integration.FTP</name>
 </project>

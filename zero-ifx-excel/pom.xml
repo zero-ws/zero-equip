@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>zero-ifx-excel</artifactId>
-    <name>Zero Infix / Excel</name>
+    <name>Zero.Plugins.Infix.Office.Excel</name>
     <dependencies>
         <dependency>
             <groupId>org.apache.poi</groupId>

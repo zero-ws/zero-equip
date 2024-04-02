@@ -11,7 +11,7 @@
 
     <artifactId>zero-equip</artifactId>
     <packaging>pom</packaging>
-    <name>Zero Infix</name>
+    <name>Zero.Plugins.Infix.POM.${zero.version}</name>
     <modules>
         <module>zero-ifx-auth</module>      <!-- Enhance:      Extension for Authorization ( Rbac Module ) -->
         <module>zero-ifx-excel</module>     <!-- Excel with Apache POI -->

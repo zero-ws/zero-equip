@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>zero-ifx-liquibase</artifactId>
-    <name>Zero Infix / Liquibase Fix</name>
+    <name>Zero.Plugins.Infix.Store.Liquibase</name>
     <dependencies>
         <!-- Fix MySQL 8 Issue -->
         <dependency>

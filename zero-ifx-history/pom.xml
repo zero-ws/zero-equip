@@ -11,5 +11,5 @@
 
     <artifactId>zero-ifx-history</artifactId>
     <!-- Higher dependency -->
-    <name>Zero Infix / History Trash</name>
+    <name>Zero.Plugins.Infix.Native.Trash</name>
 </project>
