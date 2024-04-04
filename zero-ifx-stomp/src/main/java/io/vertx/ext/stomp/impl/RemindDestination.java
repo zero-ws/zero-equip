@@ -1,5 +1,6 @@
 package io.vertx.ext.stomp.impl;
 
+import io.horizon.uca.log.Annal;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.MultiMap;
@@ -31,6 +32,7 @@ import java.util.regex.Pattern;
  * @author <a href="http://www.origin-x.cn">Lang</a>
  */
 public class RemindDestination extends Topic {
+    private static final Annal LOGGER = Annal.get(RemindDestination.class);
 
     private final BridgeOptions options;
 
@@ -63,7 +65,7 @@ public class RemindDestination extends Topic {
          */
         String addressEvent = AresGrid.configAddress(address);
         if (Ut.isNil(addressEvent)) {
-            // The Map dose not store the address
+            // The Map does not store the address
             addressEvent = address;
         }
         if (this.checkMatches(false, address, null)) {
@@ -78,16 +80,25 @@ public class RemindDestination extends Topic {
 
                     /* Code modified here for inject method calling */
                     AresGrid.wsInvoke(address, msg.body(), (returned) -> {
+                        final Object resultData = returned.result();
+                        if (Objects.isNull(resultData)) {
+                            LOGGER.warn("[ Warning ] The invoker returned value is null, the message will be ignored.");
+                            return;
+                        }
+                        final Object invoked = returned.result();
                         if (this.options.isPointToPoint()) {
                             final Optional<Subscription> chosen = this.subscriptions.stream().filter(s -> s.destination.equals(address)).findAny();
                             if (chosen.isPresent()) {
-                                final Frame stompFrame = this.transform(msg, chosen.get(), returned.result());
+                                final Subscription target = chosen.get();
+                                final FrameBuilder builder = FrameBuilder.of(target.id);
+                                final Frame stompFrame = builder.buildFrame(msg, invoked, target.ackMode);
                                 chosen.get().connection.write(stompFrame);
                             }
                         } else {
-                            this.subscriptions.stream().filter(s -> s.destination.equals(address)).forEach(s -> {
-                                final Frame stompFrame = this.transform(msg, s, returned.result());
-                                s.connection.write(stompFrame);
+                            this.subscriptions.stream().filter(s -> s.destination.equals(address)).forEach(target -> {
+                                final FrameBuilder builder = FrameBuilder.of(target.id);
+                                final Frame stompFrame = builder.buildFrame(msg, invoked, target.ackMode);
+                                target.connection.write(stompFrame);
                             });
                         }
                     });
@@ -136,54 +147,6 @@ public class RemindDestination extends Topic {
         }
     }
 
-    private Frame transform(final Message<Object> msg, final Subscription subscription, final Object bodyData) {
-        final String messageId = UUID.randomUUID().toString();
-
-        final Frame frame = new Frame();
-        frame.setCommand(Command.MESSAGE);
-
-        final Headers headers = Headers.create(frame.getHeaders())
-            // Destination already set in the input headers.
-            .add(Frame.SUBSCRIPTION, subscription.id)
-            .add(Frame.MESSAGE_ID, messageId)
-            .add(Frame.DESTINATION, msg.address());
-        if (!"auto".equals(subscription.ackMode)) {
-            // We reuse the message Id as ack Id
-            headers.add(Frame.ACK, messageId);
-        }
-
-        // Specific headers.
-        if (msg.replyAddress() != null) {
-            headers.put("reply-address", msg.replyAddress());
-        }
-
-        // Copy headers.
-        for (final Map.Entry<String, String> entry : msg.headers()) {
-            headers.putIfAbsent(entry.getKey(), entry.getValue());
-        }
-
-        frame.setHeaders(headers);
-
-        final Object body = Objects.nonNull(bodyData) ? bodyData : msg.body();
-        if (body != null) {
-            if (body instanceof String) {
-                frame.setBody(Buffer.buffer((String) body));
-            } else if (body instanceof Buffer) {
-                frame.setBody((Buffer) body);
-            } else if (body instanceof JsonObject) {
-                frame.setBody(Buffer.buffer(((JsonObject) body).encode()));
-            } else {
-                throw new IllegalStateException("Illegal body - unsupported body type: " + body.getClass().getName());
-            }
-        }
-
-        if (body != null && frame.getHeader(Frame.CONTENT_LENGTH) == null) {
-            frame.addHeader(Frame.CONTENT_LENGTH, Integer.toString(frame.getBody().length()));
-        }
-
-        return frame;
-    }
-
     @Override
     public Destination dispatch(final StompServerConnection connection, final Frame frame) {
         final String address = frame.getDestination();
@@ -204,7 +167,8 @@ public class RemindDestination extends Topic {
                             .filter(s -> s.connection.equals(connection) && s.destination.equals(replyAddress))
                             .findFirst();
                         subscription.ifPresent(value -> AresGrid.wsInvoke(address, res.result(), (returned) -> {
-                            final Frame stompFrame = this.transform(res.result(), value, returned.result());
+                            final FrameBuilder builder = FrameBuilder.of(value.id);
+                            final Frame stompFrame = builder.buildFrame(res.result(), returned.result(), value.ackMode);
                             value.connection.write(stompFrame);
                         }));
                     }
