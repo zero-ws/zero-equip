@@ -8,9 +8,9 @@ import io.vertx.ext.stomp.StompServer;
 import io.vertx.ext.stomp.StompServerOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.up.commune.secure.Aegis;
-import io.vertx.up.extension.AbstractAres;
 import io.vertx.up.util.Ut;
 import io.zerows.core.vertx.SockOptions;
+import io.zerows.extension.AbstractAres;
 import io.zerows.infix.stomp.socket.ServerWsHandler;
 
 import java.util.Objects;
