@@ -4,9 +4,9 @@ import io.vertx.core.Future;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.quiz.ZeroBase;
-import io.vertx.up.plugin.neo4j.Neo4jClient;
-import io.vertx.up.plugin.neo4j.Neo4jInfix;
 import io.vertx.up.unity.Ux;
+import io.zerows.infix.neo4j.Neo4jClient;
+import io.zerows.infix.neo4j.Neo4jInfix;
 import org.junit.Ignore;
 
 import java.util.function.BiFunction;

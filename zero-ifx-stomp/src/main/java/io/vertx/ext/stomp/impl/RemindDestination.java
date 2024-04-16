@@ -14,8 +14,8 @@ import io.vertx.ext.bridge.PermittedOptions;
 import io.vertx.ext.stomp.*;
 import io.vertx.ext.stomp.utils.Headers;
 import io.vertx.up.extension.router.AresGrid;
-import io.vertx.up.plugin.stomp.websocket.BridgeStomp;
 import io.vertx.up.util.Ut;
+import io.zerows.infix.stomp.websocket.BridgeStomp;
 
 import java.util.*;
 import java.util.regex.Matcher;

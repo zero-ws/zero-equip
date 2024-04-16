@@ -3,8 +3,8 @@ package io.vertx.mod.plugin.elasticsearch;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.quiz.ZeroBase;
-import io.vertx.up.plugin.elasticsearch.ElasticSearchClient;
-import io.vertx.up.plugin.elasticsearch.ElasticSearchInfix;
+import io.zerows.infix.elasticsearch.ElasticSearchClient;
+import io.zerows.infix.elasticsearch.ElasticSearchInfix;
 import org.junit.Ignore;
 import org.junit.Test;
 
