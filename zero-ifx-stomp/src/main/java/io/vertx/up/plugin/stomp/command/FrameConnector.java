@@ -11,9 +11,9 @@ import io.vertx.ext.stomp.StompServerConnection;
 import io.vertx.ext.stomp.StompServerHandler;
 import io.vertx.up.eon.KName;
 import io.vertx.up.plugin.stomp.socket.ServerWsHandler;
-import io.vertx.up.secure.Lee;
 import io.vertx.up.secure.bridge.Bolt;
 import io.vertx.up.util.Ut;
+import io.zerows.macro.sdk.secure.Lee;
 import jakarta.ws.rs.core.HttpHeaders;
 
 import java.util.Objects;

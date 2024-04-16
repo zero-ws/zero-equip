@@ -25,6 +25,7 @@ import io.vertx.up.secure.authorization.AuthorizationBuiltInHandler;
 import io.vertx.up.secure.authorization.AuthorizationBuiltInProvider;
 import io.vertx.up.secure.authorization.AuthorizationExtensionHandler;
 import io.vertx.up.util.Ut;
+import io.zerows.macro.sdk.secure.LeeBuiltIn;
 
 import java.util.Objects;
 

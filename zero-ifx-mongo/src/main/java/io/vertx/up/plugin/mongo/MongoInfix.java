@@ -5,13 +5,14 @@ import io.vertx.core.Vertx;
 import io.vertx.ext.mongo.MongoClient;
 import io.vertx.up.annotations.Infusion;
 import io.vertx.up.eon.configure.YmlCore;
+import io.zerows.macro.plugin.Infix;
 
 /**
  *
  */
 @Infusion
 @SuppressWarnings("unchecked")
-public class MongoInfix implements io.vertx.up.plugin.Infix {
+public class MongoInfix implements Infix {
 
     private static final String NAME = "ZERO_MONGO_POOL";
     /**
@@ -21,7 +22,7 @@ public class MongoInfix implements io.vertx.up.plugin.Infix {
 
     private static void initInternal(final Vertx vertx,
                                      final String name) {
-        CC_CLIENT.pick(() -> io.vertx.up.plugin.Infix.init(YmlCore.inject.MONGO,
+        CC_CLIENT.pick(() -> Infix.init(YmlCore.inject.MONGO,
             (config) -> MongoClient.createShared(vertx, config, name),
             MongoInfix.class), name);
     }

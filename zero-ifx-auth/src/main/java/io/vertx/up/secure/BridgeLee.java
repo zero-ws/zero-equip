@@ -9,6 +9,8 @@ import io.vertx.ext.web.handler.AuthorizationHandler;
 import io.vertx.up.commune.secure.Aegis;
 import io.vertx.up.commune.secure.AegisItem;
 import io.vertx.up.eon.em.EmSecure;
+import io.zerows.macro.sdk.secure.Lee;
+import io.zerows.macro.sdk.secure.LeeBuiltIn;
 
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;

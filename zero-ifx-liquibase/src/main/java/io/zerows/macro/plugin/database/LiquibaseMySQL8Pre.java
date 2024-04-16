@@ -1,4 +1,4 @@
-package io.vertx.up.plugin.database;
+package io.zerows.macro.plugin.database;
 
 import liquibase.database.Database;
 import liquibase.database.jvm.JdbcConnection;
@@ -17,6 +17,7 @@ import java.util.Objects;
 
 public class LiquibaseMySQL8Pre implements CustomPrecondition {
     private static final Logger LOGGER = LoggerFactory.getLogger(LiquibaseMySQL8Pre.class);
+
     /*
      * 该函数为 MySQL 升级8.0过后引起的约束问题执行临时解决方案
      * liquibase.exception.DatabaseException: The table does not comply with the requirements by an external plugin
@@ -31,29 +32,29 @@ public class LiquibaseMySQL8Pre implements CustomPrecondition {
      */
     @Override
     public void check(final Database database)
-            throws CustomPreconditionFailedException, CustomPreconditionErrorException {
+        throws CustomPreconditionFailedException, CustomPreconditionErrorException {
         final String tableName = database.getDatabaseChangeLogTableName();
         // DATABASECHANGELOG 检查用户是否定制过该表方法
         try {
             // 1）检查表是否存在，不存在则跳过
-            if(this.ifSkipTable(database, tableName)){
+            if (this.ifSkipTable(database, tableName)) {
                 return;
             }
             // 2) 检查表是否有主键，存在主键则跳过
-            if(this.ifSkipPrimary(database, tableName)){
+            if (this.ifSkipPrimary(database, tableName)) {
                 return;
             }
             // 3）检查满足条件，修改表追加主键
             this.execFix(database, tableName);
-        }catch (Throwable ex){
+        } catch (final Throwable ex) {
             // 检查未通过
             throw new CustomPreconditionFailedException(ex.getMessage());
         }
     }
 
-    private void execFix(final Database database, final String tableName) throws SQLException{
+    private void execFix(final Database database, final String tableName) throws SQLException {
         final String sqlTpl = "ALTER TABLE {0} ADD PRIMARY KEY(ID, AUTHOR, FILENAME)";
-        final Connection conn = getConnection(database);
+        final Connection conn = this.getConnection(database);
         final Statement stmt = conn.createStatement();
 
         LOGGER.info("[Zero] Liquibase Fix ? {}", sqlTpl);
@@ -62,12 +63,12 @@ public class LiquibaseMySQL8Pre implements CustomPrecondition {
 
     private boolean ifSkipTable(final Database database, final String tableName) throws SQLException {
         final String sqlTpl = "SELECT COUNT(*) AS RET FROM information_schema.TABLES WHERE TABLE_NAME=''{0}'' AND TABLE_SCHEMA=''{1}''";
-        final Connection conn = getConnection(database);
+        final Connection conn = this.getConnection(database);
         final Statement stmt = conn.createStatement();
         final String sql = MessageFormat.format(sqlTpl, tableName, database.getLiquibaseCatalogName());
         final ResultSet rs = stmt.executeQuery(sql);
         int counter = 0;
-        while(rs.next()){
+        while (rs.next()) {
             counter = rs.getInt("RET");
         }
         final boolean result = counter == 0;
@@ -75,21 +76,21 @@ public class LiquibaseMySQL8Pre implements CustomPrecondition {
         return result;
     }
 
-    private boolean ifSkipPrimary(final Database database, final String tableName) throws SQLException{
+    private boolean ifSkipPrimary(final Database database, final String tableName) throws SQLException {
         final String sqlTpl = "SELECT col.COLUMN_NAME FROM" +
-                " information_schema.TABLE_CONSTRAINTS tab," +
-                " information_schema.KEY_COLUMN_USAGE col" +
-                " WHERE col.CONSTRAINT_NAME = tab.CONSTRAINT_NAME" +
-                " AND col.TABLE_NAME = tab.TABLE_NAME" +
-                " AND tab.CONSTRAINT_TYPE = ''PRIMARY KEY''" +
-                " AND col.TABLE_NAME = ''{0}''" +
-                " AND tab.CONSTRAINT_SCHEMA = ''{1}''";
-        final Connection conn = getConnection(database);
+            " information_schema.TABLE_CONSTRAINTS tab," +
+            " information_schema.KEY_COLUMN_USAGE col" +
+            " WHERE col.CONSTRAINT_NAME = tab.CONSTRAINT_NAME" +
+            " AND col.TABLE_NAME = tab.TABLE_NAME" +
+            " AND tab.CONSTRAINT_TYPE = ''PRIMARY KEY''" +
+            " AND col.TABLE_NAME = ''{0}''" +
+            " AND tab.CONSTRAINT_SCHEMA = ''{1}''";
+        final Connection conn = this.getConnection(database);
         final Statement stmt = conn.createStatement();
         final String sql = MessageFormat.format(sqlTpl, tableName, database.getLiquibaseCatalogName());
         final ResultSet rs = stmt.executeQuery(sql);
         String name = null;
-        while(rs.next()){
+        while (rs.next()) {
             name = rs.getString("COLUMN_NAME");
         }
         final boolean result = Objects.nonNull(name);
@@ -97,7 +98,7 @@ public class LiquibaseMySQL8Pre implements CustomPrecondition {
         return result;
     }
 
-    private Connection getConnection(final Database database){
+    private Connection getConnection(final Database database) {
         final JdbcConnection connection = (JdbcConnection) database.getConnection();
         return connection.getUnderlyingConnection();
     }

@@ -5,7 +5,7 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.plugin.TpClient;
+import io.zerows.macro.plugin.TpClient;
 
 /**
  * AliSmsClient for platform of https://dysms.console.aliyun.com/dysms.htm

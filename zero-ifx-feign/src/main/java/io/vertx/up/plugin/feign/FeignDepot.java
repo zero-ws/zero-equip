@@ -8,7 +8,7 @@ import feign.codec.JsonObjectDecoder;
 import feign.codec.JsonObjectEncoder;
 import io.horizon.uca.cache.Cc;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.plugin.init.TpConfig;
+import io.zerows.macro.plugin.init.TpConfig;
 
 import java.io.Serializable;
 

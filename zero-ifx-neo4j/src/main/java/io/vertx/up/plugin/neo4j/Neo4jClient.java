@@ -5,7 +5,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.plugin.TpClient;
+import io.zerows.macro.plugin.TpClient;
 
 public interface Neo4jClient extends TpClient<Neo4jClient> {
 

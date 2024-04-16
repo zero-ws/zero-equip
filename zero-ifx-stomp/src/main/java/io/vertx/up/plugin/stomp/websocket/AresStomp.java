@@ -1,7 +1,6 @@
 package io.vertx.up.plugin.stomp.websocket;
 
 import io.vertx.boot.supply.Electy;
-import io.vertx.core.SockOptions;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.JsonObject;
@@ -12,6 +11,7 @@ import io.vertx.up.commune.secure.Aegis;
 import io.vertx.up.extension.AbstractAres;
 import io.vertx.up.plugin.stomp.socket.ServerWsHandler;
 import io.vertx.up.util.Ut;
+import io.zerows.core.vertx.SockOptions;
 
 import java.util.Objects;
 

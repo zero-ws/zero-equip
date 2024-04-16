@@ -3,7 +3,7 @@ package io.vertx.up.plugin.ali.sms;
 import io.horizon.uca.log.Annal;
 import io.vertx.core.json.JsonObject;
 import io.vertx.up.fn.Fn;
-import io.vertx.up.plugin.init.TpConfig;
+import io.zerows.macro.plugin.init.TpConfig;
 
 import java.io.Serializable;
 import java.util.Objects;

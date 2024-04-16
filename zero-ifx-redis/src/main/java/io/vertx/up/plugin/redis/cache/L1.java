@@ -1,7 +1,7 @@
 package io.vertx.up.plugin.redis.cache;
 
 import io.vertx.core.Future;
-import io.vertx.up.plugin.cache.hit.AbstractL1;
+import io.zerows.macro.plugin.cache.hit.AbstractL1;
 
 /**
  * @author <a href="http://www.origin-x.cn">Lang</a>

@@ -7,8 +7,9 @@ import io.vertx.redis.client.Redis;
 import io.vertx.redis.client.RedisOptions;
 import io.vertx.up.annotations.Infusion;
 import io.vertx.up.eon.configure.YmlCore;
-import io.vertx.up.plugin.cache.Harp;
 import io.vertx.up.util.Ut;
+import io.zerows.macro.plugin.Infix;
+import io.zerows.macro.plugin.cache.Harp;
 import redis.clients.jedis.Jedis;
 
 import java.util.Objects;
@@ -17,7 +18,7 @@ import java.util.concurrent.ConcurrentMap;
 
 @Infusion
 @SuppressWarnings("unchecked")
-public class RedisInfix implements io.vertx.up.plugin.Infix {
+public class RedisInfix implements Infix {
 
     private static final String NAME = "ZERO_REDIS_POOL";
     private static final Annal LOGGER = Annal.get(RedisInfix.class);
@@ -29,7 +30,7 @@ public class RedisInfix implements io.vertx.up.plugin.Infix {
 
     private static void initInternal(final Vertx vertx,
                                      final String name) {
-        final RedisOptions options = io.vertx.up.plugin.Infix.init(YmlCore.inject.REDIS,
+        final RedisOptions options = Infix.init(YmlCore.inject.REDIS,
             /*
              * Two parts for
              * - Redis reference

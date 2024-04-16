@@ -5,7 +5,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.up.error.excel._404ConnectMissingException;
 import io.vertx.up.fn.Fn;
-import io.vertx.up.plugin.booting.KConnect;
+import io.zerows.macro.plugin.booting.KConnect;
 import io.vertx.up.unity.Ux;
 import io.vertx.up.util.Ut;
 

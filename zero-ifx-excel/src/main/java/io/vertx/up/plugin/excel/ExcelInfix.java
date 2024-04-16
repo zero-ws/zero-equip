@@ -5,17 +5,18 @@ import io.vertx.core.Vertx;
 import io.vertx.up.annotations.Infusion;
 import io.vertx.up.eon.configure.YmlCore;
 import io.vertx.up.unity.Ux;
+import io.zerows.macro.plugin.Infix;
 
 @Infusion
 @SuppressWarnings("all")
-public class ExcelInfix implements io.vertx.up.plugin.Infix {
+public class ExcelInfix implements Infix {
 
     private static final String NAME = "ZERO_EXCEL_POOL";
     private static final Cc<String, ExcelClient> CC_CLIENT = Cc.open();
 
     private static void initInternal(final Vertx vertx,
                                      final String name) {
-        CC_CLIENT.pick(() -> io.vertx.up.plugin.Infix.init(YmlCore.inject.EXCEL,
+        CC_CLIENT.pick(() -> Infix.init(YmlCore.inject.EXCEL,
             (config) -> ExcelClient.createShared(vertx, config),
             ExcelInfix.class), name);
     }
@@ -33,7 +34,7 @@ public class ExcelInfix implements io.vertx.up.plugin.Infix {
     }
 
     public static ExcelClient createClient(final Vertx vertx) {
-        return io.vertx.up.plugin.Infix.init("excel", (config) -> ExcelClient.createShared(vertx, config), ExcelInfix.class);
+        return Infix.init("excel", (config) -> ExcelClient.createShared(vertx, config), ExcelInfix.class);
     }
 
     @Override

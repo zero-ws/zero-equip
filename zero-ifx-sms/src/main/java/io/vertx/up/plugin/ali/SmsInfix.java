@@ -4,10 +4,11 @@ import io.horizon.uca.cache.Cc;
 import io.vertx.core.Vertx;
 import io.vertx.up.annotations.Infusion;
 import io.vertx.up.plugin.ali.sms.SmsClient;
+import io.zerows.macro.plugin.Infix;
 
 @Infusion
 @SuppressWarnings("all")
-public class SmsInfix implements io.vertx.up.plugin.Infix {
+public class SmsInfix implements Infix {
 
     private static final String NAME = "ZERO_ALI_SMS_POOL";
 
@@ -15,7 +16,7 @@ public class SmsInfix implements io.vertx.up.plugin.Infix {
 
     private static void initInternal(final Vertx vertx,
                                      final String name) {
-        CC_CLIENT.pick(() -> io.vertx.up.plugin.Infix.init("ali-sms",
+        CC_CLIENT.pick(() -> Infix.init("ali-sms",
             (config) -> SmsClient.createShared(vertx),
             SmsInfix.class), name);
     }
