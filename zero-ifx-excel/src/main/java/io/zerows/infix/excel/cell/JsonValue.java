@@ -4,8 +4,8 @@ import io.horizon.eon.VString;
 import io.horizon.uca.log.Annal;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.uca.log.DevEnv;
 import io.vertx.up.util.Ut;
+import io.zerows.core.metadata.uca.environment.DevEnv;
 
 /*
  * Fix issue of excel length: 32767 characters
