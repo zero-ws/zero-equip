@@ -3,7 +3,7 @@ package io.zerows.infix.stomp.command;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.ext.stomp.ServerFrame;
-import io.vertx.up.commune.secure.Aegis;
+import io.zerows.core.domain.atom.commune.secure.Aegis;
 
 /**
  * @author <a href="http://www.origin-x.cn">Lang</a>

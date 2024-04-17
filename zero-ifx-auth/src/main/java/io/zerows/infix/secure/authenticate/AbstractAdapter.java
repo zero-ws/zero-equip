@@ -2,8 +2,8 @@ package io.zerows.infix.secure.authenticate;
 
 import io.horizon.uca.log.Annal;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
-import io.vertx.up.commune.secure.Aegis;
-import io.vertx.up.commune.secure.AegisItem;
+import io.zerows.core.domain.atom.commune.secure.Aegis;
+import io.zerows.core.domain.atom.commune.secure.AegisItem;
 import io.vertx.up.eon.configure.YmlCore;
 import io.vertx.up.eon.em.EmSecure;
 import io.vertx.up.util.Ut;

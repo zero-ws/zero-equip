@@ -2,7 +2,7 @@ package io.zerows.infix.secure.authenticate;
 
 import io.horizon.uca.cache.Cc;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
-import io.vertx.up.commune.secure.Aegis;
+import io.zerows.core.domain.atom.commune.secure.Aegis;
 
 /**
  * @author <a href="http://www.origin-x.cn">Lang</a>

@@ -9,7 +9,7 @@ import io.vertx.ext.auth.authorization.AuthorizationContext;
 import io.vertx.ext.auth.authorization.AuthorizationProvider;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.AuthorizationHandler;
-import io.vertx.up.commune.secure.Aegis;
+import io.zerows.core.domain.atom.commune.secure.Aegis;
 import io.vertx.up.eon.KName;
 
 import java.util.ArrayList;

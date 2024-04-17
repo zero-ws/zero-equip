@@ -7,7 +7,7 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.stomp.StompServer;
 import io.vertx.ext.stomp.StompServerOptions;
 import io.vertx.ext.web.Router;
-import io.vertx.up.commune.secure.Aegis;
+import io.zerows.core.domain.atom.commune.secure.Aegis;
 import io.vertx.up.util.Ut;
 import io.zerows.core.vertx.SockOptions;
 import io.zerows.extension.AbstractAres;

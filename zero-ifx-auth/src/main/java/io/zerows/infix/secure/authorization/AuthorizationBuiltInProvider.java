@@ -6,7 +6,7 @@ import io.vertx.core.Handler;
 import io.vertx.ext.auth.User;
 import io.vertx.ext.auth.authorization.Authorization;
 import io.vertx.ext.auth.authorization.AuthorizationProvider;
-import io.vertx.up.commune.secure.Aegis;
+import io.zerows.core.domain.atom.commune.secure.Aegis;
 import io.vertx.up.fn.Fn;
 import io.zerows.infix.secure.profile.PermissionAuthorization;
 
