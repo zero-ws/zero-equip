@@ -5,9 +5,9 @@ import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.zerows.macro.plugin.TpClient;
+import io.zerows.core.metadata.zdk.plugins.InfixClient;
 
-public interface Neo4jClient extends TpClient<Neo4jClient> {
+public interface Neo4jClient extends InfixClient<Neo4jClient> {
 
     static Neo4jClient createShared(final Vertx vertx) {
         return new Neo4jClientImpl(vertx, Neo4jConfig.create());

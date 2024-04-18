@@ -4,11 +4,11 @@ import feign.Feign;
 import feign.Request;
 import feign.Retryer;
 import feign.codec.ErrorDecoder;
-import io.zerows.infix.feign.codec.JsonObjectDecoder;
-import io.zerows.infix.feign.codec.JsonObjectEncoder;
 import io.horizon.uca.cache.Cc;
 import io.vertx.core.json.JsonObject;
-import io.zerows.macro.plugin.init.TpConfig;
+import io.zerows.core.metadata.zdk.plugins.InfixConfig;
+import io.zerows.infix.feign.codec.JsonObjectDecoder;
+import io.zerows.infix.feign.codec.JsonObjectEncoder;
 
 import java.io.Serializable;
 
@@ -36,7 +36,7 @@ public class FeignDepot implements Serializable {
         }
     }
 
-    private final transient TpConfig reference;
+    private final transient InfixConfig reference;
     /**
      * request options
      */
@@ -47,7 +47,7 @@ public class FeignDepot implements Serializable {
     private transient Retryer.Default defaults;
 
     private FeignDepot(final String key, final String rule) {
-        this.reference = TpConfig.create(key, rule);
+        this.reference = InfixConfig.create(key, rule);
         // Initializing
         this.initOpts(this.reference.getConfig());
     }

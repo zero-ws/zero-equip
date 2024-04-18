@@ -9,8 +9,8 @@ import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import io.zerows.core.metadata.zdk.plugins.InfixClient;
 import io.zerows.infix.excel.atom.ExTable;
-import io.zerows.macro.plugin.TpClient;
 
 import java.io.InputStream;
 import java.util.Set;
@@ -19,7 +19,7 @@ import java.util.Set;
  * ExcelClient for office excel data loading
  * Apache Poi
  */
-public interface ExcelClient extends TpClient<ExcelClient> {
+public interface ExcelClient extends InfixClient<ExcelClient> {
 
     static ExcelClient createShared(final Vertx vertx, final JsonObject config) {
         return new ExcelClientImpl(vertx, config);

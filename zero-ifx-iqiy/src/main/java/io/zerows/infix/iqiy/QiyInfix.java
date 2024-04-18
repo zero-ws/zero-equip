@@ -3,7 +3,7 @@ package io.zerows.infix.iqiy;
 import io.horizon.uca.cache.Cc;
 import io.vertx.core.Vertx;
 import io.vertx.up.annotations.Infusion;
-import io.zerows.macro.plugin.Infix;
+import io.zerows.core.metadata.zdk.plugins.Infix;
 
 @Infusion
 @SuppressWarnings("all")

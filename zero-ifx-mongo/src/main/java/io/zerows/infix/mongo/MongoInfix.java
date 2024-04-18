@@ -5,7 +5,7 @@ import io.vertx.core.Vertx;
 import io.vertx.ext.mongo.MongoClient;
 import io.vertx.up.annotations.Infusion;
 import io.vertx.up.eon.configure.YmlCore;
-import io.zerows.macro.plugin.Infix;
+import io.zerows.core.metadata.zdk.plugins.Infix;
 
 /**
  *

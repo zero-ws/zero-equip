@@ -5,13 +5,13 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
-import io.zerows.macro.plugin.TpClient;
+import io.zerows.core.metadata.zdk.plugins.InfixClient;
 
 /**
  * AliSmsClient for platform of https://dysms.console.aliyun.com/dysms.htm
  * Message open sdk
  */
-public interface SmsClient extends TpClient<SmsClient> {
+public interface SmsClient extends InfixClient<SmsClient> {
 
     static SmsClient createShared(final Vertx vertx) {
         return new SmsClientImpl(vertx, SmsConfig.create());

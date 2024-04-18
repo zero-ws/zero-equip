@@ -3,7 +3,7 @@ package io.zerows.infix.sms.sms;
 import io.horizon.uca.log.Annal;
 import io.vertx.core.json.JsonObject;
 import io.vertx.up.fn.Fn;
-import io.zerows.macro.plugin.init.TpConfig;
+import io.zerows.core.metadata.zdk.plugins.InfixConfig;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -25,7 +25,7 @@ public class SmsConfig implements Serializable {
     private static final String KEY_TPL = "tpl";
     private static final String DFT_DOMAIN = "dysmsapi.aliyuncs.com";
 
-    private static final TpConfig CONFIG = TpConfig.create(KEY, KEY);
+    private static final InfixConfig CONFIG = InfixConfig.create(KEY, KEY);
 
     private final String accessId;
     private final String accessSecret;

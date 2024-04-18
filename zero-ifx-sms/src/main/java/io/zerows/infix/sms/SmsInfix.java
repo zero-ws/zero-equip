@@ -3,8 +3,8 @@ package io.zerows.infix.sms;
 import io.horizon.uca.cache.Cc;
 import io.vertx.core.Vertx;
 import io.vertx.up.annotations.Infusion;
+import io.zerows.core.metadata.zdk.plugins.Infix;
 import io.zerows.infix.sms.sms.SmsClient;
-import io.zerows.macro.plugin.Infix;
 
 @Infusion
 @SuppressWarnings("all")

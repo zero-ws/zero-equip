@@ -8,7 +8,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.up.util.Ut;
-import io.zerows.macro.plugin.TpClient;
+import io.zerows.core.metadata.zdk.plugins.InfixClient;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.PullResult;
 import org.eclipse.jgit.api.Status;
@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 /**
  * @author <a href="http://www.origin-x.cn">Lang</a>
  */
-public interface GitClient extends TpClient<GitClient> {
+public interface GitClient extends InfixClient<GitClient> {
 
     static GitClient createShared(final Vertx vertx, final JsonObject repoJ) {
         final KRepo repo = Ut.deserialize(repoJ, KRepo.class);

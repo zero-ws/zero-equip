@@ -5,13 +5,13 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
-import io.zerows.macro.plugin.TpClient;
+import io.zerows.core.metadata.zdk.plugins.InfixClient;
 
 /**
  * QiyClient for platform of http://open.iqiyi.com/
  * Video open sdk
  */
-public interface QiyClient extends TpClient<QiyClient> {
+public interface QiyClient extends InfixClient<QiyClient> {
 
     static QiyClient createShared(final Vertx vertx) {
         return new QiyClientImpl(vertx, QiyConfig.create());
