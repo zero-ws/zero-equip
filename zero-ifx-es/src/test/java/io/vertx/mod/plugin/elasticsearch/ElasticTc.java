@@ -2,7 +2,7 @@ package io.vertx.mod.plugin.elasticsearch;
 
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.unit.TestContext;
-import io.vertx.quiz.ZeroBase;
+import io.zerows.core.facade.junit.ZeroBase;
 import io.zerows.infix.elasticsearch.ElasticSearchClient;
 import io.zerows.infix.elasticsearch.ElasticSearchInfix;
 import org.junit.Ignore;
