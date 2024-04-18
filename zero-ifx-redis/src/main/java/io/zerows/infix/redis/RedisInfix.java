@@ -8,8 +8,8 @@ import io.vertx.redis.client.RedisOptions;
 import io.vertx.up.annotations.Infusion;
 import io.vertx.up.eon.configure.YmlCore;
 import io.vertx.up.util.Ut;
+import io.zerows.core.feature.database.cache.Harp;
 import io.zerows.core.metadata.zdk.plugins.Infix;
-import io.zerows.macro.plugin.cache.Harp;
 import redis.clients.jedis.Jedis;
 
 import java.util.Objects;

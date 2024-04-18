@@ -1,7 +1,7 @@
 package io.zerows.infix.redis.cache;
 
 import io.vertx.core.Future;
-import io.zerows.macro.plugin.cache.hit.AbstractL1;
+import io.zerows.core.feature.database.cache.hit.AbstractL1;
 
 /**
  * @author <a href="http://www.origin-x.cn">Lang</a>
