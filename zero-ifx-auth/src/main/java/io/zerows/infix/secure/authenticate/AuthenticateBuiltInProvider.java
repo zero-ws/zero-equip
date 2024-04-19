@@ -8,8 +8,8 @@ import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.User;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
-import io.zerows.core.domain.atom.commune.secure.Aegis;
 import io.vertx.up.fn.Fn;
+import io.zerows.core.security.atom.Aegis;
 
 import java.lang.reflect.Method;
 import java.util.Objects;

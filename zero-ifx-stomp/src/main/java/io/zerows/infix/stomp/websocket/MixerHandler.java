@@ -3,7 +3,7 @@ package io.zerows.infix.stomp.websocket;
 import io.vertx.core.Vertx;
 import io.vertx.ext.stomp.StompServerHandler;
 import io.vertx.ext.stomp.StompServerOptions;
-import io.zerows.core.domain.atom.commune.secure.Aegis;
+import io.zerows.core.security.atom.Aegis;
 import io.zerows.infix.stomp.command.FrameWsHandler;
 
 /**

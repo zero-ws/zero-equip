@@ -6,8 +6,8 @@ import io.vertx.core.Handler;
 import io.vertx.ext.auth.User;
 import io.vertx.ext.auth.authorization.Authorization;
 import io.vertx.ext.auth.authorization.AuthorizationProvider;
-import io.zerows.core.domain.atom.commune.secure.Aegis;
 import io.vertx.up.fn.Fn;
+import io.zerows.core.security.atom.Aegis;
 import io.zerows.infix.secure.profile.PermissionAuthorization;
 
 import java.lang.reflect.Method;

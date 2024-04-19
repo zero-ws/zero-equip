@@ -7,8 +7,8 @@ import io.vertx.ext.auth.authentication.AuthenticationProvider;
 import io.vertx.ext.web.handler.AuthenticationHandler;
 import io.vertx.ext.web.handler.AuthorizationHandler;
 import io.vertx.up.eon.em.EmSecure;
-import io.zerows.core.domain.atom.commune.secure.Aegis;
-import io.zerows.core.domain.atom.commune.secure.AegisItem;
+import io.zerows.core.security.atom.Aegis;
+import io.zerows.core.security.atom.AegisItem;
 import io.zerows.core.security.zdk.Lee;
 import io.zerows.core.security.zdk.LeeBuiltIn;
 

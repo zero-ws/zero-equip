@@ -9,11 +9,11 @@ import io.vertx.ext.auth.jwt.JWTAuth;
 import io.vertx.ext.auth.jwt.JWTAuthOptions;
 import io.vertx.ext.web.handler.AuthenticationHandler;
 import io.vertx.ext.web.handler.JWTAuthHandler;
-import io.zerows.core.domain.atom.commune.secure.Aegis;
-import io.zerows.core.domain.atom.commune.secure.AegisItem;
 import io.vertx.up.eon.configure.YmlCore;
 import io.vertx.up.unity.Ux;
 import io.vertx.up.util.Ut;
+import io.zerows.core.security.atom.Aegis;
+import io.zerows.core.security.atom.AegisItem;
 import io.zerows.infix.secure.authenticate.AdapterProvider;
 
 import java.util.Objects;

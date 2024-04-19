@@ -109,8 +109,8 @@ class FrameConnector extends AbstractFrameHandler {
         // Extract authorization to token
         final Lee lee = Bolt.reference(this.config.getType());
         /*
-         * Token String -> Json Token Object
-         * 1. Token String must be split with ' ' and get the 1
+         * WebToken String -> Json WebToken Object
+         * 1. WebToken String must be split with ' ' and get the 1
          * 2. Aegis must be switched to valid value except extension
          */
         final String tokenString = authorization.split(" ")[1];

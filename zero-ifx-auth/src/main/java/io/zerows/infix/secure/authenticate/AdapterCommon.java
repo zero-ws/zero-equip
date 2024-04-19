@@ -2,7 +2,7 @@ package io.zerows.infix.secure.authenticate;
 
 import io.vertx.ext.auth.ChainAuth;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
-import io.zerows.core.domain.atom.commune.secure.Aegis;
+import io.zerows.core.security.atom.Aegis;
 
 import java.util.Objects;
 

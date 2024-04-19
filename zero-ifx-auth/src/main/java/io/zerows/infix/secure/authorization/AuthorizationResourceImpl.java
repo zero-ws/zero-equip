@@ -9,11 +9,11 @@ import io.vertx.ext.auth.authorization.Authorization;
 import io.vertx.ext.auth.authorization.OrAuthorization;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.up.annotations.AuthorizedResource;
-import io.zerows.core.domain.atom.commune.secure.Aegis;
 import io.vertx.up.eon.em.EmSecure;
 import io.vertx.up.fn.Fn;
-import io.zerows.infix.secure.profile.PermissionAuthorization;
 import io.vertx.up.util.Ut;
+import io.zerows.core.security.atom.Aegis;
+import io.zerows.infix.secure.profile.PermissionAuthorization;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -34,6 +34,7 @@ public class AuthorizationResourceImpl implements AuthorizationResource {
         this.aegis = aegis;
     }
 
+    @Override
     @SuppressWarnings("all")
     public void requestResource(final RoutingContext context, final Handler<AsyncResult<Authorization>> handler) {
         final JsonObject params = AuthorizationResource.parameters(context);

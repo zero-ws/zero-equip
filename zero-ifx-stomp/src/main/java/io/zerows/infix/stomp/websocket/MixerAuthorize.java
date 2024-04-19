@@ -6,9 +6,9 @@ import io.vertx.core.Vertx;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
 import io.vertx.ext.stomp.StompServerHandler;
 import io.vertx.ext.stomp.StompServerOptions;
-import io.zerows.core.domain.atom.commune.secure.Aegis;
-import io.zerows.secure.bridge.Bolt;
 import io.vertx.up.unity.RegexPath;
+import io.zerows.core.security.atom.Aegis;
+import io.zerows.secure.bridge.Bolt;
 
 import java.util.Objects;
 import java.util.Set;

@@ -2,11 +2,11 @@ package io.zerows.infix.secure.authenticate;
 
 import io.horizon.uca.log.Annal;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
-import io.zerows.core.domain.atom.commune.secure.Aegis;
-import io.zerows.core.domain.atom.commune.secure.AegisItem;
 import io.vertx.up.eon.configure.YmlCore;
 import io.vertx.up.eon.em.EmSecure;
 import io.vertx.up.util.Ut;
+import io.zerows.core.security.atom.Aegis;
+import io.zerows.core.security.atom.AegisItem;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
