@@ -8,12 +8,12 @@ import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.up.eon.KName;
-import io.vertx.up.uca.cache.Rapid;
-import io.vertx.up.uca.cache.RapidKey;
 import io.vertx.up.util.Ut;
 import io.zerows.core.domain.atom.commune.secure.Aegis;
 import io.zerows.core.domain.atom.commune.secure.Against;
 import io.zerows.core.metadata.uca.environment.DevEnv;
+import io.zerows.feature.web.cache.Rapid;
+import io.zerows.feature.web.cache.RapidKey;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
