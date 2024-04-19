@@ -7,9 +7,9 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.User;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.up.eon.KName;
+import io.vertx.up.eon.KWeb;
 import io.zerows.core.metadata.uca.environment.DevEnv;
 import io.zerows.feature.web.cache.Rapid;
-import io.zerows.feature.web.cache.RapidKey;
 
 import java.util.Objects;
 
@@ -30,7 +30,7 @@ class AuthorizationCache {
     static void userAuthorized(final RoutingContext context, final Actuator actuator) {
         final User user = context.user();
         final Rapid<String, JsonObject> rapid = Rapid.user(user);
-        rapid.read(RapidKey.User.AUTHORIZATION).onComplete(res -> {
+        rapid.read(KWeb.CACHE.User.AUTHORIZATION).onComplete(res -> {
             if (res.succeeded()) {
                 JsonObject authorized = res.result();
                 if (Objects.isNull(authorized)) {
@@ -53,7 +53,7 @@ class AuthorizationCache {
     static void userAuthorize(final RoutingContext context, final Actuator actuator) {
         final User user = context.user();
         final Rapid<String, JsonObject> rapid = Rapid.user(user);
-        rapid.read(RapidKey.User.AUTHORIZATION).onComplete(res -> {
+        rapid.read(KWeb.CACHE.User.AUTHORIZATION).onComplete(res -> {
             if (res.succeeded()) {
                 final String requestKey = requestKey(context);
                 JsonObject authorized = res.result();
@@ -61,7 +61,7 @@ class AuthorizationCache {
                     authorized = new JsonObject();
                 }
                 authorized.put(requestKey, Boolean.TRUE);
-                rapid.write(RapidKey.User.AUTHORIZATION, authorized).onComplete(next -> actuator.execute());
+                rapid.write(KWeb.CACHE.User.AUTHORIZATION, authorized).onComplete(next -> actuator.execute());
             }
         });
     }

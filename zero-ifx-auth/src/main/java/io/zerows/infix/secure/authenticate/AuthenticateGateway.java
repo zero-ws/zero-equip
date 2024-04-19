@@ -8,12 +8,12 @@ import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.up.eon.KName;
+import io.vertx.up.eon.KWeb;
 import io.vertx.up.util.Ut;
 import io.zerows.core.domain.atom.commune.secure.Aegis;
 import io.zerows.core.domain.atom.commune.secure.Against;
 import io.zerows.core.metadata.uca.environment.DevEnv;
 import io.zerows.feature.web.cache.Rapid;
-import io.zerows.feature.web.cache.RapidKey;
 
 import java.lang.reflect.Method;
 import java.util.Objects;
@@ -28,7 +28,7 @@ public class AuthenticateGateway {
     public static void userCached(final JsonObject credentials, final Actuator actuator, final Actuator fnCache) {
         final String habitus = credentials.getString(KName.HABITUS);
         final Rapid<String, JsonObject> rapid = Rapid.t(habitus);
-        rapid.read(RapidKey.User.AUTHENTICATE).onComplete(res -> {
+        rapid.read(KWeb.CACHE.User.AUTHENTICATE).onComplete(res -> {
             if (res.succeeded()) {
                 final JsonObject cached = res.result();
                 if (Objects.isNull(cached)) {
@@ -46,7 +46,7 @@ public class AuthenticateGateway {
     public static void userCached(final JsonObject credentials, final Actuator actuator) {
         final String habitus = credentials.getString(KName.HABITUS);
         final Rapid<String, JsonObject> rapid = Rapid.t(habitus);
-        rapid.write(RapidKey.User.AUTHENTICATE, credentials).onComplete(next -> actuator.execute());
+        rapid.write(KWeb.CACHE.User.AUTHENTICATE, credentials).onComplete(next -> actuator.execute());
     }
 
     /*
