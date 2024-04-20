@@ -1,6 +1,5 @@
 package io.zerows.infix.stomp.websocket;
 
-import io.vertx.boot.supply.Electy;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.JsonObject;
@@ -9,6 +8,7 @@ import io.vertx.ext.stomp.StompServerOptions;
 import io.vertx.ext.web.Router;
 import io.vertx.up.util.Ut;
 import io.zerows.core.configuration.atom.option.SockOptions;
+import io.zerows.core.configuration.zdk.OptionOfServer;
 import io.zerows.core.security.atom.Aegis;
 import io.zerows.extension.AbstractAres;
 import io.zerows.infix.stomp.socket.ServerWsHandler;
@@ -26,30 +26,30 @@ public class AresStomp extends AbstractAres {
     }
 
     @Override
-    public void configure(final HttpServerOptions options) {
-        super.configure(options);
-        final SockOptions sockOptions = Electy.optionSock().get(options.getPort());
+    public void configure(final OptionOfServer<SockOptions> serverOptions) {
+        super.configure(serverOptions);
+        final SockOptions sockOptions = serverOptions.options();
         Objects.requireNonNull(sockOptions);
         final HttpServerOptions configured = sockOptions.options();
         if (Objects.nonNull(configured)) {
             /* Re-define for WebSocket 8 attributes */
-            options.setWebSocketAllowServerNoContext(configured.getWebSocketAllowServerNoContext());
-            options.setWebSocketClosingTimeout(configured.getWebSocketClosingTimeout());
-            options.setWebSocketCompressionLevel(configured.getWebSocketCompressionLevel());
-            options.setWebSocketPreferredClientNoContext(configured.getWebSocketPreferredClientNoContext());
+            this.options.setWebSocketAllowServerNoContext(configured.getWebSocketAllowServerNoContext());
+            this.options.setWebSocketClosingTimeout(configured.getWebSocketClosingTimeout());
+            this.options.setWebSocketCompressionLevel(configured.getWebSocketCompressionLevel());
+            this.options.setWebSocketPreferredClientNoContext(configured.getWebSocketPreferredClientNoContext());
             /* Here must include stomp sub protocols */
-            options.setWebSocketSubProtocols(configured.getWebSocketSubProtocols());
+            this.options.setWebSocketSubProtocols(configured.getWebSocketSubProtocols());
 
-            options.setMaxWebSocketFrameSize(configured.getMaxWebSocketFrameSize());
-            options.setMaxWebSocketMessageSize(configured.getMaxWebSocketMessageSize());
-            options.setPerFrameWebSocketCompressionSupported(configured.getPerFrameWebSocketCompressionSupported());
-            options.setPerMessageWebSocketCompressionSupported(configured.getPerMessageWebSocketCompressionSupported());
+            this.options.setMaxWebSocketFrameSize(configured.getMaxWebSocketFrameSize());
+            this.options.setMaxWebSocketMessageSize(configured.getMaxWebSocketMessageSize());
+            this.options.setPerFrameWebSocketCompressionSupported(configured.getPerFrameWebSocketCompressionSupported());
+            this.options.setPerMessageWebSocketCompressionSupported(configured.getPerMessageWebSocketCompressionSupported());
         }
     }
 
     @Override
     public void mount(final Router router, final JsonObject config) {
-        final SockOptions sockOptions = Electy.optionSock().get(this.options.getPort());
+        final SockOptions sockOptions = this.serverOptions.options(); // Electy.optionSock().get(this.options.getPort());
         Objects.requireNonNull(sockOptions);
         final JsonObject stompJ = Ut.valueJObject(sockOptions.getConfig(), "stomp");
         final StompServerOptions stompOptions = new StompServerOptions(stompJ);
