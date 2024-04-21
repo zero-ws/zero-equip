@@ -6,7 +6,7 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.up.fn.Fn;
 import io.vertx.up.unity.Ux;
 import io.vertx.up.util.Ut;
-import io.zerows.core.web.metadata.zdk.specification.KConnect;
+import io.zerows.core.web.metadata.extension.KConnect;
 import io.zerows.infix.excel.exception._404ConnectMissingException;
 
 import java.io.Serializable;
