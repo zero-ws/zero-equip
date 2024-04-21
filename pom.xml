@@ -13,18 +13,22 @@
     <packaging>pom</packaging>
     <name>Zero.Plugins.Infix.POM.${zero.version}</name>
     <modules>
-        <module>zero-ifx-auth</module>      <!-- Enhance:      Extension for Authorization ( Rbac Module ) -->
-        <module>zero-ifx-excel</module>     <!-- Excel with Apache POI -->
-        <module>zero-ifx-history</module>   <!-- Trash Module to support backup in deleting -->
-        <module>zero-ifx-shell</module>     <!-- Zero Shell Framework for DevOps -->
-        <module>zero-ifx-es</module>        <!-- ElasticSearch Client -->
+        <!-- Enhance:      Extension for Authorization ( Rbac Module ) -->
+        <module>zero-plugins-common-security</module>
+        <!-- Zero Shell Framework for DevOps -->
+        <module>zero-plugins-common-shell</module>
+
+        <module>zero-plugins-office-excel</module>     <!-- Excel with Apache POI -->
+        <module>zero-plugins-common-trash</module>   <!-- Trash Module to support backup in deleting -->
+        <module>zero-plugins-store-elasticsearch</module>        <!-- ElasticSearch Client -->
         <module>zero-ifx-ftp</module>       <!-- FTP Service   Client  -->
         <module>zero-ifx-git</module>       <!-- Git Service   Client  -->
         <module>zero-ifx-feign</module>     <!-- Feign         Client  -->
         <module>zero-ifx-mongo</module>     <!-- MongoDb       Client -->
         <module>zero-ifx-neo4j</module>     <!-- Neo4j         Client -->
         <module>zero-ifx-redis</module>     <!-- Redis         Client -->
-        <module>zero-ifx-stomp</module>     <!-- Enhance:      Extension for WebSocket ( stomp include )-->
+        <module>zero-plugins-websocket-stomp
+        </module>     <!-- Enhance:      Extension for WebSocket ( stomp include )-->
         <module>zero-ifx-sms</module>       <!-- CN:           Ali Sms Client -->
         <module>zero-ifx-iqiy</module>      <!-- CN:           iqiy Client -->
         <module>zero-ifx-liquibase</module> <!-- Liquibase Fix        -->
@@ -33,7 +37,6 @@
         <dependency>
             <groupId>io.zerows</groupId>
             <artifactId>zero-core-entry-standalone</artifactId>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
     <build>
