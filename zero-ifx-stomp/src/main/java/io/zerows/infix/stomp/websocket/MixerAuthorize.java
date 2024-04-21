@@ -1,17 +1,17 @@
 package io.zerows.infix.stomp.websocket;
 
-import io.horizon.uca.cache.Cc;
-import io.vertx.boot.supply.Electy;
 import io.vertx.core.Vertx;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
 import io.vertx.ext.stomp.StompServerHandler;
 import io.vertx.ext.stomp.StompServerOptions;
 import io.vertx.up.util.Ut;
 import io.zerows.core.security.atom.Aegis;
-import io.zerows.secure.bridge.Bolt;
+import io.zerows.feature.web.security.store.OCacheSecurity;
+import io.zerows.feature.web.security.uca.bridge.Bolt;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -19,7 +19,6 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author <a href="http://www.origin-x.cn">Lang</a>
  */
 public class MixerAuthorize extends AbstractMixer {
-    private static final Cc<String, Set<Aegis>> CC_WALLS = Electy.ucaWall();
     private static final AtomicBoolean LOG_FOUND = new AtomicBoolean(Boolean.TRUE);
     private static final AtomicBoolean LOG_PROVIDER = new AtomicBoolean(Boolean.TRUE);
 
@@ -35,7 +34,9 @@ public class MixerAuthorize extends AbstractMixer {
         // Stomp Path Find
         final String stomp = option.getWebsocketPath();
         final AtomicReference<Aegis> reference = new AtomicReference<>();
-        CC_WALLS.store().forEach((path, aegisSet) -> {
+
+        final ConcurrentMap<String, Set<Aegis>> walls = OCacheSecurity.of().getWall();
+        walls.forEach((path, aegisSet) -> {
             /*
              * Stomp:   /api/web-socket/stomp
              * Path:    /api/

@@ -32,7 +32,7 @@
     <dependencies>
         <dependency>
             <groupId>io.zerows</groupId>
-            <artifactId>zero-web</artifactId>
+            <artifactId>zero-core-entry-standalone</artifactId>
             <scope>provided</scope>
         </dependency>
     </dependencies>

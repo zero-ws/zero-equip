@@ -8,10 +8,10 @@ import io.vertx.ext.auth.authorization.AndAuthorization;
 import io.vertx.ext.auth.authorization.Authorization;
 import io.vertx.ext.auth.authorization.OrAuthorization;
 import io.vertx.ext.web.RoutingContext;
-import io.vertx.up.annotations.AuthorizedResource;
 import io.vertx.up.eon.em.EmSecure;
 import io.vertx.up.fn.Fn;
 import io.vertx.up.util.Ut;
+import io.zerows.core.security.annotations.AuthorizedResource;
 import io.zerows.core.security.atom.Aegis;
 import io.zerows.infix.secure.profile.PermissionAuthorization;
 
