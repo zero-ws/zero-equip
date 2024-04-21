@@ -79,7 +79,7 @@ class L1ChannelAsync {
                     if (Objects.nonNull(eraseKeys) && !eraseKeys.isEmpty()) {
                         /*
                          * Set<String>
-                         * Key is null, when it's not null here should execute
+                         * Key is null, when it's not null here should action
                          */
                         final List<Request> requests = this.redis.requestData(eraseKeys);
                         this.redis.requestAsync(requests, deletion -> deletion).onComplete(deletion -> {

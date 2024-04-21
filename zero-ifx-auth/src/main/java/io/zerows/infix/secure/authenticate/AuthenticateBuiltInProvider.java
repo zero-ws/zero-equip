@@ -43,7 +43,7 @@ public class AuthenticateBuiltInProvider implements AuthenticationProvider {
         /*
          * 1. Read User information from user cache
          *    Zero framework provide cache pool to store user logged information to avoid
-         *    duplicated execute the code logical in @Wall to simply and speed up the
+         *    duplicated action the code logical in @Wall to simply and speed up the
          *    401 authenticate.
          * 2. Here the credentials data structure is as following;
          *    {
@@ -57,7 +57,7 @@ public class AuthenticateBuiltInProvider implements AuthenticationProvider {
 
             /*
              * The major code logical that has been defined
-             * @Wall class to execute your own code here.
+             * @Wall class to action your own code here.
              */
             () -> this.authenticateInternal(credentials, handler),
 

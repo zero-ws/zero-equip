@@ -6,7 +6,7 @@ import io.vertx.core.Vertx;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
 import io.vertx.ext.stomp.StompServerHandler;
 import io.vertx.ext.stomp.StompServerOptions;
-import io.vertx.up.unity.RegexPath;
+import io.vertx.up.util.Ut;
 import io.zerows.core.security.atom.Aegis;
 import io.zerows.secure.bridge.Bolt;
 
@@ -14,7 +14,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.regex.Pattern;
 
 /**
  * @author <a href="http://www.origin-x.cn">Lang</a>
@@ -41,8 +40,7 @@ public class MixerAuthorize extends AbstractMixer {
              * Stomp:   /api/web-socket/stomp
              * Path:    /api/
              */
-            final Pattern regexPath = RegexPath.createRegex(path);
-            if (!aegisSet.isEmpty() && regexPath.matcher(stomp).matches()) {
+            if (!aegisSet.isEmpty() && Ut.uriMatch(stomp, path)) {
                 if (LOG_FOUND.getAndSet(Boolean.FALSE)) {
                     this.logger().info(Info.SECURE_FOUND, stomp, path, String.valueOf(aegisSet.size()));
                 }

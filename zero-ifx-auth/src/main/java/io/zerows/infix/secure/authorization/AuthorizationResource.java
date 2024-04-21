@@ -1,6 +1,5 @@
 package io.zerows.infix.secure.authorization;
 
-import io.vertx.boot.supply.Electy;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.MultiMap;
@@ -13,6 +12,7 @@ import io.vertx.up.eon.KName;
 import io.vertx.up.eon.KWeb;
 import io.zerows.core.domain.atom.commune.Vis;
 import io.zerows.core.security.atom.Aegis;
+import io.zerows.core.web.metadata.store.OCacheUri;
 
 import java.util.Objects;
 
@@ -60,7 +60,7 @@ public interface AuthorizationResource {
          * New: request.path()
          * path() will remove all query string part
          */
-        metadata.put(KName.URI, Electy.uriRecovery(request.path(), request.method()));
+        metadata.put(KName.URI, OCacheUri.T.recovery(request.path(), request.method()));
         metadata.put(KName.URI_REQUEST, request.path());
         metadata.put(KName.METHOD, request.method().name());
         /*

@@ -509,7 +509,7 @@ public class ServerStompHandler implements ServerWsHandler {
      * <p/>
      * The handler will only be called if the connection supports heartbeats.
      *
-     * @param handler the action to execute when a `PING` needs to be sent.
+     * @param handler the action to action when a `PING` needs to be sent.
      *
      * @return the current {@link StompServerHandler}
      */
