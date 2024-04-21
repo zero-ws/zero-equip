@@ -5,8 +5,8 @@ import io.vertx.ext.stomp.Destination;
 import io.vertx.ext.stomp.StompServerHandler;
 import io.vertx.ext.stomp.StompServerOptions;
 import io.vertx.ext.stomp.impl.RemindDestination;
-import io.vertx.up.eon.em.container.RemindType;
-import io.zerows.extension.router.AresGrid;
+import io.zerows.core.feature.websocket.eon.em.RemindType;
+import io.zerows.core.feature.websocket.router.AresGrid;
 
 import java.util.Objects;
 import java.util.concurrent.ConcurrentMap;

@@ -34,7 +34,7 @@ class ConsoleTool {
          */
         final CommandLineParser parser = new DefaultParser();
         /*
-         * Command Verifier
+         * Command ToolVerifier
          * The command must existing in your configuration files
          */
         final String commandName = args[0];
