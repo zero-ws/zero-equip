@@ -13,31 +13,31 @@
     <packaging>pom</packaging>
     <name>Zero.Plugins.Infix.POM.${zero.version}</name>
     <modules>
-        <!-- Enhance:      Extension for Authorization ( Rbac Module ) -->
+        <!-- Common -->
         <module>zero-plugins-common-security</module>
-        <!-- Zero Shell Framework for DevOps -->
         <module>zero-plugins-common-shell</module>
+        <module>zero-plugins-common-trash</module>
 
-        <module>zero-plugins-office-excel</module>     <!-- Excel with Apache POI -->
-        <module>zero-plugins-common-trash</module>   <!-- Trash Module to support backup in deleting -->
-        <module>zero-plugins-store-elasticsearch</module>        <!-- ElasticSearch Client -->
-        <module>zero-ifx-ftp</module>       <!-- FTP Service   Client  -->
-        <module>zero-ifx-git</module>       <!-- Git Service   Client  -->
-        <module>zero-ifx-feign</module>     <!-- Feign         Client  -->
-        <module>zero-ifx-mongo</module>     <!-- MongoDb       Client -->
-        <module>zero-ifx-neo4j</module>     <!-- Neo4j         Client -->
-        <module>zero-ifx-redis</module>     <!-- Redis         Client -->
-        <module>zero-plugins-websocket-stomp
-        </module>     <!-- Enhance:      Extension for WebSocket ( stomp include )-->
-        <module>zero-ifx-sms</module>       <!-- CN:           Ali Sms Client -->
-        <module>zero-ifx-iqiy</module>      <!-- CN:           iqiy Client -->
-        <module>zero-ifx-liquibase</module> <!-- Liquibase Fix        -->
+        <!-- Integration -->
+        <module>zero-plugins-integration-git</module>
+        <module>zero-plugins-integration-feign</module>
+        <module>zero-plugins-integration-sms</module>
+
+        <!-- Office -->
+        <module>zero-plugins-office-excel</module>
+
+        <!-- Store -->
+        <module>zero-plugins-store-elasticsearch</module>
+        <module>zero-plugins-store-liquibase</module>
+        <module>zero-plugins-store-mongo</module>
+        <module>zero-plugins-store-neo4j</module>
+        <module>zero-plugins-store-redis</module>
+
+        <!-- Web -->
+        <module>zero-plugins-video-iqiy</module>
+        <module>zero-plugins-websocket-stomp</module>
     </modules>
     <dependencies>
-        <dependency>
-            <groupId>io.zerows</groupId>
-            <artifactId>zero-core-entry-standalone</artifactId>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
