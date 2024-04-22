@@ -9,7 +9,7 @@ import io.zerows.jackson.databind.ClassSerializer;
 import io.zerows.jackson.databind.JsonObjectDeserializer;
 import io.zerows.jackson.databind.JsonObjectSerializer;
 import io.zerows.plugins.common.shell.Commander;
-import io.zerows.plugins.common.shell.cv.em.CommandType;
+import io.zerows.plugins.common.shell.eon.EmCommand;
 import org.apache.commons.cli.Options;
 
 import java.io.Serializable;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  */
 public class CommandAtom implements Serializable {
 
-    private transient CommandType type = CommandType.COMMAND;   // Default Command Type
+    private transient EmCommand.Type type = EmCommand.Type.COMMAND;   // Default Command Type
 
     private transient String simple;
     private transient String name;
@@ -73,11 +73,11 @@ public class CommandAtom implements Serializable {
         this.plugin = plugin;
     }
 
-    public CommandType getType() {
+    public EmCommand.Type getType() {
         return this.type;
     }
 
-    public void setType(final CommandType type) {
+    public void setType(final EmCommand.Type type) {
         this.type = type;
     }
 
@@ -121,7 +121,7 @@ public class CommandAtom implements Serializable {
      * Whether this command is valid
      */
     public boolean valid() {
-        if (CommandType.COMMAND == this.type) {
+        if (EmCommand.Type.COMMAND == this.type) {
             if (Objects.isNull(this.plugin)) {
                 return false;
             } else {

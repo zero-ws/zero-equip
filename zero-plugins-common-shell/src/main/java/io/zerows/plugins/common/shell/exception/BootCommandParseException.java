@@ -6,10 +6,10 @@ import org.apache.commons.cli.ParseException;
 /**
  * @author <a href="http://www.origin-x.cn">Lang</a>
  */
-public class CommandParseException extends BootingException {
+public class BootCommandParseException extends BootingException {
 
-    public CommandParseException(final Class<?> clazz, final String input,
-                                 final ParseException error) {
+    public BootCommandParseException(final Class<?> clazz, final String input,
+                                     final ParseException error) {
         super(clazz, input, error.getMessage());
     }
 

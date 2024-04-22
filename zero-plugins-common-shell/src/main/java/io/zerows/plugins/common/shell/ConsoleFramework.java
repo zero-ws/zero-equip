@@ -4,7 +4,7 @@ import io.horizon.eon.em.Environment;
 import io.horizon.uca.log.Annal;
 import io.vertx.core.Vertx;
 import io.vertx.up.eon.configure.YmlCore;
-import io.zerows.plugins.common.shell.exception.InternalConflictException;
+import io.zerows.plugins.common.shell.exception.BootInternalConflictException;
 import io.zerows.plugins.common.shell.refine.Sl;
 
 import java.util.Objects;
@@ -92,7 +92,7 @@ public class ConsoleFramework {
      */
     public ConsoleFramework bind(final String name, final Consumer<String> consumer) {
         if (YmlCore.shell.boot.CONFIG.equals(name)) {
-            throw new InternalConflictException(ConsoleFramework.class);
+            throw new BootInternalConflictException(ConsoleFramework.class);
         }
         INTERNAL.put(name, consumer);
         return this;

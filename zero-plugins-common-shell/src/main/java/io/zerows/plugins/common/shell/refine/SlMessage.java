@@ -3,7 +3,7 @@ package io.zerows.plugins.common.shell.refine;
 import io.vertx.core.json.JsonObject;
 import io.vertx.up.eon.configure.YmlCore;
 import io.vertx.up.util.Ut;
-import io.zerows.plugins.common.shell.cv.em.TermStatus;
+import io.zerows.plugins.common.shell.eon.EmCommand;
 
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -24,14 +24,14 @@ class SlMessage {
             () -> "Invalid command \"{0}\", it could not be recognised"), command);
     }
 
-    static TermStatus failError(final Throwable ex) {
+    static EmCommand.TermStatus failError(final Throwable ex) {
         final String error = Objects.isNull(ex) ? "Error" : ex.getMessage();
         Sl.output(message(YmlCore.shell.welcome.message.ERROR,
             () -> Ut.rgbRedB("[ ERROR ]") + " " + Ut.rgbRedN(" {0} ")), error);
         if (SlConfig.isDebug()) {
             ex.printStackTrace();
         }
-        return TermStatus.FAILURE;
+        return EmCommand.TermStatus.FAILURE;
     }
 
     static void failWarn(final String message, final Object... args) {

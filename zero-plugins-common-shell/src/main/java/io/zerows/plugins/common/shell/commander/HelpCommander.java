@@ -6,8 +6,7 @@ import io.vertx.up.util.Ut;
 import io.zerows.plugins.common.shell.AbstractCommander;
 import io.zerows.plugins.common.shell.atom.CommandAtom;
 import io.zerows.plugins.common.shell.atom.CommandInput;
-import io.zerows.plugins.common.shell.cv.em.CommandType;
-import io.zerows.plugins.common.shell.cv.em.TermStatus;
+import io.zerows.plugins.common.shell.eon.EmCommand;
 import io.zerows.plugins.common.shell.refine.Sl;
 import org.apache.commons.cli.HelpFormatter;
 
@@ -25,7 +24,7 @@ public class HelpCommander extends AbstractCommander {
     private static final String ARG_COMMAND = "c";
 
     @Override
-    public TermStatus execute(final CommandInput args) {
+    public EmCommand.TermStatus execute(final CommandInput args) {
         final List<CommandAtom> atomList = this.getAtomList(args.atom());
         final ConcurrentMap<String, String> inputMap = args.get();
         if (inputMap.containsKey(ARG_COMMAND)) {
@@ -36,21 +35,21 @@ public class HelpCommander extends AbstractCommander {
                  * Command invalid
                  */
                 Sl.failInvalid(commandValue);
-                return TermStatus.FAILURE;
+                return EmCommand.TermStatus.FAILURE;
             } else {
 
                 /*
                  * Valid Help
                  */
                 this.printCommand(found);
-                return TermStatus.SUCCESS;
+                return EmCommand.TermStatus.SUCCESS;
             }
         } else {
             /*
              * No `command` provide
              */
             this.printCommands(atomList);
-            return TermStatus.SUCCESS;
+            return EmCommand.TermStatus.SUCCESS;
         }
     }
 
@@ -95,7 +94,7 @@ public class HelpCommander extends AbstractCommander {
             content.append(String.format("%-20s", prefix + " " + atom.getSimple()));
             content.append(String.format("%-20s", atom.getDescription())).append("\n");
             /* Where it's SYSTEM */
-            if (CommandType.SYSTEM == atom.getType()) {
+            if (EmCommand.Type.SYSTEM == atom.getType()) {
                 final List<CommandAtom> children = atom.getCommands();
                 this.printContent(content, children, prefix + " - ");
             }

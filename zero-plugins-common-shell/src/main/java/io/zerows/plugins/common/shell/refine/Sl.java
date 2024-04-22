@@ -2,7 +2,7 @@ package io.zerows.plugins.common.shell.refine;
 
 import io.horizon.eon.em.Environment;
 import io.zerows.plugins.common.shell.atom.CommandAtom;
-import io.zerows.plugins.common.shell.cv.em.TermStatus;
+import io.zerows.plugins.common.shell.eon.EmCommand;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -68,7 +68,7 @@ public class Sl {
         SlMessage.failWarn(message, args);
     }
 
-    public static TermStatus failError(final Throwable ex) {
+    public static EmCommand.TermStatus failError(final Throwable ex) {
         return SlMessage.failError(ex);
     }
 

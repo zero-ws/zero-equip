@@ -7,7 +7,7 @@ import io.zerows.plugins.common.shell.atom.CommandAtom;
 import io.zerows.plugins.common.shell.commander.BackCommander;
 import io.zerows.plugins.common.shell.commander.HelpCommander;
 import io.zerows.plugins.common.shell.commander.QuitCommander;
-import io.zerows.plugins.common.shell.cv.em.CommandType;
+import io.zerows.plugins.common.shell.eon.EmCommand;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -82,13 +82,13 @@ class SlCommand {
         return commandsDefaultList.stream().filter(command -> includeSet.contains(command.getSimple()))
             .peek(command -> {
                 command.setArgs(false);
-                command.setType(CommandType.DEFAULT);
+                command.setType(EmCommand.Type.DEFAULT);
                 command.setPlugin(COMMAND_PLUGINS.get(command.getSimple()));
             }).collect(Collectors.toList());
     }
 
     private static List<CommandAtom> mountPlugin(final List<CommandAtom> commands) {
-        commands.stream().filter(item -> CommandType.SYSTEM == item.getType()).forEach(command -> {
+        commands.stream().filter(item -> EmCommand.Type.SYSTEM == item.getType()).forEach(command -> {
             command.setArgs(false);
             command.setPlugin(ConsoleCommander.class);
         });

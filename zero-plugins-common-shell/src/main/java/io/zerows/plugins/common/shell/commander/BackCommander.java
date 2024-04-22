@@ -2,7 +2,7 @@ package io.zerows.plugins.common.shell.commander;
 
 import io.zerows.plugins.common.shell.AbstractCommander;
 import io.zerows.plugins.common.shell.atom.CommandInput;
-import io.zerows.plugins.common.shell.cv.em.TermStatus;
+import io.zerows.plugins.common.shell.eon.EmCommand;
 import io.zerows.plugins.common.shell.refine.Sl;
 
 /**
@@ -10,8 +10,8 @@ import io.zerows.plugins.common.shell.refine.Sl;
  */
 public class BackCommander extends AbstractCommander {
     @Override
-    public TermStatus execute(final CommandInput args) {
+    public EmCommand.TermStatus execute(final CommandInput args) {
         Sl.goodbye(this.atom);
-        return TermStatus.EXIT;
+        return EmCommand.TermStatus.EXIT;
     }
 }

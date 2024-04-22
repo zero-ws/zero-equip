@@ -5,7 +5,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.zerows.plugins.common.shell.atom.CommandAtom;
 import io.zerows.plugins.common.shell.atom.Terminal;
-import io.zerows.plugins.common.shell.cv.em.TermStatus;
+import io.zerows.plugins.common.shell.eon.EmCommand;
 import io.zerows.plugins.common.shell.refine.Sl;
 
 import java.util.List;
@@ -55,12 +55,12 @@ class ConsoleInteract {
                 final String[] args = handler.result();
 
                 /* Major code logical should returned Future<TermStatus> instead */
-                final Future<TermStatus> future = this.runAsync(args);
+                final Future<EmCommand.TermStatus> future = this.runAsync(args);
 
                 future.onComplete(callback -> {
                     if (callback.succeeded()) {
-                        final TermStatus status = callback.result();
-                        if (TermStatus.EXIT == status) {
+                        final EmCommand.TermStatus status = callback.result();
+                        if (EmCommand.TermStatus.EXIT == status) {
                             /*
                              * EXIT -> EmApp End
                              */
@@ -69,7 +69,7 @@ class ConsoleInteract {
                             /*
                              * SUCCESS, FAILURE
                              */
-                            if (TermStatus.WAIT != status) {
+                            if (EmCommand.TermStatus.WAIT != status) {
                                 consumer.accept(terminal);
                             }
                         }
@@ -85,7 +85,7 @@ class ConsoleInteract {
         });
     }
 
-    private Future<TermStatus> runAsync(final String[] args) {
+    private Future<EmCommand.TermStatus> runAsync(final String[] args) {
         /* Critical CommandOption */
         final List<CommandAtom> commands = Sl.commands();
 

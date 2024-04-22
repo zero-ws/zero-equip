@@ -5,7 +5,7 @@ import io.vertx.core.Promise;
 import io.zerows.plugins.common.shell.atom.CommandAtom;
 import io.zerows.plugins.common.shell.atom.CommandInput;
 import io.zerows.plugins.common.shell.atom.Terminal;
-import io.zerows.plugins.common.shell.cv.em.TermStatus;
+import io.zerows.plugins.common.shell.eon.EmCommand;
 import io.zerows.plugins.common.shell.refine.Sl;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.function.BiConsumer;
 public class ConsoleCommander extends AbstractCommander {
 
     @Override
-    public Future<TermStatus> executeAsync(final CommandInput args) {
+    public Future<EmCommand.TermStatus> executeAsync(final CommandInput args) {
         /* Welcome first */
         Sl.welcomeSub(this.environment, this.atom);
         /* Async Result Captured */
@@ -27,10 +27,10 @@ public class ConsoleCommander extends AbstractCommander {
         return this.run(terminal);
     }
 
-    private Future<TermStatus> run(final Terminal terminal) {
-        final Promise<TermStatus> promise = Promise.promise();
+    private Future<EmCommand.TermStatus> run(final Terminal terminal) {
+        final Promise<EmCommand.TermStatus> promise = Promise.promise();
 
-        final BiConsumer<Terminal, TermStatus> consumer = (terminalRef, status) -> {
+        final BiConsumer<Terminal, EmCommand.TermStatus> consumer = (terminalRef, status) -> {
             /* Environment input again */
             Sl.welcomeSub(this.environment, this.atom);
             /* Continue here */
@@ -44,36 +44,36 @@ public class ConsoleCommander extends AbstractCommander {
                 final String[] args = handler.result();
 
                 /* Major code logical should returned Future<TermStatus> instead */
-                final Future<TermStatus> future = this.runAsync(args);
+                final Future<EmCommand.TermStatus> future = this.runAsync(args);
                 future.onComplete(callback -> {
                     if (callback.succeeded()) {
-                        final TermStatus status = callback.result();
-                        if (TermStatus.EXIT == status) {
+                        final EmCommand.TermStatus status = callback.result();
+                        if (EmCommand.TermStatus.EXIT == status) {
                             /*
                              * EXIT -> Back To Major
                              */
-                            promise.complete(TermStatus.SUCCESS);
+                            promise.complete(EmCommand.TermStatus.SUCCESS);
                         } else {
                             /*
                              * SUCCESS, FAILURE
                              */
-                            if (TermStatus.WAIT != status) {
+                            if (EmCommand.TermStatus.WAIT != status) {
                                 consumer.accept(terminal, status);
                             }
                         }
                     } else {
-                        consumer.accept(terminal, TermStatus.FAILURE);
+                        consumer.accept(terminal, EmCommand.TermStatus.FAILURE);
                     }
                 });
             } else {
                 Sl.failEmpty();
-                consumer.accept(terminal, TermStatus.FAILURE);
+                consumer.accept(terminal, EmCommand.TermStatus.FAILURE);
             }
         });
         return promise.future();
     }
 
-    private Future<TermStatus> runAsync(final String[] args) {
+    private Future<EmCommand.TermStatus> runAsync(final String[] args) {
         /* Critical CommandOption */
         final List<CommandAtom> commands = Sl.commands(this.atom.getCommands());
 

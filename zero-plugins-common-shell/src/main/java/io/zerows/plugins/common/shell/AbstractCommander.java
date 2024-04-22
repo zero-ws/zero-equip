@@ -8,7 +8,7 @@ import io.vertx.up.util.Ut;
 import io.zerows.core.domain.uca.serialization.ZeroType;
 import io.zerows.plugins.common.shell.atom.CommandAtom;
 import io.zerows.plugins.common.shell.atom.CommandInput;
-import io.zerows.plugins.common.shell.cv.em.TermStatus;
+import io.zerows.plugins.common.shell.eon.EmCommand;
 import io.zerows.plugins.common.shell.refine.Sl;
 
 import java.io.File;
@@ -45,13 +45,13 @@ public abstract class AbstractCommander implements Commander {
     }
 
     @Override
-    public Future<TermStatus> executeAsync(final CommandInput args) {
+    public Future<EmCommand.TermStatus> executeAsync(final CommandInput args) {
         return Future.succeededFuture(this.execute(args));
     }
 
     @Override
-    public TermStatus execute(final CommandInput args) {
-        return TermStatus.SUCCESS;
+    public EmCommand.TermStatus execute(final CommandInput args) {
+        return EmCommand.TermStatus.SUCCESS;
     }
 
     protected Annal logger() {

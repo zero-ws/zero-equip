@@ -5,14 +5,14 @@ import io.horizon.exception.BootingException;
 /**
  * @author <a href="http://www.origin-x.cn">Lang</a>
  */
-public class CommandMissingException extends BootingException {
+public class BootInternalConflictException extends BootingException {
 
-    public CommandMissingException(final Class<?> clazz) {
+    public BootInternalConflictException(final Class<?> clazz) {
         super(clazz);
     }
 
     @Override
     public int getCode() {
-        return -40072;
+        return -40070;
     }
 }

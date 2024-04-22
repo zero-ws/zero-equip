@@ -8,7 +8,7 @@ import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.up.fn.Fn;
 import io.vertx.up.util.Ut;
-import io.zerows.plugins.common.shell.exception.CommandMissingException;
+import io.zerows.plugins.common.shell.exception.BootCommandMissingException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentMap;
 public class Terminal {
 
     private static final BootingException ERROR_ARG_MISSING =
-        new CommandMissingException(Terminal.class);
+        new BootCommandMissingException(Terminal.class);
     private static final Cc<Integer, Scanner> CC_SCANNER = Cc.open();
 
     private final transient Scanner scanner;

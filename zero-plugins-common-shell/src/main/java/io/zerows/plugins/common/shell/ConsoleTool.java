@@ -6,11 +6,10 @@ import io.vertx.core.Future;
 import io.vertx.up.util.Ut;
 import io.zerows.plugins.common.shell.atom.CommandAtom;
 import io.zerows.plugins.common.shell.atom.CommandInput;
-import io.zerows.plugins.common.shell.cv.em.CommandType;
-import io.zerows.plugins.common.shell.cv.em.TermStatus;
-import io.zerows.plugins.common.shell.exception.CommandParseException;
-import io.zerows.plugins.common.shell.exception.CommandUnknownException;
-import io.zerows.plugins.common.shell.exception.PluginMissingException;
+import io.zerows.plugins.common.shell.eon.EmCommand;
+import io.zerows.plugins.common.shell.exception.BootCommandParseException;
+import io.zerows.plugins.common.shell.exception.BootCommandUnknownException;
+import io.zerows.plugins.common.shell.exception.BootPluginMissingException;
 import io.zerows.plugins.common.shell.refine.Sl;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -46,14 +45,14 @@ class ConsoleTool {
                 final CommandLine parsed = parser.parse(command.options(), args);
                 return Future.succeededFuture(parsed);
             } catch (final ParseException ex) {
-                final BootingException error = new CommandParseException(ConsoleTool.class, Ut.fromJoin(args), ex);
+                final BootingException error = new BootCommandParseException(ConsoleTool.class, Ut.fromJoin(args), ex);
                 return Future.failedFuture(error);
             }
         });
     }
 
-    static Future<TermStatus> runAsync(final CommandLine parsed, final List<CommandAtom> commands,
-                                       final Function<Commander, Commander> binder) {
+    static Future<EmCommand.TermStatus> runAsync(final CommandLine parsed, final List<CommandAtom> commands,
+                                                 final Function<Commander, Commander> binder) {
         /*
          * Found command inner run method, double check for CommandAtom
          */
@@ -69,7 +68,7 @@ class ConsoleTool {
              * Commander
              */
             final Commander commander;
-            if (CommandType.SYSTEM == command.getType()) {
+            if (EmCommand.Type.SYSTEM == command.getType()) {
                 /*
                  * Sub-System call
                  */
@@ -84,7 +83,7 @@ class ConsoleTool {
                     /*
                      * Could not be found
                      */
-                    return Future.failedFuture(new PluginMissingException(ConsoleTool.class,
+                    return Future.failedFuture(new BootPluginMissingException(ConsoleTool.class,
                         command.getName() + ", ( " + command.getPlugin() + " )"));
                 }
             }
@@ -119,7 +118,7 @@ class ConsoleTool {
             /*
              * Unknown command of input throw out exception
              */
-            return Future.failedFuture(new CommandUnknownException(ConsoleTool.class, commandName));
+            return Future.failedFuture(new BootCommandUnknownException(ConsoleTool.class, commandName));
         } else {
             if (atom.valid()) {
                 /*
@@ -127,7 +126,7 @@ class ConsoleTool {
                  */
                 return Future.succeededFuture(atom);
             } else {
-                return Future.failedFuture(new PluginMissingException(ConsoleTool.class, atom.getName()));
+                return Future.failedFuture(new BootPluginMissingException(ConsoleTool.class, atom.getName()));
             }
         }
     }
