@@ -1,7 +1,7 @@
 package io.vertx.mod.plugin.neo4j;
 
 import io.vertx.ext.unit.TestContext;
-import io.zerows.infix.neo4j.Neo4jClient;
+import io.zerows.plugins.store.neo4j.Neo4jClient;
 import org.junit.Ignore;
 import org.junit.Test;
 

@@ -5,8 +5,8 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.up.util.Ut;
 import io.zerows.core.feature.unit.testing.ZeroBase;
-import io.zerows.infix.neo4j.Neo4jClient;
-import io.zerows.infix.neo4j.Neo4jInfix;
+import io.zerows.plugins.store.neo4j.Neo4jClient;
+import io.zerows.plugins.store.neo4j.Neo4jInfix;
 import org.junit.Ignore;
 
 import java.util.function.BiFunction;

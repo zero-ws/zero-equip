@@ -35,7 +35,7 @@
                             <!-- SPI Required -->
                             io.zerows.core.metadata.osgi.spi.*;-split-package:=merge-first,
 
-                            io.zerows.plugins.integration.feign.*,
+                            io.zerows.plugins.integration.git.*,
                         </Export-Package>
                         <Import-Package>
                             *;resolution:=optional,
