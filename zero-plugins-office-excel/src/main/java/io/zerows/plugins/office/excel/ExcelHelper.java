@@ -340,7 +340,7 @@ class ExcelHelper {
             connectList.stream().filter(Objects::nonNull)
                 .filter(connect -> Objects.nonNull(connect.getTable()))
                 .forEach(connect -> Pool.CONNECTS.put(connect.getTable(), connect));
-            /* boot */
+            /* scanned */
             final Set<HExtension> boots = HExtension.initialize();
             boots.forEach(boot -> Pool.CONNECTS.putAll(boot.configure()));
         }
