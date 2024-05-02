@@ -5,7 +5,7 @@ import io.horizon.uca.log.Annal;
 import io.modello.specification.meta.HMetaAtom;
 import io.vertx.up.util.Ut;
 import io.zerows.core.metadata.uca.environment.DevEnv;
-import io.zerows.core.web.metadata.extension.KConnect;
+import io.zerows.core.web.model.extension.KConnect;
 import io.zerows.plugins.office.excel.atom.ExKey;
 import io.zerows.plugins.office.excel.atom.ExTable;
 import io.zerows.plugins.office.excel.ranger.*;
