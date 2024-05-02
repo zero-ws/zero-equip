@@ -5,9 +5,9 @@ import io.vertx.ext.auth.authentication.AuthenticationProvider;
 import io.vertx.ext.stomp.StompServerHandler;
 import io.vertx.ext.stomp.StompServerOptions;
 import io.vertx.up.util.Ut;
+import io.zerows.core.feature.web.security.store.OCacheSecurity;
+import io.zerows.core.feature.web.security.uca.bridge.Bolt;
 import io.zerows.core.security.atom.Aegis;
-import io.zerows.feature.web.security.store.OCacheSecurity;
-import io.zerows.feature.web.security.uca.bridge.Bolt;
 
 import java.util.Objects;
 import java.util.Set;
