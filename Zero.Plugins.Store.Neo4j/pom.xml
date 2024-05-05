@@ -11,6 +11,7 @@
 
     <artifactId>zero-plugins-store-neo4j</artifactId>
     <name>Zero.Plugins.Store.Neo4j</name>
+    <packaging>bundle</packaging>
     <dependencies>
         <dependency>
             <groupId>io.zerows</groupId>
