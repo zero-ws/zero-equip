@@ -60,7 +60,7 @@ public interface AuthorizationResource {
          * New: request.path()
          * path() will remove all query string part
          */
-        metadata.put(KName.URI, OCacheUri.T.recovery(request.path(), request.method()));
+        metadata.put(KName.URI, OCacheUri.Tool.recovery(request.path(), request.method()));
         metadata.put(KName.URI_REQUEST, request.path());
         metadata.put(KName.METHOD, request.method().name());
         /*

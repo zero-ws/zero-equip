@@ -35,7 +35,7 @@ public class MixerAuthorize extends AbstractMixer {
         final String stomp = option.getWebsocketPath();
         final AtomicReference<Aegis> reference = new AtomicReference<>();
 
-        final ConcurrentMap<String, Set<Aegis>> walls = OCacheSecurity.of().getWall();
+        final ConcurrentMap<String, Set<Aegis>> walls = OCacheSecurity.entireWall();
         walls.forEach((path, aegisSet) -> {
             /*
              * Stomp:   /api/web-socket/stomp
