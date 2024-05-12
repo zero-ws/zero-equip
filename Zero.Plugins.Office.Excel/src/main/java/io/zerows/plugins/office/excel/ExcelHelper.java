@@ -14,8 +14,9 @@ import io.vertx.up.eon.configure.YmlCore;
 import io.vertx.up.fn.Fn;
 import io.vertx.up.unity.Ux;
 import io.vertx.up.util.Ut;
+import io.zerows.core.web.model.atom.io.modeling.MDConnect;
 import io.zerows.core.web.model.extension.HExtension;
-import io.zerows.core.web.model.extension.KConnect;
+import io.zerows.core.web.model.uca.normalize.Oneness;
 import io.zerows.plugins.office.excel.atom.ExRecord;
 import io.zerows.plugins.office.excel.atom.ExTable;
 import io.zerows.plugins.office.excel.atom.ExTenant;
@@ -47,7 +48,6 @@ class ExcelHelper {
     private static final Cc<Integer, Workbook> CC_WORKBOOK_STREAM = Cc.open();
     private static final Map<String, Workbook> REFERENCES = new ConcurrentHashMap<>();
     private transient final Class<?> target;
-    ConcurrentMap<String, KConnect> CONNECTS = new ConcurrentHashMap<>();
     private transient ExTpl tpl;
     private transient ExTenant tenant;
 
@@ -335,7 +335,7 @@ class ExcelHelper {
     void initConnect(final JsonArray connects) {
         /* JsonArray serialization */
         if (Pool.CONNECTS.isEmpty()) {
-            final List<KConnect> connectList = Ut.deserialize(connects, new TypeReference<List<KConnect>>() {
+            final List<MDConnect> connectList = Ut.deserialize(connects, new TypeReference<List<MDConnect>>() {
             });
             connectList.stream().filter(Objects::nonNull)
                 .filter(connect -> Objects.nonNull(connect.getTable()))
@@ -391,8 +391,12 @@ class ExcelHelper {
      * 2. Unique duplicated
      */
     <T> List<T> compress(final List<T> input, final ExTable table) {
-        final String key = table.pkIn();
-        if (Objects.isNull(key)) {
+
+        final MDConnect connect = table.getConnect();
+        final Oneness<MDConnect> oneness = Oneness.ofConnect();
+        final String keyPrimary = oneness.keyPrimary(connect);
+
+        if (Objects.isNull(keyPrimary)) {
             // Relation Table
             return input;
         }
@@ -400,7 +404,7 @@ class ExcelHelper {
         final Set<Object> keys = new HashSet<>();
         final AtomicInteger counter = new AtomicInteger(0);
         input.forEach(item -> {
-            final Object value = Ut.field(item, key);
+            final Object value = Ut.field(item, keyPrimary);
             if (Objects.nonNull(value) && !keys.contains(value)) {
                 keys.add(value);
                 keyList.add(item);

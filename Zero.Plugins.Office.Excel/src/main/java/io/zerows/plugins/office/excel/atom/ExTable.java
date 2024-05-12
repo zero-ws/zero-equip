@@ -6,7 +6,8 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.up.fn.Fn;
 import io.vertx.up.unity.Ux;
 import io.vertx.up.util.Ut;
-import io.zerows.core.web.model.extension.KConnect;
+import io.zerows.core.web.model.atom.io.modeling.MDConnect;
+import io.zerows.core.web.model.uca.normalize.Oneness;
 import io.zerows.plugins.office.excel.exception._404ConnectMissingException;
 
 import java.io.Serializable;
@@ -25,7 +26,7 @@ public class ExTable implements Serializable {
     private final transient ConcurrentMap<Integer, String> indexMap = new ConcurrentHashMap<>();
     private transient String name;
     private transient String description;
-    private transient KConnect connect;
+    private transient MDConnect connect;
 
     public ExTable(final String sheet) {
         this.sheet = sheet;
@@ -44,31 +45,6 @@ public class ExTable implements Serializable {
 
     public void setDescription(final String description) {
         this.description = description;
-    }
-
-    /*
-     * Class<?>
-     * Dao / Pojo
-     */
-    @SuppressWarnings("all")
-    public <T> Class<T> classPojo() {
-        return (Class<T>) this.getConnect().getPojo();
-    }
-
-    public Class<?> classDao() {
-        return this.getConnect().getDao();
-    }
-
-    public String filePojo() {
-        return this.getConnect().getPojoFile();
-    }
-
-    public Set<String> ukIn() {
-        return this.getConnect().ukIn();
-    }
-
-    public String pkIn() {
-        return this.getConnect().pkIn();
     }
 
     /*
@@ -147,9 +123,10 @@ public class ExTable implements Serializable {
      */
     @SuppressWarnings("unchecked")
     public <ID> ID whereKey(final JsonObject data) {
-        final String keyField = this.pkIn();
-        if (Objects.nonNull(keyField)) {
-            final Object id = data.getValue(keyField);
+        final Oneness<MDConnect> oneness = Oneness.ofConnect();
+        final String keyPrimary = oneness.keyPrimary(this.getConnect());
+        if (Objects.nonNull(keyPrimary)) {
+            final Object id = data.getValue(keyPrimary);
             return null == id ? null : (ID) id;
         } else {
             return null;
@@ -220,12 +197,12 @@ public class ExTable implements Serializable {
         return this.fields.size();
     }
 
-    private KConnect getConnect() {
+    public MDConnect getConnect() {
         Fn.outWeb(null == this.connect, _404ConnectMissingException.class, this.getClass(), this.name);
         return this.connect;
     }
 
-    public void setConnect(final KConnect connect) {
+    public void setConnect(final MDConnect connect) {
         this.connect = connect;
     }
 

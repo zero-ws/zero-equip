@@ -5,7 +5,7 @@ import io.horizon.uca.log.Annal;
 import io.modello.specification.meta.HMetaAtom;
 import io.vertx.up.util.Ut;
 import io.zerows.core.metadata.uca.environment.DevEnv;
-import io.zerows.core.web.model.extension.KConnect;
+import io.zerows.core.web.model.atom.io.modeling.MDConnect;
 import io.zerows.plugins.office.excel.atom.ExKey;
 import io.zerows.plugins.office.excel.atom.ExTable;
 import io.zerows.plugins.office.excel.ranger.*;
@@ -140,7 +140,7 @@ public class SheetAnalyzer implements Serializable {
             found -> table.setDescription(found.getStringCellValue()));
         /* Calculation */
         if (Objects.nonNull(table.getName()) && Pool.CONNECTS.containsKey(table.getName())) {
-            final KConnect connect = Pool.CONNECTS.get(table.getName());
+            final MDConnect connect = Pool.CONNECTS.get(table.getName());
             if (Objects.nonNull(connect)) {
                 table.setConnect(connect);
             }

@@ -11,6 +11,8 @@ import io.vertx.up.fn.Fn;
 import io.vertx.up.unity.Ux;
 import io.vertx.up.util.Ut;
 import io.zerows.core.feature.database.jooq.operation.UxJooq;
+import io.zerows.core.web.model.atom.io.modeling.MDConnect;
+import io.zerows.core.web.model.uca.normalize.Oneness;
 import io.zerows.plugins.office.excel.atom.ExTable;
 import io.zerows.plugins.office.excel.exception._500ExportingErrorException;
 
@@ -20,6 +22,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author <a href="http://www.origin-x.cn">Lang</a>
  */
+@SuppressWarnings("unchecked")
 class SheetImport {
     private static final Annal LOGGER = Annal.get(ExcelClientImpl.class);
     private transient final ExcelHelper helper;
@@ -34,37 +37,51 @@ class SheetImport {
 
     <T> Set<T> saveEntity(final JsonArray data, final ExTable table) {
         final Set<T> resultSet = new HashSet<>();
-        if (Objects.nonNull(table.classPojo()) && Objects.nonNull(table.classDao())) {
+
+
+        final MDConnect connect = table.getConnect();
+        Objects.requireNonNull(connect);
+        final Class<T> classPojo = (Class<T>) connect.getPojo();
+        final Class<?> classDao = connect.getDao();
+
+
+        if (Objects.nonNull(classPojo) && Objects.nonNull(classDao)) {
             try {
                 final JsonObject filters = table.whereAncient(data);
                 LOGGER.debug("[ Έξοδος ]  Table: {1}, Filters: {0}", filters.encode(), table.getName());
-                final List<T> entities = Ux.fromJson(data, table.classPojo(), table.filePojo());
+                final List<T> entities = Ux.fromJson(data, classPojo, connect.getPojoFile());
                 final UxJooq jooq = this.jooq(table);
                 assert null != jooq;
                 final List<T> queried = jooq.fetch(filters);
+
+
                 /*
                  * Compare by unique
                  */
+                final Oneness<MDConnect> oneness = Oneness.ofConnect();
+                final Set<String> keyUnique = oneness.keyUnique(connect);
+                final String keyPrimary = oneness.keyPrimary(connect);
+
+
                 ConcurrentMap<ChangeFlag, List<T>> compared =
-                    Ux.compare(queried, entities, table.ukIn(), table.filePojo());
+                    Ux.compare(queried, entities, keyUnique, connect.getPojoFile());
                 final List<T> qUpdate = compared.getOrDefault(ChangeFlag.UPDATE, new ArrayList<>());
                 final List<T> qInsert = compared.getOrDefault(ChangeFlag.ADD, new ArrayList<>());
                 if (!qInsert.isEmpty()) {
                     /*
                      * Compare by keys
                      */
-                    final String entityKey = table.pkIn();
-                    if (Objects.nonNull(entityKey)) {
+                    if (Objects.nonNull(keyPrimary)) {
                         final Set<String> keys = new HashSet<>();
                         qInsert.forEach(item -> {
-                            final Object value = Ut.field(item, entityKey);
+                            final Object value = Ut.field(item, keyPrimary);
                             if (Objects.nonNull(value)) {
                                 keys.add(value.toString());
                             }
                         });
-                        final List<T> qKeys = jooq.fetchIn(entityKey, keys);
+                        final List<T> qKeys = jooq.fetchIn(keyPrimary, keys);
                         if (!qKeys.isEmpty()) {
-                            compared = Ux.compare(qKeys, qInsert, table.ukIn(), table.filePojo());
+                            compared = Ux.compare(qKeys, qInsert, keyUnique, connect.getPojoFile());
                             qUpdate.addAll(compared.getOrDefault(ChangeFlag.UPDATE, new ArrayList<>()));
                             // qInsert reset
                             qInsert.clear();
@@ -92,13 +109,21 @@ class SheetImport {
 
     <T> T saveEntity(final JsonObject data, final ExTable table) {
         T reference = null;
-        if (Objects.nonNull(table.classPojo()) && Objects.nonNull(table.classDao())) {
+
+
+        final MDConnect connect = table.getConnect();
+        Objects.requireNonNull(connect);
+        final Class<T> classPojo = (Class<T>) connect.getPojo();
+        final Class<?> classDao = connect.getDao();
+
+
+        if (Objects.nonNull(classPojo) && Objects.nonNull(classDao)) {
             /*
              * First, find the record by unique filters that defined in income here.
              */
             final JsonObject filters = table.whereUnique(data);
             LOGGER.debug("[ Έξοδος ]  Table: {1}, Filters: {0}", filters.encode(), table.getName());
-            final T entity = Ux.fromJson(data, table.classPojo(), table.filePojo());
+            final T entity = Ux.fromJson(data, classPojo, connect.getPojoFile());
             final UxJooq jooq = this.jooq(table);
             assert null != jooq;
             /*
@@ -190,9 +215,10 @@ class SheetImport {
     }
 
     private UxJooq jooq(final ExTable table) {
-        final UxJooq jooq = Ux.Jooq.on(table.classDao());
+        final MDConnect connect = table.getConnect();
+        final UxJooq jooq = Ux.Jooq.on(connect.getDao());
         if (null != jooq) {
-            final String pojoFile = table.filePojo();
+            final String pojoFile = connect.getPojoFile();
             if (Ut.isNotNil(pojoFile)) {
                 jooq.on(pojoFile);
             }
