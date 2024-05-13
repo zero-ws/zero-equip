@@ -1,6 +1,5 @@
 package io.zerows.plugins.office.excel;
 
-import io.horizon.uca.log.Annal;
 import io.modello.specification.meta.HMetaAtom;
 import io.vertx.codegen.annotations.Fluent;
 import io.vertx.core.AsyncResult;
@@ -12,6 +11,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.up.eon.configure.YmlCore;
 import io.vertx.up.util.Ut;
+import io.zerows.core.metadata.uca.logging.OLog;
 import io.zerows.plugins.office.excel.atom.ExTable;
 import io.zerows.plugins.office.excel.atom.ExTenant;
 
@@ -20,7 +20,7 @@ import java.util.Set;
 
 public class ExcelClientImpl implements ExcelClient {
 
-    private static final Annal LOGGER = Annal.get(ExcelClientImpl.class);
+    private static final OLog LOGGER = Ut.Log.plugin(ExcelClientImpl.class);
 
     private transient final Vertx vertx;
     private transient final ExcelHelper helper = ExcelHelper.helper(this.getClass());
@@ -37,8 +37,7 @@ public class ExcelClientImpl implements ExcelClient {
     @Override
     public ExcelClient init(final JsonObject config) {
         final JsonArray mapping = config.getJsonArray(YmlCore.excel.MAPPING, new JsonArray());
-        this.helper.initConnect(mapping);
-        LOGGER.debug("[ Έξοδος ] Configuration finished: {0}", Pool.CONNECTS.size());
+        this.helper.initConnect(config);
         if (config.containsKey(YmlCore.excel.ENVIRONMENT)) {
             final JsonArray environments = config.getJsonArray(YmlCore.excel.ENVIRONMENT);
             this.helper.initEnvironment(environments);

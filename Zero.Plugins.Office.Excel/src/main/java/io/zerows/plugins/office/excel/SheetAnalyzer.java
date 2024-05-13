@@ -1,11 +1,12 @@
 package io.zerows.plugins.office.excel;
 
 import io.horizon.eon.VValue;
-import io.horizon.uca.log.Annal;
 import io.modello.specification.meta.HMetaAtom;
 import io.vertx.up.util.Ut;
 import io.zerows.core.metadata.uca.environment.DevEnv;
+import io.zerows.core.metadata.uca.logging.OLog;
 import io.zerows.core.web.model.atom.io.modeling.MDConnect;
+import io.zerows.core.web.model.store.module.OCacheExtension;
 import io.zerows.plugins.office.excel.atom.ExKey;
 import io.zerows.plugins.office.excel.atom.ExTable;
 import io.zerows.plugins.office.excel.ranger.*;
@@ -22,7 +23,7 @@ import java.util.concurrent.ConcurrentMap;
  * build ExTable here.
  */
 public class SheetAnalyzer implements Serializable {
-    private static final Annal LOGGER = Annal.get(SheetAnalyzer.class);
+    private static final OLog LOGGER = Ut.Log.plugin(SheetAnalyzer.class);
     private final transient Sheet sheet;
     private transient FormulaEvaluator evaluator;
     private transient ExIn scanner;
@@ -138,11 +139,15 @@ public class SheetAnalyzer implements Serializable {
             found -> table.setName(found.getStringCellValue()));
         ExFn.onCell(row, cell.getColumnIndex() + 2,
             found -> table.setDescription(found.getStringCellValue()));
-        /* Calculation */
-        if (Objects.nonNull(table.getName()) && Pool.CONNECTS.containsKey(table.getName())) {
-            final MDConnect connect = Pool.CONNECTS.get(table.getName());
+        /* 直接对标扩展 */
+
+
+        if (Objects.nonNull(table.getName())) {
+            final MDConnect connect = OCacheExtension.getConnect(table.getName());
             if (Objects.nonNull(connect)) {
                 table.setConnect(connect);
+            } else {
+                LOGGER.warn("The connect of configuration: {} is missing.", table.getName());
             }
         }
         return table;
