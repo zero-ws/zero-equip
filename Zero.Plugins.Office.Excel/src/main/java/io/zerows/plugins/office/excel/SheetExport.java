@@ -134,7 +134,7 @@ class SheetExport {
         /*
          * 5. Apply for style based on Tpl extraction
          */
-        this.helper.brush(workbook, sheet, metaAtom);
+        this.helper.runBrush(workbook, sheet, metaAtom);
 
         /*
          * 6. Adjust column width

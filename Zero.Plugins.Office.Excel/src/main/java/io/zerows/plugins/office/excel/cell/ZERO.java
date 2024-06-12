@@ -10,13 +10,13 @@ import java.util.function.Function;
 
 interface Pool {
 
-    ConcurrentMap<String, ExValue> VALUE_MAP = new ConcurrentHashMap<String, ExValue>() {
+    ConcurrentMap<String, ExValue> VALUE_MAP = new ConcurrentHashMap<>() {
         {
             this.put(Literal.UUID, Ut.singleton(UuidValue.class));
         }
     };
 
-    ConcurrentMap<String, ExValue> PREFIX_MAP = new ConcurrentHashMap<String, ExValue>() {
+    ConcurrentMap<String, ExValue> PREFIX_MAP = new ConcurrentHashMap<>() {
         {
             this.put(Literal.Prefix.JSON, Ut.singleton(JsonValue.class));
             this.put(Literal.Prefix.FILE, Ut.singleton(FileValue.class));
@@ -24,7 +24,7 @@ interface Pool {
     };
 
     ConcurrentMap<CellType, Function<Cell, Object>> FUNS
-        = new ConcurrentHashMap<CellType, Function<Cell, Object>>() {
+        = new ConcurrentHashMap<>() {
         {
             this.put(CellType.STRING, DataValue::toString);
             this.put(CellType.BOOLEAN, DataValue::toBoolean);

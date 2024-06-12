@@ -3,7 +3,7 @@ package io.zerows.plugins.office.excel.tool;
 import io.modello.specification.meta.HMetaAtom;
 import io.vertx.core.json.JsonArray;
 import io.vertx.up.util.Ut;
-import io.zerows.plugins.office.excel.ranger.ExBound;
+import io.zerows.plugins.office.excel.uca.ranger.ExBound;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;

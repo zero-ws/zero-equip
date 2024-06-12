@@ -1,64 +1,68 @@
 package io.zerows.plugins.office.excel;
 
 import io.horizon.eon.VPath;
-import io.horizon.eon.VString;
 import io.horizon.uca.cache.Cc;
 import io.horizon.uca.log.Annal;
 import io.modello.specification.meta.HMetaAtom;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.eon.KName;
-import io.vertx.up.eon.configure.YmlCore;
 import io.vertx.up.fn.Fn;
-import io.vertx.up.unity.Ux;
 import io.vertx.up.util.Ut;
-import io.zerows.core.metadata.uca.logging.OLog;
 import io.zerows.core.web.model.atom.io.MDConfiguration;
 import io.zerows.core.web.model.atom.io.modeling.MDConnect;
-import io.zerows.core.web.model.extension.HExtension;
-import io.zerows.core.web.model.store.module.OCacheExtension;
-import io.zerows.core.web.model.uca.normalize.EquipAt;
 import io.zerows.core.web.model.uca.normalize.Oneness;
-import io.zerows.core.web.model.uca.normalize.Replacer;
 import io.zerows.plugins.office.excel.atom.ExRecord;
 import io.zerows.plugins.office.excel.atom.ExTable;
 import io.zerows.plugins.office.excel.atom.ExTenant;
 import io.zerows.plugins.office.excel.exception._404ExcelFileNullException;
-import io.zerows.plugins.office.excel.ranger.ExBound;
-import io.zerows.plugins.office.excel.ranger.RowBound;
+import io.zerows.plugins.office.excel.uca.data.DataApply;
+import io.zerows.plugins.office.excel.uca.data.DataTaker;
+import io.zerows.plugins.office.excel.uca.initialize.*;
+import io.zerows.plugins.office.excel.uca.ranger.ExBound;
+import io.zerows.plugins.office.excel.uca.ranger.RowBound;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
-
-;
 
 /*
  * Excel Helper to help ExcelClient to do some object building
  */
 class ExcelHelper {
 
-    private static final OLog LOGGER = Ut.Log.plugin(ExcelHelper.class);
-
     private static final Cc<String, ExcelHelper> CC_HELPER = Cc.open();
     private static final Cc<String, Workbook> CC_WORKBOOK = Cc.open();
     private static final Cc<Integer, Workbook> CC_WORKBOOK_STREAM = Cc.open();
+    // 构造的特殊对象
     private static final Map<String, Workbook> REFERENCES = new ConcurrentHashMap<>();
     private transient final Class<?> target;
+
+    // 四种特殊对象对应的构造器
+    private final transient ExcelEnv<MDConfiguration> envConnect;
+    private final transient ExcelEnv<ExTpl> envPen;
+    private final transient ExcelEnv<Map<String, Workbook>> envFormula;
+    private final transient ExcelEnv<ExTenant> envTenant;
+
+    // 构造的特殊对象
     private transient ExTpl tpl;
     private transient ExTenant tenant;
 
+    @SuppressWarnings("unchecked")
     private ExcelHelper(final Class<?> target) {
         this.target = target;
+
+        this.envConnect = (ExcelEnv<MDConfiguration>) ExcelEnv.of(ExcelEnvConnect.class);
+        this.envPen = (ExcelEnv<ExTpl>) ExcelEnv.of(ExcelEnvPen.class);
+        this.envFormula = ((ExcelEnvFormula) ExcelEnv.of(ExcelEnvFormula.class))
+            .bind(this::getWorkbook);
+        this.envTenant = (ExcelEnv<ExTenant>) ExcelEnv.of(ExcelEnvTenant.class);
     }
 
     static ExcelHelper helper(final Class<?> target) {
@@ -72,101 +76,6 @@ class ExcelHelper {
         return Fn.compressA(futures);
     }
 
-    /*
-     * {
-     *      "source",
-     *      "mapping"
-     * }
-     */
-    private Future<JsonArray> extractDynamic(final JsonArray dataArray, final String name) {
-        /* Source Processing */
-        if (Objects.isNull(this.tenant)) {
-            return Ux.future(dataArray);
-        } else {
-            final JsonArray normalized;
-            final JsonObject valueDefault = this.tenant.valueDefault();
-            if (Ut.isNotNil(valueDefault)) {
-                normalized = new JsonArray();
-                // Append Global
-                Ut.itJArray(dataArray).forEach(json -> normalized.add(valueDefault.copy().mergeIn(json, true)));
-            } else {
-                normalized = dataArray.copy();
-            }
-
-            // Extract Mapping
-            final ConcurrentMap<String, String> first = this.tenant.dictionaryDefinition(name);
-            if (first.isEmpty()) {
-                return Ux.future(normalized);
-            } else {
-                // Directory
-                return this.tenant.dictionary().compose(dataMap -> {
-                    if (!dataMap.isEmpty()) {
-                        /*
-                         * mapping
-                         * field = name
-                         * dataMap
-                         * name = JsonObject ( from = to )
-                         * --->
-                         *
-                         * field -> JsonObject
-                         */
-                        final ConcurrentMap<String, JsonObject> combine
-                            = Ut.elementZip(first, dataMap);
-
-                        combine.forEach((key, value) -> Ut.itJArray(normalized).forEach(json -> {
-                            final String fromValue = json.getString(key);
-                            if (Ut.isNotNil(fromValue) && value.containsKey(fromValue)) {
-                                final Object toValue = value.getValue(fromValue);
-                                // Replace
-                                json.put(key, toValue);
-                            }
-                        }));
-                    }
-                    return Ux.future(normalized);
-                });
-            }
-        }
-    }
-
-    /*
-     * static
-     * {
-     *      "dictionary"
-     * }
-     */
-    private JsonArray extractStatic(final JsonArray dataArray, final String name) {
-        final ConcurrentMap<String, ConcurrentMap<String, String>> tree = this.tenant.tree(name);
-        if (!tree.isEmpty()) {
-            tree.forEach((field, map) -> Ut.itJArray(dataArray).forEach(record -> {
-                final String input = record.getString(field);
-                if (map.containsKey(input)) {
-                    final String output = map.get(input);
-                    record.put(field, output);
-                }
-            }));
-        }
-        return dataArray;
-    }
-
-    private Future<JsonArray> extractForbidden(final JsonArray dataArray, final String name) {
-        final ConcurrentMap<String, Set<String>> forbidden = this.tenant.valueCriteria(name);
-        if (forbidden.isEmpty()) {
-            return Ux.future(dataArray);
-        } else {
-            final JsonArray normalized = new JsonArray();
-            Ut.itJArray(dataArray).filter(item -> forbidden.keySet().stream().allMatch(field -> {
-                if (item.containsKey(field)) {
-                    final Set<String> values = forbidden.get(field);
-                    final String value = item.getString(field);
-                    return !values.contains(value);
-                } else {
-                    return true;
-                }
-            })).forEach(normalized::add);
-            return Ux.future(normalized);
-        }
-    }
-
     Future<JsonArray> extract(final ExTable table) {
         /* Records extracting */
         final List<ExRecord> records = table.get();
@@ -178,47 +87,11 @@ class ExcelHelper {
             .forEach(dataArray::add);
 
         /* dictionary for static part */
-        return Ux.future(this.extractStatic(dataArray, tableName))
+        return DataTaker.ofStatic(this.tenant).extract(dataArray, tableName)
             /* dictionary for dynamic part */
-            .compose(extracted -> this.extractDynamic(extracted, tableName))
+            .compose(extracted -> DataTaker.ofDynamic(this.tenant).extract(extracted, tableName))
             /* forbidden record filter */
-            .compose(extracted -> this.extractForbidden(extracted, tableName));
-    }
-
-    private void extractIngest(final Set<ExTable> dataSet) {
-        if (Objects.nonNull(this.tenant)) {
-            final JsonObject dataGlobal = this.tenant.valueDefault();
-            if (Ut.isNotNil(dataGlobal)) {
-                /*
-                 * New for developer account importing cross different
-                 * apps
-                 * {
-                 *     "developer":
-                 * }
-                 */
-                final JsonObject developer = Ut.valueJObject(dataGlobal, KName.DEVELOPER).copy();
-                final JsonObject normalized = dataGlobal.copy();
-                normalized.remove(KName.DEVELOPER);
-                dataSet.forEach(table -> {
-                    // Developer Checking
-                    if ("S_USER".equals(table.getName()) && Ut.isNotNil(developer)) {
-                        // JsonObject ( user = employeeId )
-                        table.get().forEach(record -> {
-                            // Mount Global Data
-                            record.putOr(normalized);
-                            // EmployeeId Replacement for `lang.yu` or other developer account
-                            final String username = record.get(KName.USERNAME);
-                            if (developer.containsKey(username)) {
-                                record.put(KName.MODEL_KEY, developer.getString(username));
-                            }
-                        });
-                    } else {
-                        // Mount Global Data into the ingest data.
-                        table.get().forEach(record -> record.putOr(normalized));
-                    }
-                });
-            }
-        }
+            .compose(extracted -> DataTaker.ofForbidden(this.tenant).extract(extracted, tableName));
     }
 
     /*
@@ -308,138 +181,40 @@ class ExcelHelper {
                 final SheetAnalyzer exSheet = new SheetAnalyzer(sheet).on(evaluator);
                 /* Build Set */
                 final Set<ExTable> dataSet = exSheet.analyzed(range, metaAtom);
-                /*
-                 * Here for critical injection, mount the data of
-                 * {
-                 *      "global": {
-                 *      }
-                 * }
-                 * */
-                this.extractIngest(dataSet);
+
+
+                final DataApply apply = DataApply.of(this.tenant);
+                apply.applyData(dataSet);
+
+                
                 sheets.addAll(dataSet);
             }
             return sheets;
         }, workbook);
     }
 
-    void brush(final Workbook workbook, final Sheet sheet, final HMetaAtom metaAtom) {
+    void runBrush(final Workbook workbook, final Sheet sheet, final HMetaAtom metaAtom) {
         if (Objects.nonNull(this.tpl)) {
             this.tpl.bind(workbook);
             this.tpl.applyStyle(sheet, metaAtom);
         }
     }
 
-    void initPen(final String componentStr) {
-        if (Ut.isNotNil(componentStr)) {
-            final Class<?> tplCls = Ut.clazz(componentStr, null);
-            if (Ut.isImplement(tplCls, ExTpl.class)) {
-                this.tpl = Ut.singleton(componentStr);
-            }
-        }
+    // --------------------- 初始化专用方法 ---------------------
+    void initPen(final JsonObject excelJ) {
+        this.tpl = this.envPen.prepare(excelJ);
     }
 
-    /**
-     * 此处直接初始化环境中的连接配置信息，配置信息来源根据不同信息会有所区别：
-     * <pre><code>
-     *     Norm 环境（原始单机环境）
-     *     1. 当前项目一般是启动器 Launcher，配置文件直接位于 src/main/resources 之下
-     *     2. 旧版直接走 {@link HExtension}（每个模块一个）读取配置信息
-     *     Osgi 环境
-     *     1. 当前项目一般是一个独立 Bundle，配置文件依旧位于 src/main/resources 之下
-     *     2. 读取配置时，直接读取当前环境中的配置信息
-     * </code></pre>
-     * 所以新版核心配置处理流程直接依赖 {@link OCacheExtension} 来实现，新版本的 vertx-excel.yml 配置会发生简单变化
-     * <pre><code>
-     * excel:
-     *   pen: "io.zerows.plugins.office.excel.tpl.BlueTpl"
-     *   environment:
-     *     - name: environment.ambient.xlsx
-     *       path: "init/oob/environment.ambient.xlsx"
-     *       alias:
-     *         - /src/main/resources/init/oob/environment.ambient.xlsx
-     *   temp: /tmp/
-     *   tenant: "init/environment.json"
-     *   # 旧版
-     *   mapping:
-     *     # 导入内容处理
-     *   # 新版
-     *   mapping: "字符串格式，直接提供配置目录，此处配置目录为启动器或启动 Bundle 的目录"
-     * </code></pre>
-     *
-     * @param excelJ 当前环境中的连接配置
-     */
     void initConnect(final JsonObject excelJ) {
-        final String configId = Ut.valueString(excelJ, "configuration");
-        if (Ut.isNil(configId)) {
-            LOGGER.warn("The excel configuration is wrong, please contact the administrator.");
-            return;
-        }
-        /*
-         * 初始化当前环境中的基本配置信息，启动器配置位于
-         * plugins/<configId>/ 目录之下，配置目录结构为新版结构
-         */
-        final OCacheExtension extension = OCacheExtension.of();
-        MDConfiguration configuration = extension.valueGet(configId);
-        if (Objects.isNull(configuration)) {
-            LOGGER.debug("[ Έξοδος ] Could not find configuration: id = {}, the system will build new one", configId);
-            configuration = new MDConfiguration(configId);
-        }
-        final EquipAt component = EquipAt.of(configuration.id());
-        component.initialize(configuration);            // 已执行初始化的情况下此处不会再执行
-
-
-        /*
-         * 额外 attached 的基础配置信息，在执行此处之前，已经执行过内置的反射扫描流程了，所以此处不再担心找不到 Table 的情况，如果此处
-         * 找不到 table 证明扫描过程出了问题，而这里的构造流程是构造内部 MDConnect 相关信息，而且和实体无关，主要是附加相关内容到环境里
-         * 如果是 OSGI 环境，除非是 APP 类型的 Bundle 会包含此配置，由于其他类型的 Bundle 没有 HSetting，自然不会包含此配置。
-         */
-        final JsonArray connectA = Ut.valueJArray(excelJ, KName.MAPPING);
-        if (Ut.isNotNil(connectA)) {
-            final Replacer<MDConnect> connectReplacer = Replacer.ofConnect();
-            final List<MDConnect> connectList = connectReplacer.build(connectA);
-            configuration.addConnect(connectList);
-            LOGGER.debug("[ Έξοδος ] Configuration of connect: {} has been added into current environment: id = {}",
-                connectList.size(), configuration.id().value());
-        }
+        this.envConnect.prepare(excelJ);
     }
 
-    void initEnvironment(final JsonArray environments) {
-        environments.stream().filter(Objects::nonNull)
-            .map(item -> (JsonObject) item)
-            .forEach(each -> {
-                /*
-                 * Build reference
-                 */
-                final String path = each.getString(YmlCore.excel.environment.PATH);
-                /*
-                 * Reference Evaluator
-                 */
-                final String name = each.getString(YmlCore.excel.environment.NAME);
-                final Workbook workbook = this.getWorkbook(path);
-                REFERENCES.put(name, workbook);
-                this.initEnvironment(each, workbook);
-            });
+    void initEnvironment(final JsonObject excelJ) {
+        REFERENCES.putAll(this.envFormula.prepare(excelJ));
     }
 
-    void initTenant(final ExTenant tenant) {
-        this.tenant = tenant;
-    }
-
-    private void initEnvironment(final JsonObject each, final Workbook workbook) {
-        /*
-         * Alias Parsing
-         */
-        if (each.containsKey(YmlCore.excel.environment.ALIAS)) {
-            final JsonArray alias = each.getJsonArray(YmlCore.excel.environment.ALIAS);
-            final File current = new File(VString.EMPTY);
-            Ut.itJArray(alias, String.class, (item, index) -> {
-                final String filename = current.getAbsolutePath() + item;
-                final File file = new File(filename);
-                if (file.exists()) {
-                    REFERENCES.put(file.getAbsolutePath(), workbook);
-                }
-            });
-        }
+    void initTenant(final JsonObject excelJ) {
+        this.tenant = this.envTenant.prepare(excelJ);
     }
 
     /*

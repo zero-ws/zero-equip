@@ -1,4 +1,4 @@
-package io.zerows.plugins.office.excel.ranger;
+package io.zerows.plugins.office.excel.uca.ranger;
 
 import io.horizon.uca.log.Annal;
 import io.modello.specification.meta.HMetaAtom;
