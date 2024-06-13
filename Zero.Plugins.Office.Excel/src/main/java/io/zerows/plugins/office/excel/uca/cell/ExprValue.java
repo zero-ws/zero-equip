@@ -6,7 +6,6 @@ import io.horizon.eon.VString;
 import io.horizon.eon.VValue;
 import io.horizon.exception.web._501NotSupportException;
 import io.vertx.core.json.JsonArray;
-import io.vertx.core.json.JsonObject;
 import io.vertx.up.eon.KName;
 import io.vertx.up.util.Ut;
 import io.zerows.plugins.office.excel.eon.ExConstant;
@@ -35,8 +34,8 @@ public class ExprValue implements ExValue {
                 return value;
             }
         } else if (valueExpr.endsWith(VName.CONFIG)) {
-            final JsonObject content = Ut.ioJObject(path);
-            return content.encode();
+            // 此处直接提取字符串
+            return Ut.ioString(path);
         } else {
             return value;
         }

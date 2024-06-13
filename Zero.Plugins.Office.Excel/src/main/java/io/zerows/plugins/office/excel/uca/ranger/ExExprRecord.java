@@ -2,6 +2,7 @@ package io.zerows.plugins.office.excel.uca.ranger;
 
 import io.vertx.core.json.JsonObject;
 import io.vertx.up.eon.KName;
+import io.vertx.up.util.Ut;
 import io.zerows.plugins.office.excel.atom.ExRecord;
 import io.zerows.plugins.office.excel.eon.ExConstant;
 import io.zerows.plugins.office.excel.uca.cell.ExValue;
@@ -19,10 +20,7 @@ import java.util.function.Supplier;
 class ExExprRecord implements ExExpr {
     @Override
     public JsonObject parse(final ExRecord record) {
-        final ConcurrentMap<String, String> paramMap = new ConcurrentHashMap<>();
-        paramMap.put(KName.DIRECTORY, record.refTable().getDirectory());
-        paramMap.put(KName.NAME, record.get(KName.NAME));
-        paramMap.put(KName.CODE, record.get(KName.CODE));
+        final ConcurrentMap<String, String> paramMap = this.pickParam(record);
 
 
         // CURRENT 可以直接从 ExRecord -> ExTable 中提取，此处可忽略，主要是先构造 paramMap（第三参）
@@ -35,6 +33,23 @@ class ExExprRecord implements ExExpr {
             record.put(field, result);
         });
         return record.toJson();
+    }
+
+    private ConcurrentMap<String, String> pickParam(final ExRecord record) {
+        final ConcurrentMap<String, String> paramMap = new ConcurrentHashMap<>();
+        final String directory = record.refTable().getDirectory();
+        if (Ut.isNotNil(directory)) {
+            paramMap.put(KName.DIRECTORY, directory);
+        }
+        final String name = record.get(KName.NAME);
+        if (Ut.isNotNil(name)) {
+            paramMap.put(KName.NAME, name);
+        }
+        final String code = record.get(KName.CODE);
+        if (Ut.isNotNil(code)) {
+            paramMap.put(KName.CODE, code);
+        }
+        return paramMap;
     }
 
     private ExValue pickComponent(final Object value) {

@@ -176,8 +176,7 @@ public class ExFn {
                              final int rowIndex, final int rowIndex1,
                              final BiConsumer<Row, Row> consumer) {
         onRow(sheet, rowIndex, row ->
-            onRow(sheet, rowIndex1,
-                row1 -> consumer.accept(row, row1)), null);
+            onRow(sheet, rowIndex1, row1 -> consumer.accept(row, row1)), null);
     }
 
     public static void onCell(final Row row,
