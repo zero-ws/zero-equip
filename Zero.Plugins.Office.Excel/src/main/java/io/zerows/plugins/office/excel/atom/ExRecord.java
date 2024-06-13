@@ -4,18 +4,23 @@ import io.horizon.eon.VString;
 import io.horizon.specification.typed.TJson;
 import io.vertx.core.json.JsonObject;
 import io.vertx.up.util.Ut;
-import io.zerows.plugins.office.excel.cell.ExValue;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.BiConsumer;
 
 public class ExRecord implements Serializable, TJson {
 
+    private final ExTable tableRef;
     private final transient Map<String, Object> data
         = new HashMap<>();
+
+    public ExRecord(final ExTable tableRef) {
+        this.tableRef = tableRef;
+    }
 
     public static boolean isEmpty(final JsonObject recordRef) {
         final boolean isEmpty = recordRef.isEmpty();
@@ -34,19 +39,16 @@ public class ExRecord implements Serializable, TJson {
     }
 
     public void put(final String field, final Object value) {
-        this.data.put(field, ExValue.get(value).to(value));
+        this.data.put(field, value);
     }
 
-    public void put(final JsonObject data) {
-        data.fieldNames().forEach(field -> this.data.put(field, data.getValue(field)));
-    }
-
+    // 内部调用 put(String,Object)
     public void putOr(final JsonObject data) {
-        data.fieldNames().forEach(field -> {
-            if (!this.data.containsKey(field)) {
-                this.data.put(field, data.getValue(field));
-            }
-        });
+        data.fieldNames().forEach(field -> this.put(field, data.getValue(field)));
+    }
+
+    public Set<String> keySet() {
+        return this.data.keySet();
     }
 
     @SuppressWarnings("unchecked")
@@ -57,6 +59,10 @@ public class ExRecord implements Serializable, TJson {
 
     public boolean isEmpty() {
         return isEmpty(this.toJson());
+    }
+
+    public ExTable refTable() {
+        return this.tableRef;
     }
 
     @Override

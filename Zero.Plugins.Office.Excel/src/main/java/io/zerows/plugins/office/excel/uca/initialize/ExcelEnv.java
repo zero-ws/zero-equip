@@ -10,10 +10,10 @@ import io.zerows.core.metadata.uca.logging.OLog;
  */
 public interface ExcelEnv<R> {
 
-    Cc<String, ExcelEnv<?>> CC_SKELETON = Cc.openThread();
+    Cc<String, ExcelEnv<?>> CCT_ENV = Cc.openThread();
 
     static ExcelEnv<?> of(final Class<?> classImpl) {
-        return CC_SKELETON.pick(() -> Ut.instance(classImpl), classImpl.getName());
+        return CCT_ENV.pick(() -> Ut.instance(classImpl), classImpl.getName());
     }
 
     R prepare(JsonObject config);

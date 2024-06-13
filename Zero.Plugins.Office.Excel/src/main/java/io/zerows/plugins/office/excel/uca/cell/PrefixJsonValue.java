@@ -1,21 +1,21 @@
-package io.zerows.plugins.office.excel.cell;
+package io.zerows.plugins.office.excel.uca.cell;
 
 import io.horizon.eon.VString;
-import io.horizon.uca.log.Annal;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.up.util.Ut;
 import io.zerows.core.metadata.uca.environment.DevEnv;
 
+import java.util.concurrent.ConcurrentMap;
+
 /*
  * Fix issue of excel length: 32767 characters
  */
 @SuppressWarnings("all")
-public class JsonValue implements ExValue {
-    private static final Annal LOGGER = Annal.get(JsonValue.class);
+public class PrefixJsonValue implements ExValue {
 
     @Override
-    public String to(final Object value) {
+    public String to(final Object value, final ConcurrentMap<String, String> paramMap) {
         final String[] pathArr = value.toString().split(VString.COLON);
         String literal = value.toString();
         if (2 == pathArr.length) {
@@ -25,7 +25,7 @@ public class JsonValue implements ExValue {
                 if (Ut.isNotNil(content)) {
                     // 日志级别调整
                     if (DevEnv.devExcelRange()) {
-                        LOGGER.info("[ Έξοδος ] （ExJson）File = {0}, Json Value captured `{1}`",
+                        this.logger().info("[ Έξοδος ] （ExJson）File = {0}, Json Value captured `{1}`",
                             path, content);
                     }
                     if (Ut.isJArray(content)) {
@@ -36,7 +36,7 @@ public class JsonValue implements ExValue {
                         literal = normalized.encodePrettily();
                     }
                 } else {
-                    LOGGER.warn("[ Έξοδος ] （ExJson) File = {0} met error!!", path);
+                    this.logger().warn("[ Έξοδος ] （ExJson) File = {0} met error!!", path);
                 }
             }
         }

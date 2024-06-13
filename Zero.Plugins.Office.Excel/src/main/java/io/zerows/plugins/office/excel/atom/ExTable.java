@@ -27,6 +27,7 @@ public class ExTable implements Serializable {
     private transient String name;
     private transient String description;
     private transient MDConnect connect;
+    private transient String directory;
 
     public ExTable(final String sheet) {
         this.sheet = sheet;
@@ -41,6 +42,14 @@ public class ExTable implements Serializable {
      */
     public void setName(final String name) {
         this.name = name;
+    }
+
+    public String getDirectory() {
+        return this.directory;
+    }
+
+    public void setDirectory(final String directory) {
+        this.directory = directory;
     }
 
     public void setDescription(final String description) {

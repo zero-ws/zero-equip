@@ -1,4 +1,4 @@
-package io.zerows.plugins.office.excel.cell;
+package io.zerows.plugins.office.excel.util;
 
 import io.vertx.up.util.Ut;
 import org.apache.poi.ss.usermodel.Cell;
@@ -11,7 +11,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.TimeZone;
 
-class DataValue {
+/**
+ * @author lang : 2024-06-13
+ */
+class ExType {
 
     static Object toBoolean(final Cell cell) {
         if (CellType.BOOLEAN == cell.getCellType()) {
@@ -39,32 +42,38 @@ class DataValue {
     }
 
     static Object toNumeric(final Cell cell) {
-        if (CellType.NUMERIC == cell.getCellType()) {
-            if (DateUtil.isCellDateFormatted(cell)) {
-                final double cellValue = cell.getNumericCellValue();
-                if (DateUtil.isValidExcelDate(cellValue)) {
-                    final Date date = DateUtil.getJavaDate(cellValue, TimeZone.getDefault());
-                    /*
-                     * For 1899-12-30
-                     */
-                    final LocalDateTime dateTime = Ut.toDateTime(date);
-                    if (dateTime.getYear() < 1900) {
-                        /*
-                         * Calculation has been put in `toTime`
-                         */
-                        final LocalTime time = Ut.toTime(date);
-                        return time.format(DateTimeFormatter.ISO_LOCAL_TIME);
-                    } else {
-                        return date.toInstant();
-                    }
-                } else {
-                    return null;
-                }
-            } else {
-                return cell.getNumericCellValue();
-            }
-        } else {
+        // 非数值，直接返回 null
+        if (CellType.NUMERIC != cell.getCellType()) {
             return null;
+        }
+
+
+        // 非日期，直接返回数值
+        if (!DateUtil.isCellDateFormatted(cell)) {
+            return cell.getNumericCellValue();
+        }
+
+
+        final double cellValue = cell.getNumericCellValue();
+        // 非合法日期，直接返回 null
+        if (!DateUtil.isValidExcelDate(cellValue)) {
+            return null;
+        }
+
+
+        final Date date = DateUtil.getJavaDate(cellValue, TimeZone.getDefault());
+        /*
+         * For 1899-12-30
+         */
+        final LocalDateTime dateTime = Ut.toDateTime(date);
+        if (dateTime.getYear() < 1900) {
+            /*
+             * Calculation has been put in `toTime`
+             */
+            final LocalTime time = Ut.toTime(date);
+            return time.format(DateTimeFormatter.ISO_LOCAL_TIME);
+        } else {
+            return date.toInstant();
         }
     }
 }

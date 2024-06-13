@@ -1,18 +1,12 @@
 package io.zerows.plugins.office.excel.uca.ranger;
 
-import io.horizon.uca.log.Annal;
-import io.modello.specification.meta.HMetaAtom;
-import io.vertx.core.json.JsonArray;
-import io.vertx.core.json.JsonObject;
-import io.zerows.plugins.office.excel.atom.ExRecord;
-import io.zerows.plugins.office.excel.cell.ExValue;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.Sheet;
+import io.vertx.up.util.Ut;
+import io.zerows.plugins.office.excel.atom.ExKey;
+import io.zerows.plugins.office.excel.util.ExOut;
+import org.apache.poi.ss.usermodel.*;
 
 import java.util.Objects;
-import java.util.concurrent.ConcurrentMap;
-import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * @author <a href="http://www.origin-x.cn">Lang</a>
@@ -31,63 +25,90 @@ public abstract class AbstractExIn implements ExIn {
         return this;
     }
 
-    protected Annal logger() {
-        return Annal.get(this.getClass());
-    }
-
-    protected Object extractValue(final Cell dataCell, final Class<?> type) {
+    /**
+     * 值准备阶段，值准备阶段主要会从 {@link Cell} 出发做值解析，更多是兼容 Excel 或表格本身的值格式来实现值的提取流程
+     *
+     * @param dataCell {@link Cell} 实例
+     * @param type     类型
+     *
+     * @return 返回解析后的值
+     */
+    @SuppressWarnings("all")
+    protected Object formulaValue(final Cell dataCell, final Class<?> type) {
         Object result;
         try {
-            /* Cell value extraction based on shape */
-            result = ExValue.getValue(dataCell, type, this.evaluator);
+            /*
+             * 如果单元格解析失败，直接跳出，返回 null 值
+             * BLANK / ERROR
+             */
+            final CellType cellType = dataCell.getCellType();
+            if (CellType.BLANK == cellType || CellType.ERROR == cellType) {
+                return null;
+            }
+
+            if (CellType.FORMULA == cellType && Objects.nonNull(this.evaluator)) {
+                return this.formulaExpr(dataCell);
+            }
+
+            /*
+             * 重新计算函数，基于如下两种情况进行计算：
+             * 1. Cell 值 -> 解析表格
+             * 2. Shape 值 -> 元数据处理
+             */
+            final Function<Cell, Object> fun = this.formulaFn(dataCell, type);
+            if (Objects.isNull(fun)) {
+                return null;
+            }
+
+            result = fun.apply(dataCell);
         } catch (final Throwable ex) {
             this.logger().fatal(ex);
-            // For debug
             ex.printStackTrace();
             result = null;
         }
         return result;
     }
 
-    /*
-     * Merge `eachMap` to `dataMap`
-     */
-    protected void extractComplex(final ConcurrentMap<String, JsonArray> complexMap,
-                                  final ConcurrentMap<String, JsonObject> rowMap) {
-        rowMap.forEach((field, record) -> {
-            JsonArray original = complexMap.get(field);
-            if (Objects.isNull(original)) {
-                original = new JsonArray();
+    protected Function<Cell, Object> formulaFn(final Cell dataCell, final Class<?> type) {
+        // 如果类型是 FORMULA，则直接使用 STRING 的函数来处理
+        final Function<Cell, Object> fun;
+        final CellType cellType = dataCell.getCellType();
+        if (CellType.FORMULA == cellType) {
+            fun = Meta.FN_CELL.get(CellType.STRING);
+        } else {
+            if (Objects.nonNull(type)) {
+                final CellType switchedType = ExOut.type(type);
+                if (Objects.isNull(switchedType)) {
+                    fun = Meta.FN_CELL.get(cellType);
+                } else {
+                    fun = Meta.FN_CELL.get(switchedType);
+                }
+            } else {
+                fun = Meta.FN_CELL.get(cellType);
             }
-            if (!ExRecord.isEmpty(record)) {
-                original.add(record);
-            }
-            complexMap.put(field, original);
-        });
-        /* Add only once */
-        rowMap.clear();
+        }
+        return fun;
     }
 
-    protected BiConsumer<Cell, HMetaAtom> cellConsumer(final ConcurrentMap<String, JsonObject> rowMap,
-                                                       final String field) {
-        return (dataCell, shape) -> {
-            /*
-             * Calculated
-             */
-            final String[] fields = field.split("\\.");
-            final String parent = fields[0];
-            final String child = fields[1];
-            /*
-             * Do Processing
-             */
-            JsonObject original = rowMap.get(parent);
-            if (Objects.isNull(original)) {
-                original = new JsonObject();
-            }
-            final Class<?> type = shape.type(parent, child);
-            final Object value = this.extractValue(dataCell, type);
-            original.put(child, value);
-            rowMap.put(parent, original);
-        };
+    protected String formulaExpr(final Cell dataCell) {
+        // 先处理 Formula 类型的值
+        final CellValue cellValue = this.evaluator.evaluate(dataCell);
+        final String exprValue = cellValue.getStringValue();
+
+
+        // 字符串类型的空值，直接返回 null
+        if (Ut.isNil(exprValue)) {
+            return null;
+        }
+
+
+        // 非字符串类型空值，查看内置的值是否是 NULL / EMPTY 两个值，此两个语义值也直接返回 null
+        if (ExKey.VALUE_NULL.equalsIgnoreCase(exprValue.trim())) {
+            return null;
+        }
+
+
+        // 上述条件都满足的情况下，返回解析值
+        return exprValue;
     }
 }

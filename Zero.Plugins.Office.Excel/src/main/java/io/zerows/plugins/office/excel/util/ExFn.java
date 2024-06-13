@@ -1,4 +1,4 @@
-package io.zerows.plugins.office.excel.tool;
+package io.zerows.plugins.office.excel.util;
 
 import io.modello.specification.meta.HMetaAtom;
 import io.vertx.core.json.JsonArray;
@@ -220,5 +220,18 @@ public class ExFn {
     public static void generateData(final Sheet sheet, final Integer index,
                                     final JsonArray rowData, final List<Class<?>> typeArray) {
         ExData.generateData(sheet, index, rowData, typeArray);
+    }
+
+    // 值转换函数
+    public static Object toString(final Cell cell) {
+        return ExType.toString(cell);
+    }
+
+    public static Object toBoolean(final Cell cell) {
+        return ExType.toBoolean(cell);
+    }
+
+    public static Object toNumeric(final Cell cell) {
+        return ExType.toNumeric(cell);
     }
 }

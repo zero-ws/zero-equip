@@ -1,4 +1,4 @@
-package io.zerows.plugins.office.excel.tool;
+package io.zerows.plugins.office.excel.util;
 
 import io.horizon.eon.VString;
 import io.vertx.core.json.JsonArray;
@@ -19,9 +19,7 @@ import java.util.function.BiConsumer;
  * @author <a href="http://www.origin-x.cn">Lang</a>
  */
 public class ExOut {
-    private static final ConcurrentMap<Class<?>, CellType> TYPE_MAP = new ConcurrentHashMap<Class<?>, CellType>() {
-        private static final long serialVersionUID = 3360878434696227455L;
-
+    private static final ConcurrentMap<Class<?>, CellType> TYPE_MAP = new ConcurrentHashMap<>() {
         {
             this.put(String.class, CellType.STRING);
             this.put(char.class, CellType.STRING);
@@ -41,29 +39,26 @@ public class ExOut {
             this.put(JsonObject.class, CellType.STRING);
         }
     };
-    private static final ConcurrentMap<Class<?>, BiConsumer<Cell, Object>> VALUE_MAP =
-        new ConcurrentHashMap<Class<?>, BiConsumer<Cell, Object>>() {
-            private static final long serialVersionUID = 5714357194532329854L;
-
-            {
-                this.put(String.class, ExOut::outString);
-                this.put(char.class, ExOut::outString);
-                this.put(Instant.class, ExOut::outDate);
-                this.put(LocalDate.class, ExOut::outLocalDate);
-                this.put(LocalDateTime.class, ExOut::outLocalDateTime);
-                this.put(BigDecimal.class, ExOut::outBigDecimal);
-                this.put(Integer.class, ExOut::outNumeric);
-                this.put(int.class, ExOut::outNumeric);
-                this.put(Long.class, ExOut::outNumeric);
-                this.put(long.class, ExOut::outNumeric);
-                this.put(Short.class, ExOut::outNumeric);
-                this.put(short.class, ExOut::outNumeric);
-                this.put(boolean.class, ExOut::outBoolean);
-                this.put(Boolean.class, ExOut::outBoolean);
-                this.put(JsonArray.class, ExOut::outString);
-                this.put(JsonObject.class, ExOut::outString);
-            }
-        };
+    private static final ConcurrentMap<Class<?>, BiConsumer<Cell, Object>> VALUE_MAP = new ConcurrentHashMap<>() {
+        {
+            this.put(String.class, ExOut::outString);
+            this.put(char.class, ExOut::outString);
+            this.put(Instant.class, ExOut::outDate);
+            this.put(LocalDate.class, ExOut::outLocalDate);
+            this.put(LocalDateTime.class, ExOut::outLocalDateTime);
+            this.put(BigDecimal.class, ExOut::outBigDecimal);
+            this.put(Integer.class, ExOut::outNumeric);
+            this.put(int.class, ExOut::outNumeric);
+            this.put(Long.class, ExOut::outNumeric);
+            this.put(long.class, ExOut::outNumeric);
+            this.put(Short.class, ExOut::outNumeric);
+            this.put(short.class, ExOut::outNumeric);
+            this.put(boolean.class, ExOut::outBoolean);
+            this.put(Boolean.class, ExOut::outBoolean);
+            this.put(JsonArray.class, ExOut::outString);
+            this.put(JsonObject.class, ExOut::outString);
+        }
+    };
 
     /*
      * setCellValue(String)

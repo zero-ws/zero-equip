@@ -15,11 +15,13 @@ import io.zerows.core.web.model.uca.normalize.Oneness;
 import io.zerows.plugins.office.excel.atom.ExRecord;
 import io.zerows.plugins.office.excel.atom.ExTable;
 import io.zerows.plugins.office.excel.atom.ExTenant;
+import io.zerows.plugins.office.excel.atom.ExWorkbook;
 import io.zerows.plugins.office.excel.exception._404ExcelFileNullException;
 import io.zerows.plugins.office.excel.uca.data.DataApply;
 import io.zerows.plugins.office.excel.uca.data.DataTaker;
 import io.zerows.plugins.office.excel.uca.initialize.*;
 import io.zerows.plugins.office.excel.uca.ranger.ExBound;
+import io.zerows.plugins.office.excel.uca.ranger.ExExpr;
 import io.zerows.plugins.office.excel.uca.ranger.RowBound;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
@@ -49,7 +51,6 @@ class ExcelHelper {
     private final transient ExcelEnv<ExTpl> envPen;
     private final transient ExcelEnv<Map<String, Workbook>> envFormula;
     private final transient ExcelEnv<ExTenant> envTenant;
-
     // 构造的特殊对象
     private transient ExTpl tpl;
     private transient ExTenant tenant;
@@ -83,7 +84,8 @@ class ExcelHelper {
         /* Pojo Processing */
         final JsonArray dataArray = new JsonArray();
         records.stream().filter(Objects::nonNull)
-            .map(ExRecord::toJson)
+            // 解析表格中的语法格式处理
+            .map(ExExpr.of()::parse)
             .forEach(dataArray::add);
 
         /* dictionary for static part */
@@ -137,60 +139,64 @@ class ExcelHelper {
     /*
      * Get Set<ExSheet> collection based on workbook
      */
-    Set<ExTable> getExTables(final Workbook workbook, final HMetaAtom metaAtom) {
-        return Fn.runOr(new HashSet<>(), () -> {
-            /* FormulaEvaluator reference */
-            final FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+    Set<ExTable> getExTables(final ExWorkbook exWorkbook, final HMetaAtom metaAtom) {
+        if (Objects.isNull(exWorkbook) || Objects.isNull(exWorkbook.getWorkbook())) {
+            return new HashSet<>();
+        }
+        final Workbook workbook = exWorkbook.getWorkbook();
+        /* FormulaEvaluator reference */
+        final FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
 
+        /*
+         * Workbook pool for FormulaEvaluator
+         * 1）Local variable to replace global
+         **/
+        final Map<String, FormulaEvaluator> references = new ConcurrentHashMap<>();
+        REFERENCES.forEach((field, workbookRef) -> {
             /*
-             * Workbook pool for FormulaEvaluator
-             * 1）Local variable to replace global
-             **/
-            final Map<String, FormulaEvaluator> references = new ConcurrentHashMap<>();
-            REFERENCES.forEach((field, workbookRef) -> {
-                /*
-                 * Reference executor processing
-                 * Here you must put self reference evaluator and all related here.
-                 * It should fix issue: Could not set environment etc.
-                 */
-                final FormulaEvaluator executorRef = workbookRef.getCreationHelper().createFormulaEvaluator();
-                references.put(field, executorRef);
-            });
-            /*
-             * Self evaluator for current calculation
+             * Reference executor processing
+             * Here you must put self reference evaluator and all related here.
+             * It should fix issue: Could not set environment etc.
              */
-            references.put(workbook.createName().getNameName(), evaluator);
+            final FormulaEvaluator executorRef = workbookRef.getCreationHelper().createFormulaEvaluator();
+            references.put(field, executorRef);
+        });
+        /*
+         * Self evaluator for current calculation
+         */
+        references.put(workbook.createName().getNameName(), evaluator);
 
-            /*
-             * Above one line code resolved following issue:
-             * org.apache.poi.ss.formula.CollaboratingWorkbooksEnvironment$WorkbookNotFoundException:
-             * Could not resolve external workbook name 'environment.ambient.xlsx'. Workbook environment has not been set up.
-             */
-            evaluator.setupReferencedWorkbooks(references);
-            /*
-             * Sheet process
-             */
-            final Iterator<Sheet> it = workbook.sheetIterator();
-            final Set<ExTable> sheets = new HashSet<>();
-            while (it.hasNext()) {
-                /* Build temp ExSheet */
-                final Sheet sheet = it.next();
-                /* Build Range ( Row Start - End ) */
-                final ExBound range = new RowBound(sheet);
+        /*
+         * Above one line code resolved following issue:
+         * org.apache.poi.ss.formula.CollaboratingWorkbooksEnvironment$WorkbookNotFoundException:
+         * Could not resolve external workbook name 'environment.ambient.xlsx'. Workbook environment has not been set up.
+         */
+        evaluator.setupReferencedWorkbooks(references);
+        /*
+         * Sheet process
+         */
+        final Iterator<Sheet> it = workbook.sheetIterator();
+        final Set<ExTable> sheets = new HashSet<>();
+        while (it.hasNext()) {
+            /* Build temp ExSheet */
+            final Sheet sheet = it.next();
+            /* Build Range ( Row Start - End ) */
+            final ExBound range = new RowBound(sheet);
 
-                final SheetAnalyzer exSheet = new SheetAnalyzer(sheet).on(evaluator);
-                /* Build Set */
-                final Set<ExTable> dataSet = exSheet.analyzed(range, metaAtom);
+            final SheetAnalyzer exSheet = new SheetAnalyzer(sheet).on(evaluator);
+            /* Build Set */
+            final Set<ExTable> dataSet = exSheet.analyzed(range, metaAtom);
+            /* Bind current directory for ExTable to support expression cell syntax */
+            dataSet.forEach(table -> table.setDirectory(exWorkbook.getDirectory()));
 
 
-                final DataApply apply = DataApply.of(this.tenant);
-                apply.applyData(dataSet);
+            final DataApply apply = DataApply.of(this.tenant);
+            apply.applyData(dataSet);
 
-                
-                sheets.addAll(dataSet);
-            }
-            return sheets;
-        }, workbook);
+
+            sheets.addAll(dataSet);
+        }
+        return sheets;
     }
 
     void runBrush(final Workbook workbook, final Sheet sheet, final HMetaAtom metaAtom) {

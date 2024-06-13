@@ -1,6 +1,8 @@
 package io.zerows.plugins.office.excel.uca.ranger;
 
 import io.modello.specification.meta.HMetaAtom;
+import io.vertx.up.util.Ut;
+import io.zerows.core.metadata.uca.logging.OLog;
 import io.zerows.plugins.office.excel.atom.ExTable;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
@@ -18,4 +20,8 @@ public interface ExIn {
     ExBound applyTable(ExTable table, Row row, Cell cell, Integer limitation);
 
     ExTable applyData(ExTable table, ExBound dataRange, Cell cell, HMetaAtom metaAtom);
+
+    default OLog logger() {
+        return Ut.Log.plugin(getClass());
+    }
 }

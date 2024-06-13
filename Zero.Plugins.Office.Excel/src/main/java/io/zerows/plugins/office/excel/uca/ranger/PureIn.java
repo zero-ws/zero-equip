@@ -4,7 +4,7 @@ import io.horizon.atom.program.KRef;
 import io.modello.specification.meta.HMetaAtom;
 import io.zerows.plugins.office.excel.atom.ExRecord;
 import io.zerows.plugins.office.excel.atom.ExTable;
-import io.zerows.plugins.office.excel.tool.ExFn;
+import io.zerows.plugins.office.excel.util.ExFn;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -44,13 +44,13 @@ public class PureIn extends AbstractExIn {
                 cell.getColumnIndex() + table.size());
 
             /* New record build */
-            final ExRecord record = new ExRecord();
+            final ExRecord record = new ExRecord(table);
             ExFn.itRow(dataRow, bound, (dataCell, cellIndex) -> {
                 /* Field / Value */
                 final String field = table.field(cellIndex);
                 if (Objects.nonNull(field)) {
                     final Class<?> type = metaAtom.type(field);
-                    final Object value = this.extractValue(dataCell, type);
+                    final Object value = this.formulaValue(dataCell, type);
 
                     /* Stored into record */
                     record.put(field, value);
