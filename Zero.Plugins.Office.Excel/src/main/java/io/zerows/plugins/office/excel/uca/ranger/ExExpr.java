@@ -9,13 +9,27 @@ import io.zerows.plugins.office.excel.atom.ExRecord;
  * <pre><code>
  *     语法格式：
  *     JSON:????            加载 JSON 文件
- *     FILE:????            加载文件中的数据
  *     {UUID}               自动生成 UUID
  *     CODE:class           根据 CODE 加载 {CURRENT}/{code}/{field}.json -> [value]  -> String Java 类名
  *     NAME:config          根据 NAME 加载 {CURRENT}/{name}/{field}.json
  *     CODE:config          根据 CODE 加载 {CURRENT}/{code}/{field}.json -> {} -> Json 格式的配置数据
  *     CODE:NAME:config     根据 CODE 加载 {CURRENT}/{code}/{name}/{field}.json
  *     PWD                  当前目录       {CURRENT}/{field}.json
+ *     外联文件加载
+ *     FILE:????            加载文件中的数据
+ *          --> {
+ *              "__type__": "FILE",
+ *              "__content__": {
+ *                  "path": "????"
+ *              }
+ *          }
+ *     PAGE:????
+ *          --> {
+ *              "__type__": "PAGE",
+ *              "__context__": {
+ *                  "path": "????"
+ *              }
+ *          }
  * </code></pre>
  * 所以设置值的时候绕开上述的语法保留字，以防止冲突
  *

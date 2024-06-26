@@ -143,7 +143,7 @@ public class SheetAnalyzer implements Serializable {
 
 
         if (Objects.nonNull(table.getName())) {
-            final MDConnect connect = OCacheExtension.getConnect(table.getName());
+            final MDConnect connect = OCacheExtension.entireConnect(table.getName());
             if (Objects.nonNull(connect)) {
                 table.setConnect(connect);
             } else {

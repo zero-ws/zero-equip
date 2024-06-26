@@ -38,7 +38,8 @@ interface Meta {
     ConcurrentMap<String, Supplier<ExValue>> FN_PREFIX = new ConcurrentHashMap<>() {
         {
             this.put(ExConstant.CELL.P_JSON, PrefixJsonValue::new);
-            this.put(ExConstant.CELL.P_FILE, PrefixFileValue::new);
+            this.put(ExConstant.CELL.P_FILE, DynamicFileValue::new);
+            this.put(ExConstant.CELL.P_PAGE, DynamicPageValue::new);
         }
     };
 }

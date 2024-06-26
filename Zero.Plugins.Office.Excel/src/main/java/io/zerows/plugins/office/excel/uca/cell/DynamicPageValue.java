@@ -9,10 +9,9 @@ import io.zerows.plugins.office.excel.eon.ExConstant;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * @author <a href="http://www.origin-x.cn">Lang</a>
+ * @author lang : 2024-06-26
  */
-@SuppressWarnings("all")
-public class PrefixFileValue implements ExValue {
+public class DynamicPageValue implements ExValue {
 
     @Override
     public Object to(final Object value, final ConcurrentMap<String, String> paramMap) {
@@ -22,13 +21,13 @@ public class PrefixFileValue implements ExValue {
             final String path = pathArr[1];
             if (Ut.isNotNil(path)) {
                 final JsonObject valueJ = new JsonObject();
-                valueJ.put(ExConstant.K_TYPE, ExConstant.CELL.P_FILE);
+                valueJ.put(ExConstant.K_TYPE, ExConstant.CELL.P_PAGE);
 
                 final JsonObject content = new JsonObject();
                 content.put(KName.App.PATH, path);
                 valueJ.put(ExConstant.K_CONTENT, content);
                 literal = valueJ.encodePrettily();
-                this.logger().info("[ Έξοδος ] （ExJson）File = {0}, File Value built `{1}`", path, literal);
+                this.logger().info("[ Έξοδος ] （ExJson）Page = {0}, Page Value built `{1}`", path, literal);
             }
         }
         return literal;

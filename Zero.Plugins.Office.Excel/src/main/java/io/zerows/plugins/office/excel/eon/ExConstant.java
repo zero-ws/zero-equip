@@ -18,7 +18,8 @@ public interface ExConstant {
 
         String P_JSON = "JSON";
         String P_FILE = "FILE";
+        String P_PAGE = "PAGE";
 
-        String[] PREFIX = new String[]{P_FILE, P_JSON};
+        String[] PREFIX = new String[]{P_FILE, P_JSON, P_PAGE};
     }
 }
