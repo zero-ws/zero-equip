@@ -14,8 +14,8 @@ import io.vertx.ext.bridge.PermittedOptions;
 import io.vertx.ext.stomp.*;
 import io.vertx.ext.stomp.utils.Headers;
 import io.vertx.up.util.Ut;
-import io.zerows.core.feature.web.websocket.router.AresGrid;
-import io.zerows.plugins.websocket.stomp.websocket.BridgeStomp;
+import io.zerows.core.feature.web.websocket.router.SockGrid;
+import io.zerows.plugins.websocket.stomp.websocket.StompBridgeOptions;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -43,7 +43,7 @@ public class RemindDestination extends Topic {
 
     public RemindDestination(final Vertx vertx) {
         super(vertx, null);
-        this.options = BridgeStomp.wsOptionBridge();
+        this.options = StompBridgeOptions.wsOptionBridge();
     }
 
     @Override
@@ -63,7 +63,7 @@ public class RemindDestination extends Topic {
          * Here we'll split the address of Subscribe & EventBus to implement user-defined
          * @Subscribe("xxxx") @Address("yyyy")
          */
-        String addressEvent = AresGrid.configAddress(address);
+        String addressEvent = SockGrid.configAddress(address);
         if (Ut.isNil(addressEvent)) {
             // The Map does not store the address
             addressEvent = address;
@@ -79,7 +79,7 @@ public class RemindDestination extends Topic {
                     }
 
                     /* Code modified here for inject method calling */
-                    AresGrid.wsInvoke(address, msg.body(), (returned) -> {
+                    SockGrid.wsInvoke(address, msg.body(), (returned) -> {
                         final Object resultData = returned.result();
                         if (Objects.isNull(resultData)) {
                             LOGGER.warn("[ Warning ] The invoker returned value is null, the message will be ignored.");
@@ -166,7 +166,7 @@ public class RemindDestination extends Topic {
                         final Optional<Subscription> subscription = this.subscriptions.stream()
                             .filter(s -> s.connection.equals(connection) && s.destination.equals(replyAddress))
                             .findFirst();
-                        subscription.ifPresent(value -> AresGrid.wsInvoke(address, res.result(), (returned) -> {
+                        subscription.ifPresent(value -> SockGrid.wsInvoke(address, res.result(), (returned) -> {
                             final FrameBuilder builder = FrameBuilder.of(value.id);
                             final Frame stompFrame = builder.buildFrame(res.result(), returned.result(), value.ackMode);
                             value.connection.write(stompFrame);
@@ -186,7 +186,7 @@ public class RemindDestination extends Topic {
 
     private void send(final String address, final Frame frame, final Handler<AsyncResult<Message<Object>>> replyHandler) {
         // Event Bus Address seeking
-        String addressEvent = AresGrid.configAddress(address);
+        String addressEvent = SockGrid.configAddress(address);
         if (Ut.isNil(addressEvent)) {
             // The Map dose not store the address
             addressEvent = address;

@@ -6,7 +6,7 @@ import io.vertx.ext.stomp.StompServerHandler;
 import io.vertx.ext.stomp.StompServerOptions;
 import io.vertx.ext.stomp.impl.RemindDestination;
 import io.zerows.core.feature.web.websocket.eon.em.RemindType;
-import io.zerows.core.feature.web.websocket.router.AresGrid;
+import io.zerows.core.feature.web.websocket.router.SockGrid;
 
 import java.util.Objects;
 import java.util.concurrent.ConcurrentMap;
@@ -26,7 +26,7 @@ public class MixerDestination extends AbstractMixer {
          * Build Map of address = type
          * Here are two types
          */
-        final ConcurrentMap<String, RemindType> topicMap = AresGrid.configTopic();
+        final ConcurrentMap<String, RemindType> topicMap = SockGrid.configTopic();
         // Destination Building
         handler.destinationFactory((v, name) -> {
             final RemindType type = topicMap.getOrDefault(name, null);
@@ -56,7 +56,7 @@ public class MixerDestination extends AbstractMixer {
         if (RemindType.BRIDGE == type) {
             // Modify Bridge
             this.logger().info(Info.SUBSCRIBE_BRIDGE, name);
-            return Destination.bridge(vertx, BridgeStomp.wsOptionBridge());
+            return Destination.bridge(vertx, StompBridgeOptions.wsOptionBridge());
         }
         // Topic ( Default as Vert.x )
         this.logger().info(Info.SUBSCRIBE_TOPIC, name);

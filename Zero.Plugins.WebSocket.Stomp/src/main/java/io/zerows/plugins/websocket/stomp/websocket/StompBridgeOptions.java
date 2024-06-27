@@ -4,17 +4,17 @@ import io.vertx.ext.bridge.PermittedOptions;
 import io.vertx.ext.stomp.BridgeOptions;
 import io.vertx.up.util.Ut;
 import io.zerows.core.feature.web.websocket.atom.Remind;
-import io.zerows.core.feature.web.websocket.router.AresGrid;
+import io.zerows.core.feature.web.websocket.router.SockGrid;
 
 import java.util.Set;
 
 /**
  * @author <a href="http://www.origin-x.cn">Lang</a>
  */
-public class BridgeStomp {
+public class StompBridgeOptions {
 
     public static BridgeOptions wsOptionBridge() {
-        final Set<Remind> wsSock = AresGrid.wsSecure();
+        final Set<Remind> wsSock = SockGrid.wsSecure();
         final BridgeOptions bridgeOptions = new BridgeOptions();
         /*
          * To enable the bridge you need to configure the inbound and outbound addresses.

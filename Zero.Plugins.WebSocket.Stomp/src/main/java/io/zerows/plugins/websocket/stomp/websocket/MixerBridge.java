@@ -15,7 +15,7 @@ public class MixerBridge extends AbstractMixer {
 
     @Override
     public <T> T mount(final StompServerHandler handler, final StompServerOptions options) {
-        handler.bridge(BridgeStomp.wsOptionBridge());
+        handler.bridge(StompBridgeOptions.wsOptionBridge());
         return this.finished();
     }
 }
