@@ -6,7 +6,7 @@ import io.vertx.up.util.Ut;
 import io.zerows.core.metadata.atom.configuration.modeling.MDConnect;
 import io.zerows.core.metadata.uca.environment.DevEnv;
 import io.zerows.core.metadata.uca.logging.OLog;
-import io.zerows.core.web.model.store.module.OCacheExtension;
+import io.zerows.core.web.model.store.module.OCacheConfiguration;
 import io.zerows.plugins.office.excel.atom.ExKey;
 import io.zerows.plugins.office.excel.atom.ExTable;
 import io.zerows.plugins.office.excel.uca.ranger.*;
@@ -143,7 +143,7 @@ public class SheetAnalyzer implements Serializable {
 
 
         if (Objects.nonNull(table.getName())) {
-            final MDConnect connect = OCacheExtension.entireConnect(table.getName());
+            final MDConnect connect = OCacheConfiguration.entireConnect(table.getName());
             if (Objects.nonNull(connect)) {
                 table.setConnect(connect);
             } else {

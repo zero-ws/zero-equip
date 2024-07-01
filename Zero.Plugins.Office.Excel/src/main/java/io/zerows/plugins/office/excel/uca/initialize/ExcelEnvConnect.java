@@ -7,7 +7,7 @@ import io.vertx.up.util.Ut;
 import io.zerows.core.metadata.atom.configuration.MDConfiguration;
 import io.zerows.core.metadata.atom.configuration.modeling.MDConnect;
 import io.zerows.core.web.model.extension.HExtension;
-import io.zerows.core.web.model.store.module.OCacheExtension;
+import io.zerows.core.web.model.store.module.OCacheConfiguration;
 import io.zerows.core.web.model.uca.normalize.EquipAt;
 import io.zerows.core.web.model.uca.normalize.Replacer;
 
@@ -30,7 +30,7 @@ public class ExcelEnvConnect implements ExcelEnv<MDConfiguration> {
      *     1. 当前项目一般是一个独立 Bundle，配置文件依旧位于 src/main/resources 之下
      *     2. 读取配置时，直接读取当前环境中的配置信息
      * </code></pre>
-     * 所以新版核心配置处理流程直接依赖 {@link OCacheExtension} 来实现，新版本的 vertx-excel.yml 配置会发生简单变化
+     * 所以新版核心配置处理流程直接依赖 {@link OCacheConfiguration} 来实现，新版本的 vertx-excel.yml 配置会发生简单变化
      * <pre><code>
      * excel:
      *   pen: "io.zerows.plugins.office.excel.tpl.BlueTpl"
@@ -71,7 +71,7 @@ public class ExcelEnvConnect implements ExcelEnv<MDConfiguration> {
          * 初始化当前环境中的基本配置信息，启动器配置位于
          * plugins/<configId>/ 目录之下，配置目录结构为新版结构
          */
-        final OCacheExtension extension = OCacheExtension.of();
+        final OCacheConfiguration extension = OCacheConfiguration.of();
         MDConfiguration configuration = extension.valueGet(configId);
         if (Objects.isNull(configuration)) {
             this.logger().debug("[ Έξοδος ] Could not find configuration: id = {}, the system will build new one", configId);
