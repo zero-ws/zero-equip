@@ -1,4 +1,4 @@
-package io.zerows.plugins.websocket.stomp.websocket;
+package io.zerows.plugins.websocket.stomp.handler;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;

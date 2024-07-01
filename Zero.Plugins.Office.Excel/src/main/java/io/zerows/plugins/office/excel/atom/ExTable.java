@@ -6,7 +6,7 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.up.fn.Fn;
 import io.vertx.up.unity.Ux;
 import io.vertx.up.util.Ut;
-import io.zerows.core.web.model.atom.io.modeling.MDConnect;
+import io.zerows.core.metadata.atom.configuration.modeling.MDConnect;
 import io.zerows.core.web.model.uca.normalize.Oneness;
 import io.zerows.plugins.office.excel.exception._404ConnectMissingException;
 

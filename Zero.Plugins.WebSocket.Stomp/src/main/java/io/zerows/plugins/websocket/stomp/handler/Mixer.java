@@ -1,4 +1,4 @@
-package io.zerows.plugins.websocket.stomp.websocket;
+package io.zerows.plugins.websocket.stomp.handler;
 
 import io.horizon.uca.cache.Cc;
 import io.vertx.ext.stomp.StompServerHandler;

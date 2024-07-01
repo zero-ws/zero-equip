@@ -15,7 +15,7 @@ import io.vertx.ext.stomp.*;
 import io.vertx.ext.stomp.utils.Headers;
 import io.vertx.up.util.Ut;
 import io.zerows.core.feature.web.websocket.router.SockGrid;
-import io.zerows.plugins.websocket.stomp.websocket.StompBridgeOptions;
+import io.zerows.plugins.websocket.stomp.handler.StompBridgeOptions;
 
 import java.util.*;
 import java.util.regex.Matcher;

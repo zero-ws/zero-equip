@@ -1,4 +1,4 @@
-package io.zerows.plugins.websocket.stomp.websocket;
+package io.zerows.plugins.websocket.stomp.handler;
 
 /**
  * @author <a href="http://www.origin-x.cn">Lang</a>
