@@ -16,12 +16,12 @@ public interface AdapterProvider {
      * own provider and put into this package for extension
      */
     static AdapterProvider common() {
-        return CC_ADAPTER.pick(AdapterCommon::new, io.zerows.plugins.common.security.authenticate.AdapterCommon.class.getName());
+        return CC_ADAPTER.pick(AdapterCommon::new, AdapterCommon.class.getName());
     }
 
     static AdapterProvider extension(final AuthenticationProvider standard) {
         return CC_ADAPTER.pick(
-            () -> new io.zerows.plugins.common.security.authenticate.AdapterExtension(standard), io.zerows.plugins.common.security.authenticate.AdapterExtension.class.getName());
+            () -> new AdapterExtension(standard), AdapterExtension.class.getName());
     }
 
     AuthenticationProvider provider(Aegis aegis);

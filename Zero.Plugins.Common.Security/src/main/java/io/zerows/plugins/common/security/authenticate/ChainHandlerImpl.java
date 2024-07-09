@@ -50,7 +50,7 @@ public class ChainHandlerImpl extends AuthenticationHandlerImpl<AuthenticationPr
 
     @Override
     public void authenticate(final RoutingContext context, final Handler<AsyncResult<User>> handler) {
-        if (this.handlers.size() == 0) {
+        if (this.handlers.isEmpty()) {
             handler.handle(Future.failedFuture("No providers in the auth chain."));
         } else {
             // iterate all possible authN

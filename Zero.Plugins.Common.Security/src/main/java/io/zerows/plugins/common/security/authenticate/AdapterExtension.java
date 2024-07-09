@@ -8,6 +8,8 @@ import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.User;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
+import io.vertx.ext.auth.authentication.Credentials;
+import io.vertx.ext.auth.authentication.TokenCredentials;
 import io.zerows.core.security.atom.Aegis;
 
 /**
@@ -28,7 +30,8 @@ class AdapterExtension extends AbstractAdapter {
             @Override
             public void authenticate(final JsonObject jsonObject, final Handler<AsyncResult<User>> handler) {
                 // First Standard Trigger
-                AdapterExtension.this.standard.authenticate(jsonObject, res -> {
+                final Credentials credentials = new TokenCredentials(jsonObject);
+                AdapterExtension.this.standard.authenticate(credentials, res -> {
                     if (res.succeeded()) {
                         // BuildIn Trigger for User Validation
                         provider.authenticate(jsonObject, handler);

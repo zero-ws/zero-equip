@@ -78,17 +78,10 @@ public class AxisStomp implements OAxis {
             return;
         }
 
-        /* Re-define for WebSocket 8 attributes */
-        serverOptions.setWebSocketAllowServerNoContext(configured.getWebSocketAllowServerNoContext());
-        serverOptions.setWebSocketClosingTimeout(configured.getWebSocketClosingTimeout());
-        serverOptions.setWebSocketCompressionLevel(configured.getWebSocketCompressionLevel());
-        serverOptions.setWebSocketPreferredClientNoContext(configured.getWebSocketPreferredClientNoContext());
-        /* Here must include stomp sub protocols */
-        serverOptions.setWebSocketSubProtocols(configured.getWebSocketSubProtocols());
-
-        serverOptions.setMaxWebSocketFrameSize(configured.getMaxWebSocketFrameSize());
-        serverOptions.setMaxWebSocketMessageSize(configured.getMaxWebSocketMessageSize());
-        serverOptions.setPerFrameWebSocketCompressionSupported(configured.getPerFrameWebSocketCompressionSupported());
-        serverOptions.setPerMessageWebSocketCompressionSupported(configured.getPerMessageWebSocketCompressionSupported());
+        if (serverOptions == configured) {
+            // 已经桥接
+            return;
+        }
+        sockOptions.options(serverOptions);
     }
 }

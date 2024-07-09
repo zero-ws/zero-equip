@@ -21,6 +21,10 @@ import io.vertx.up.util.Ut;
 import io.zerows.core.security.atom.Aegis;
 import io.zerows.core.security.atom.AegisItem;
 import io.zerows.core.security.zdk.LeeBuiltIn;
+import io.zerows.plugins.common.security.authenticate.AuthenticateBuiltInProvider;
+import io.zerows.plugins.common.security.authenticate.ChainHandler;
+import io.zerows.plugins.common.security.authorization.AuthorizationBuiltInHandler;
+import io.zerows.plugins.common.security.authorization.AuthorizationBuiltInProvider;
 
 import java.util.Objects;
 
@@ -37,8 +41,8 @@ public abstract class AbstractLee implements LeeBuiltIn {
         final Class<?> handlerCls = config.getHandler();
         if (Objects.isNull(handlerCls)) {
             // Default profile is no access ( 403 )
-            final AuthorizationHandler handler = io.zerows.plugins.common.security.authorization.AuthorizationBuiltInHandler.create(config);
-            final AuthorizationProvider provider = io.zerows.plugins.common.security.authorization.AuthorizationBuiltInProvider.provider(config);
+            final AuthorizationHandler handler = AuthorizationBuiltInHandler.create(config);
+            final AuthorizationProvider provider = AuthorizationBuiltInProvider.provider(config);
             handler.addAuthorizationProvider(provider);
 
             /*
@@ -63,9 +67,9 @@ public abstract class AbstractLee implements LeeBuiltIn {
     }
 
     protected AuthenticationHandler wrapHandler(final AuthenticationHandler standard, final Aegis aegis) {
-        final io.zerows.plugins.common.security.authenticate.ChainHandler handler = io.zerows.plugins.common.security.authenticate.ChainHandler.all();
+        final ChainHandler handler = ChainHandler.all();
         handler.add(standard);
-        final io.zerows.plugins.common.security.authenticate.AuthenticateBuiltInProvider provider = io.zerows.plugins.common.security.authenticate.AuthenticateBuiltInProvider.provider(aegis);
+        final AuthenticateBuiltInProvider provider = AuthenticateBuiltInProvider.provider(aegis);
         handler.add(new AuthenticationHandlerImpl(provider) {
             @Override
             public void authenticate(RoutingContext context, Handler<AsyncResult<User>> handler) {
