@@ -11,7 +11,10 @@ import io.vertx.up.util.Ut;
 import io.zerows.plugins.office.excel.eon.ExConstant;
 
 import java.io.File;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.function.BiFunction;
 
 /**
  * Processing
@@ -20,6 +23,38 @@ import java.util.concurrent.ConcurrentMap;
  * - CODE:NAME:config
  */
 public class ExprValue implements ExValue {
+
+    private static final ConcurrentMap<String, BiFunction<String, ConcurrentMap<String, String>, String>> PATH_FN =
+        new ConcurrentHashMap<>() {
+            {
+                // CODE:config
+                this.put(ExConstant.CELL.CODE_CONFIG, (pathRoot, paramMap) -> {
+                    final String code = paramMap.get(KName.CODE);
+                    return Ut.ioPath(pathRoot, code);
+                });
+                // NAME:config
+                this.put(ExConstant.CELL.NAME_CONFIG, (pathRoot, paramMap) -> {
+                    final String name = paramMap.get(KName.NAME);
+                    return Ut.ioPath(pathRoot, name);
+                });
+                // CODE:NAME:config
+                this.put(ExConstant.CELL.CODE_NAME_CONFIG, (pathRoot, paramMap) -> {
+                    final String code = paramMap.get(KName.CODE);
+                    final String name = paramMap.get(KName.NAME);
+                    return Ut.ioPath(pathRoot, code) + File.pathSeparator + name;
+                });
+                // CODE:class
+                this.put(ExConstant.CELL.CODE_CLASS, (pathRoot, paramMap) -> {
+                    final String code = paramMap.get(KName.CODE);
+                    return Ut.ioPath(pathRoot, code);
+                });
+                // NAME_ABBR:config
+                this.put(ExConstant.CELL.NAME_ABBR_CONFIG, (pathRoot, paramMap) -> {
+                    final String nameAbbr = paramMap.get("nameAbbr");
+                    return Ut.ioPath(pathRoot, nameAbbr);
+                });
+            }
+        };
 
     @Override
     @SuppressWarnings("all")
@@ -42,27 +77,16 @@ public class ExprValue implements ExValue {
     }
 
     private String getPath(final String value, final ConcurrentMap<String, String> paramMap) {
+        Objects.requireNonNull(value);
         final String pathRoot = paramMap.get(KName.DIRECTORY);
-        final String name = paramMap.get(KName.NAME);
-        final String code = paramMap.get(KName.CODE);
         final String field = paramMap.get(KName.FIELD);
 
-        final String filepath;
-        if (ExConstant.CELL.CODE_CONFIG.equals(value)) {
-            // CODE:config
-            filepath = Ut.ioPath(pathRoot, code);
-        } else if (ExConstant.CELL.NAME_CONFIG.equals(value)) {
-            // NAME:config
-            filepath = Ut.ioPath(pathRoot, name);
-        } else if (ExConstant.CELL.CODE_NAME_CONFIG.equals(value)) {
-            // CODE:NAME:config
-            filepath = Ut.ioPath(pathRoot, code) + File.pathSeparator + name;
-        } else if (ExConstant.CELL.CODE_CLASS.equals(value)) {
-            // CODE:class
-            filepath = Ut.ioPath(pathRoot, code);
-        } else {
+        final BiFunction<String, ConcurrentMap<String, String>, String> exprFn =
+            PATH_FN.getOrDefault(value.trim(), null);
+        if (Objects.isNull(exprFn)) {
             throw Ut.Bnd.failureWeb(_501NotSupportException.class, this.getClass());
         }
+        final String filepath = exprFn.apply(pathRoot, paramMap);
         return Ut.ioPath(filepath, field) + VString.DOT + VPath.SUFFIX.JSON;
     }
 }

@@ -37,18 +37,23 @@ class ExExprRecord implements ExExpr {
 
     private ConcurrentMap<String, String> pickParam(final ExRecord record) {
         final ConcurrentMap<String, String> paramMap = new ConcurrentHashMap<>();
+        // 特殊参数
         final String directory = record.refTable().getDirectory();
         if (Ut.isNotNil(directory)) {
             paramMap.put(KName.DIRECTORY, directory);
         }
-        final String name = record.get(KName.NAME);
-        if (Ut.isNotNil(name)) {
-            paramMap.put(KName.NAME, name);
-        }
-        final String code = record.get(KName.CODE);
-        if (Ut.isNotNil(code)) {
-            paramMap.put(KName.CODE, code);
-        }
+        // 记录专用参数
+        /*
+         * - name
+         * - code
+         * - nameAbbr
+         */
+        Arrays.stream(ExConstant.CELL.PARAM_INPUT).forEach(paramName -> {
+            final String paramValue = record.get(paramName);
+            if (Ut.isNotNil(paramValue)) {
+                paramMap.put(paramName, paramValue);
+            }
+        });
         return paramMap;
     }
 
