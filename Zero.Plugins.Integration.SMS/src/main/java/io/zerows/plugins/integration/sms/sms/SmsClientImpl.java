@@ -7,19 +7,18 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
-import io.horizon.uca.log.Annal;
+import io.horizon.exception.WebException;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.up.fn.Fn;
+import io.vertx.up.util.Ut;
 import io.zerows.plugins.integration.sms.exception._424MessageSendException;
 import io.zerows.plugins.integration.sms.exception._424ProfileEndPointException;
 
 public class SmsClientImpl implements SmsClient {
-
-    private static final Annal LOGGER = Annal.get(SmsClientImpl.class);
 
     private transient final Vertx vertx;
     private transient SmsConfig config;
@@ -49,9 +48,7 @@ public class SmsClientImpl implements SmsClient {
                 DefaultProfile.addEndpoint(SmsConfig.DFT_REGION, SmsConfig.DFT_REGION,
                     SmsConfig.DFT_PRODUCT, this.config.getDomain());
             } catch (final ClientException ex) {
-                Fn.outWeb(true, LOGGER,
-                    _424ProfileEndPointException.class,
-                    this.getClass(), ex);
+                throw Ut.Bnd.failureWeb(_424ProfileEndPointException.class, this.getClass(), ex);
             }
             this.client = new DefaultAcsClient(profile);
         }, params);
@@ -82,10 +79,9 @@ public class SmsClientImpl implements SmsClient {
             data.put(SmsConfig.RESPONSE_MESSAGE, response.getMessage());
             return Future.succeededFuture(data);
         } catch (final ClientException ex) {
-            Fn.outWeb(true, LOGGER,
-                _424MessageSendException.class,
-                this.getClass(), ex);
-            return Future.failedFuture(ex);
+            this.logger().fatal(ex);
+            final WebException error = Ut.Bnd.failureWeb(_424MessageSendException.class, this.getClass(), ex);
+            return Future.failedFuture(error);
         }
     }
 

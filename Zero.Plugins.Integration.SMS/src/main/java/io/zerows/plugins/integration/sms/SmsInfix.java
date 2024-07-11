@@ -5,6 +5,7 @@ import io.vertx.core.Vertx;
 import io.vertx.up.annotations.Infusion;
 import io.zerows.core.metadata.zdk.plugins.Infix;
 import io.zerows.plugins.integration.sms.sms.SmsClient;
+import io.zerows.plugins.integration.sms.sms.SmsConfig;
 
 @Infusion
 @SuppressWarnings("all")
@@ -16,7 +17,7 @@ public class SmsInfix implements Infix {
 
     private static void initInternal(final Vertx vertx,
                                      final String name) {
-        CC_CLIENT.pick(() -> Infix.init("ali-sms",
+        CC_CLIENT.pick(() -> Infix.init(SmsConfig.KEY,
             (config) -> SmsClient.createShared(vertx),
             SmsInfix.class), name);
     }

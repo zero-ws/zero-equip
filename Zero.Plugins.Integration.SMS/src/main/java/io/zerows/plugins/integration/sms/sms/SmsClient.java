@@ -1,10 +1,10 @@
 package io.zerows.plugins.integration.sms.sms;
 
 import io.vertx.codegen.annotations.Fluent;
-import io.vertx.core.AsyncResult;
-import io.vertx.core.Handler;
-import io.vertx.core.Vertx;
+import io.vertx.core.*;
 import io.vertx.core.json.JsonObject;
+import io.vertx.up.util.Ut;
+import io.zerows.core.metadata.uca.logging.OLog;
 import io.zerows.core.metadata.zdk.plugins.InfixClient;
 
 /**
@@ -33,4 +33,14 @@ public interface SmsClient extends InfixClient<SmsClient> {
     @Fluent
     SmsClient send(String mobile, String tplCode, JsonObject params,
                    Handler<AsyncResult<JsonObject>> handler);
+
+    default Future<JsonObject> send(final String mobile, final String tplCode, final JsonObject params) {
+        final Promise<JsonObject> response = Promise.promise();
+        this.send(mobile, tplCode, params, response);
+        return response.future();
+    }
+
+    default OLog logger() {
+        return Ut.Log.plugin(getClass());
+    }
 }

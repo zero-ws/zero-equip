@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public class SmsConfig implements Serializable {
 
+    public static final String KEY = "sms-ali";
     static final String TIMEOUT_CONN = "timeout_connect";
     static final String TIMEOUT_READ = "timeout_read";
     static final String DFT_PRODUCT = "Dysmsapi";
@@ -18,7 +19,6 @@ public class SmsConfig implements Serializable {
     static final String RESPONSE_BUSINESS_ID = "business_id";
     static final String RESPONSE_CODE = "code";
     static final String RESPONSE_MESSAGE = "message";
-    private static final String KEY = "ali-sms";
     private static final String KEY_ID = "access_id";
     private static final String KEY_SECRET = "access_secret";
     private static final String KEY_SIGN_NAME = "sign_name";
@@ -96,10 +96,9 @@ public class SmsConfig implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof SmsConfig)) {
+        if (!(o instanceof final SmsConfig smsConfig)) {
             return false;
         }
-        final SmsConfig smsConfig = (SmsConfig) o;
         return Objects.equals(this.accessId, smsConfig.accessId) &&
             Objects.equals(this.accessSecret, smsConfig.accessSecret);
     }
