@@ -4,26 +4,19 @@ import io.horizon.uca.cache.Cc;
 import io.vertx.core.Vertx;
 import io.vertx.up.annotations.Infusion;
 import io.zerows.core.metadata.zdk.plugins.Infix;
-import io.zerows.plugins.integration.sms.sms.SmsClient;
-import io.zerows.plugins.integration.sms.sms.SmsConfig;
 
 @Infusion
 @SuppressWarnings("all")
 public class SmsInfix implements Infix {
 
-    private static final String NAME = "ZERO_ALI_SMS_POOL";
+    private static final String NAME = "ZERO_SMS_ALI_POOL";
 
     private static final Cc<String, SmsClient> CC_CLIENT = Cc.open();
 
-    private static void initInternal(final Vertx vertx,
-                                     final String name) {
-        CC_CLIENT.pick(() -> Infix.init(SmsConfig.KEY,
-            (config) -> SmsClient.createShared(vertx),
-            SmsInfix.class), name);
-    }
-
     public static void init(final Vertx vertx) {
-        initInternal(vertx, NAME);
+        CC_CLIENT.pick(() -> Infix.init(SmsConfig.CONFIG_KEY,
+            (config) -> SmsClient.createShared(vertx),
+            SmsInfix.class), NAME);
     }
 
     public static SmsClient getClient() {

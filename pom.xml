@@ -22,6 +22,7 @@
         <module>Zero.Plugins.Integration.Feign</module>
         <module>Zero.Plugins.Integration.Git</module>
         <module>Zero.Plugins.Integration.SMS</module>
+        <module>Zero.Plugins.Integration.Wechat</module>
 
         <!-- Office -->
         <module>Zero.Plugins.Office.Excel</module>

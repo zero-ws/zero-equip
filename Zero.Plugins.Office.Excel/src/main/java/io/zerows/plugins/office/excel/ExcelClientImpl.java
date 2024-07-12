@@ -9,16 +9,12 @@ import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.util.Ut;
-import io.zerows.core.metadata.uca.logging.OLog;
 import io.zerows.plugins.office.excel.atom.ExTable;
 
 import java.io.InputStream;
 import java.util.Set;
 
 public class ExcelClientImpl implements ExcelClient {
-
-    private static final OLog LOGGER = Ut.Log.plugin(ExcelClientImpl.class);
 
     private transient final Vertx vertx;
     private transient final ExcelHelper helper = ExcelHelper.helper(this.getClass());
