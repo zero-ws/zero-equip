@@ -25,7 +25,7 @@ public class DynamicFileValue implements ExValue {
                 valueJ.put(ExConstant.K_TYPE, ExConstant.CELL.P_FILE);
 
                 final JsonObject content = new JsonObject();
-                content.put(KName.App.PATH, path);
+                content.put(KName.App.CONTEXT, path);
                 valueJ.put(ExConstant.K_CONTENT, content);
                 literal = valueJ.encodePrettily();
                 this.logger().info("[ Έξοδος ] （ExJson）File = {0}, File Value built `{1}`", path, literal);
