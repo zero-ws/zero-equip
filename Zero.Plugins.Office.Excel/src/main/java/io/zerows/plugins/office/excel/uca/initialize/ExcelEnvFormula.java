@@ -28,12 +28,14 @@ public class ExcelEnvFormula implements ExcelEnv<Map<String, Workbook>> {
     @Override
     public Map<String, Workbook> prepare(final JsonObject config) {
         if (!config.containsKey(YmlCore.excel.ENVIRONMENT)) {
-            return null;
+            // Fix: Cannot invoke "java.util.Map.size()" because "m" is null
+            return new ConcurrentHashMap<>();
         }
 
 
         if (Objects.isNull(this.workbookFn)) {
-            return null;
+            // Fix: Cannot invoke "java.util.Map.size()" because "m" is null
+            return new ConcurrentHashMap<>();
         }
 
 
