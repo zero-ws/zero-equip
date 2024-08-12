@@ -7,7 +7,7 @@ import io.zerows.core.metadata.uca.logging.OLog;
 import io.zerows.core.metadata.zdk.plugins.InfixClient;
 
 /**
- * AliSmsClient for platform of <a href="https://dysms.console.aliyun.com/dysms.htm">阿里巴巴短信服务</a>
+ * AliSmsClient for app.zero.cloud of <a href="https://dysms.console.aliyun.com/dysms.htm">阿里巴巴短信服务</a>
  * Message open sdk
  */
 public interface SmsClient extends InfixClient<SmsClient> {

@@ -8,7 +8,7 @@ import io.vertx.core.json.JsonObject;
 import io.zerows.core.metadata.zdk.plugins.InfixClient;
 
 /**
- * QiyClient for platform of http://open.iqiyi.com/
+ * QiyClient for app.zero.cloud of http://open.iqiyi.com/
  * Video open sdk
  */
 public interface QiyClient extends InfixClient<QiyClient> {
