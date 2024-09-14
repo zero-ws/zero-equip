@@ -2,7 +2,12 @@ package io.zerows.plugins.common.security.authorization;
 
 import io.horizon.exception.WebException;
 import io.horizon.exception.web._403ForbiddenException;
+import io.horizon.fn.Actuator;
 import io.horizon.uca.log.Annal;
+import io.vertx.core.http.HttpServerRequest;
+import io.vertx.core.http.HttpVersion;
+import io.vertx.core.http.impl.Http1xServerRequest;
+import io.vertx.core.http.impl.Http2ServerRequest;
 import io.vertx.ext.auth.User;
 import io.vertx.ext.auth.authorization.Authorization;
 import io.vertx.ext.auth.authorization.AuthorizationContext;
@@ -63,9 +68,13 @@ public class AuthorizationBuiltInHandler implements AuthorizationHandler {
                 /*
                  * Before starting any potential async operation here
                  * pause parsing the request body, The reason is that we don't want to
-                 * loose the body or protocol upgrades for async operations
+                 * lose the body or protocol upgrades for async operations
                  */
-                event.request().pause();
+                final HttpServerRequest request = event.request();
+                this.httpSwitch(request, request::pause);
+                // event.request().pause();
+
+
                 /*
                  * The modification for default to async fetch authorization
                  */
@@ -88,7 +97,8 @@ public class AuthorizationBuiltInHandler implements AuthorizationHandler {
                         } else {
                             // Exception happened
                             final Throwable ex = res.cause();
-                            event.request().resume();
+                            this.httpSwitch(request, request::resume);
+                            // event.request().resume();
                             if (Objects.nonNull(ex)) {
                                 event.fail(ex);
                             } else {
@@ -97,7 +107,8 @@ public class AuthorizationBuiltInHandler implements AuthorizationHandler {
                         }
                     });
                 } catch (final RuntimeException ex) {
-                    event.request().resume();
+                    this.httpSwitch(request, request::resume);
+                    // event.request().resume();
                     event.fail(ex);
                 }
             });
@@ -111,13 +122,15 @@ public class AuthorizationBuiltInHandler implements AuthorizationHandler {
                                             final Authorization resource,
                                             final AuthorizationContext authorizationContext,
                                             final Iterator<AuthorizationProvider> providers) {
+        final HttpServerRequest request = routingContext.request();
         if (resource.match(authorizationContext)) {
             final User user = authorizationContext.user();
             final String session = user.principal().getString(KName.SESSION);
             LOGGER.info("[ Auth ]\u001b[0;32m 403 Authorized successfully \u001b[m for ( {0} ) user: principal = {1}, attribute = {2}",
                 session, user.principal(), user.attributes());
             AuthorizationCache.userAuthorize(routingContext, () -> {
-                routingContext.request().resume();
+                this.httpSwitch(request, request::resume);
+                // event.request().resume();
                 routingContext.next();
             });
             return;
@@ -126,7 +139,8 @@ public class AuthorizationBuiltInHandler implements AuthorizationHandler {
             // resume as the error handler may allow this request to become valid again
             // Here the provides has no next to process, it means that all the providers
             // fail to 401/403 workflow here.
-            routingContext.request().resume();
+            this.httpSwitch(request, request::resume);
+            // event.request().resume();
             routingContext.fail(new _403ForbiddenException(this.getClass()));
             return;
         }
@@ -169,4 +183,46 @@ public class AuthorizationBuiltInHandler implements AuthorizationHandler {
         return this;
     }
 
+    /**
+     * {@link Http1xServerRequest}
+     * <pre><code>
+     *     public HttpServerRequest pause() {
+     *         synchronized(this.conn) {
+     *             if (this.pending != null) {
+     *                 this.pending.pause();
+     *             } else {
+     *                 this.pending = InboundBuffer.createPaused(this.context, 8L, this.pendingDrainHandler(), this.pendingHandler());
+     *             }
+     *
+     *             return this;
+     *         }
+     *     }
+     * </code></pre>
+     * {@link Http2ServerRequest}
+     * <pre><code>
+     *      public HttpServerRequest pause() {
+     *         synchronized((Http2ServerConnection)this.stream.conn) {
+     *             // 此处会抛异常：java.lang.IllegalStateException: Request has already been read
+     *             this.checkEnded();
+     *             this.stream.doPause();
+     *             return this;
+     *         }
+     *     }
+     * </code></pre>
+     * 当使用 2.0 协议代替 1.0 协议时，关于 {@link HttpServerRequest#pause()} 和 {@link HttpServerRequest#resume()} 调用时会
+     * 有所不同，所以此处就要求 2.0 模式下有所变化，只有 1.0 时才调用，如果 2.0 先跳过，防止异常信息
+     * <pre><code>
+     *     java.lang.IllegalStateException: Request has already been read
+     * </code></pre>
+     * 异常抛出，若缺失对应内容可以在后期 2.0 熟悉之后来补充，目前从代码上看不出这样的判断是否有影响，停止处理。
+     *
+     * @param request  HTTP请求
+     * @param actuator 执行器
+     */
+    private void httpSwitch(final HttpServerRequest request, final Actuator actuator) {
+        if (HttpVersion.HTTP_2 == request.version()) {
+            return;
+        }
+        actuator.execute();
+    }
 }
