@@ -27,7 +27,7 @@ public class AuthenticateGateway {
 
     public static void userCached(final JsonObject credentials, final Actuator actuator, final Actuator fnCache) {
         final String habitus = credentials.getString(KName.HABITUS);
-        final Rapid<String, JsonObject> rapid = Rapid.t(habitus);
+        final Rapid<String, JsonObject> rapid = Rapid.object(habitus);
         rapid.read(KWeb.CACHE.User.AUTHENTICATE).onComplete(res -> {
             if (res.succeeded()) {
                 final JsonObject cached = res.result();
@@ -45,7 +45,7 @@ public class AuthenticateGateway {
 
     public static void userCached(final JsonObject credentials, final Actuator actuator) {
         final String habitus = credentials.getString(KName.HABITUS);
-        final Rapid<String, JsonObject> rapid = Rapid.t(habitus);
+        final Rapid<String, JsonObject> rapid = Rapid.object(habitus);
         rapid.write(KWeb.CACHE.User.AUTHENTICATE, credentials).onComplete(next -> actuator.execute());
     }
 
