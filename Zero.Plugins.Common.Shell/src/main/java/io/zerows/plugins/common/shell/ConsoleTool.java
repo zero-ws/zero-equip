@@ -1,7 +1,6 @@
 package io.zerows.plugins.common.shell;
 
 import io.horizon.eon.VValue;
-import io.horizon.exception.BootingException;
 import io.vertx.core.Future;
 import io.vertx.up.util.Ut;
 import io.zerows.plugins.common.shell.atom.CommandAtom;
@@ -45,8 +44,7 @@ class ConsoleTool {
                 final CommandLine parsed = parser.parse(command.options(), args);
                 return Future.succeededFuture(parsed);
             } catch (final ParseException ex) {
-                final BootingException error = new BootCommandParseException(ConsoleTool.class, Ut.fromJoin(args), ex);
-                return Future.failedFuture(error);
+                return Ut.Bnd.failOut(BootCommandParseException.class, ConsoleTool.class, Ut.fromJoin(args), ex);
             }
         });
     }
@@ -83,8 +81,8 @@ class ConsoleTool {
                     /*
                      * Could not be found
                      */
-                    return Future.failedFuture(new BootPluginMissingException(ConsoleTool.class,
-                        command.getName() + ", ( " + command.getPlugin() + " )"));
+                    return Ut.Bnd.failOut(BootPluginMissingException.class, ConsoleTool.class,
+                        command.getName() + ", ( " + command.getPlugin() + " )");
                 }
             }
             /*
@@ -114,20 +112,23 @@ class ConsoleTool {
              */
             .filter(each -> commandName.equals(each.getSimple()) || commandName.equals(each.getName()))
             .findAny().orElse(null);
+
+
         if (Objects.isNull(atom)) {
             /*
              * Unknown command of input throw out exception
              */
-            return Future.failedFuture(new BootCommandUnknownException(ConsoleTool.class, commandName));
+            return Ut.Bnd.failOut(BootCommandUnknownException.class, ConsoleTool.class, commandName);
+        }
+
+
+        if (atom.valid()) {
+            /*
+             * Returned Command Atom
+             */
+            return Future.succeededFuture(atom);
         } else {
-            if (atom.valid()) {
-                /*
-                 * Returned Command Atom
-                 */
-                return Future.succeededFuture(atom);
-            } else {
-                return Future.failedFuture(new BootPluginMissingException(ConsoleTool.class, atom.getName()));
-            }
+            return Ut.Bnd.failOut(BootPluginMissingException.class, ConsoleTool.class, atom.getName());
         }
     }
 }

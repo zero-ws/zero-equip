@@ -84,7 +84,7 @@ public class ExprValue implements ExValue {
         final BiFunction<String, ConcurrentMap<String, String>, String> exprFn =
             PATH_FN.getOrDefault(value.trim(), null);
         if (Objects.isNull(exprFn)) {
-            throw Ut.Bnd.failureWeb(_501NotSupportException.class, this.getClass());
+            throw Ut.Bnd.failWeb(_501NotSupportException.class, this.getClass());
         }
         final String filepath = exprFn.apply(pathRoot, paramMap);
         return Ut.ioPath(filepath, field) + VString.DOT + VPath.SUFFIX.JSON;

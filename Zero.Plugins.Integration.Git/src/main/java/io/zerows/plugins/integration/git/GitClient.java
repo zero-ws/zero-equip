@@ -123,7 +123,7 @@ public interface GitClient extends InfixClient<GitClient> {
         } catch (final WebException ex) {
             return Future.failedFuture(ex);
         } catch (final Throwable ex) {
-            return Future.failedFuture(new _500InternalServerException(this.getClass(), ex.getMessage()));
+            return Ut.Bnd.failOut(_500InternalServerException.class, this.getClass(), ex.getMessage());
         }
     }
 }

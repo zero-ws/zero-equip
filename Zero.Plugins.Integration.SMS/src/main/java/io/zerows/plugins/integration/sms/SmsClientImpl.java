@@ -7,7 +7,6 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
-import io.horizon.exception.WebException;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
@@ -47,7 +46,7 @@ public class SmsClientImpl implements SmsClient {
             try {
                 DefaultProfile.addEndpoint(SmsConfig.DFT_REGION, SmsConfig.DFT_REGION, SmsConfig.DFT_PRODUCT);
             } catch (final Throwable ex) {
-                throw Ut.Bnd.failureWeb(_424ProfileEndPointException.class, this.getClass(), ex);
+                throw Ut.Bnd.failWeb(_424ProfileEndPointException.class, this.getClass(), ex);
             }
             this.client = new DefaultAcsClient(profile);
         }, params);
@@ -81,8 +80,7 @@ public class SmsClientImpl implements SmsClient {
             return Future.succeededFuture(data);
         } catch (final ClientException ex) {
             this.logger().fatal(ex);
-            final WebException error = Ut.Bnd.failureWeb(_424MessageSendException.class, this.getClass(), ex);
-            return Future.failedFuture(error);
+            return Ut.Bnd.failOut(_424MessageSendException.class, this.getClass(), ex);
         }
     }
 

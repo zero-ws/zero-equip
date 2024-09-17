@@ -9,6 +9,7 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.User;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
 import io.vertx.up.fn.Fn;
+import io.vertx.up.util.Ut;
 import io.zerows.core.security.atom.Aegis;
 
 import java.lang.reflect.Method;
@@ -93,7 +94,7 @@ public class AuthenticateBuiltInProvider implements AuthenticationProvider {
                     () -> handler.handle(this.buildUser(credentials)));
             } else {
                 // 401 Workflow
-                handler.handle(Future.failedFuture(new _401UnauthorizedException(this.getClass())));
+                handler.handle(Ut.Bnd.failOut(_401UnauthorizedException.class, this.getClass()));
             }
         });
     }

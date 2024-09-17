@@ -59,7 +59,7 @@ public class AuthenticateGateway {
         final Method method = against.getAuthenticate();
         if (Objects.isNull(method)) {
             // Exception for method is null ( This situation should not happen )
-            handler.handle(Future.failedFuture(new _401UnauthorizedException(AuthenticateGateway.class)));
+            handler.handle(Ut.Bnd.failOut(_401UnauthorizedException.class, AuthenticateGateway.class));
         } else {
             // Verify the data by @Wall's method that has been annotated by @Authenticate
             final Object proxy = aegis.getProxy();
@@ -74,7 +74,7 @@ public class AuthenticateGateway {
                     final Throwable ex = res.cause();
                     if (Objects.isNull(ex)) {
                         // 401 Without Exception
-                        handler.handle(Future.failedFuture(new _401UnauthorizedException(AuthenticateGateway.class)));
+                        handler.handle(Ut.Bnd.failOut(_401UnauthorizedException.class, AuthenticateGateway.class));
                     } else {
                         // 401 With Throwable
                         handler.handle(Future.failedFuture(ex));

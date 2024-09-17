@@ -203,14 +203,15 @@ class SheetImport {
         if (async.succeeded()) {
             final Set<ExTable> tables = async.result();
             return this.importAsync(tables);
+        }
+
+
+        final Throwable error = async.cause();
+        if (Objects.nonNull(error)) {
+            return Ut.Bnd.failOut(_500ExportingErrorException.class, this.getClass(), error.getMessage());
         } else {
-            final Throwable error = async.cause();
-            if (Objects.nonNull(error)) {
-                return Future.failedFuture(new _500ExportingErrorException(this.getClass(), error.getMessage()));
-            } else {
-                return Future.failedFuture(new _500InternalServerException(this.getClass(),
-                    "Unexpected Error when Importing"));
-            }
+            return Ut.Bnd.failOut(_500InternalServerException.class, this.getClass(),
+                "Unexpected Error when Importing");
         }
     }
 
