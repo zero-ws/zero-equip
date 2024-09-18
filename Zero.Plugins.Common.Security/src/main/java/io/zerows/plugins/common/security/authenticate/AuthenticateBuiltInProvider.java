@@ -85,16 +85,21 @@ public class AuthenticateBuiltInProvider implements AuthenticationProvider {
              *          <Current Method Code Logical>
              *     }
              */
-            final Boolean checked = res.result();
-            if (checked) {
-                // Success to passed validation
-                LOGGER.info("[ Auth ]\u001b[0;32m 401 Authenticated successfully!\u001b[m");
-                AuthenticateGateway.userCached(credentials,
-                    // Build `User`
-                    () -> handler.handle(this.buildUser(credentials)));
+            if (res.succeeded()) {
+                final Boolean checked = res.result();
+                if (checked) {
+                    // Success to passed validation
+                    LOGGER.info("[ Auth ]\u001b[0;32m 401 Authenticated successfully!\u001b[m");
+                    AuthenticateGateway.userCached(credentials,
+                        // Build `User`
+                        () -> handler.handle(this.buildUser(credentials)));
+                } else {
+                    // 401 Workflow
+                    handler.handle(Ut.Bnd.failOut(_401UnauthorizedException.class, this.getClass()));
+                }
             } else {
-                // 401 Workflow
-                handler.handle(Ut.Bnd.failOut(_401UnauthorizedException.class, this.getClass()));
+                // Validated
+                handler.handle(Future.failedFuture(res.cause()));
             }
         });
     }
