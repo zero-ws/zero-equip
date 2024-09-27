@@ -97,7 +97,7 @@ class ExcelHelper {
     }
 
     /*
-     * Read file from path to build Excel Workbook object.
+     * Read file from path to web Excel Workbook object.
      * If this function get null dot file or file object, zero system
      * will throw exception out.
      */

@@ -96,7 +96,7 @@ public class ComplexIn extends AbstractExIn {
              */
             final Row row = rowList.get(VValue.IDX);
             /*
-             * In first iterator for first row, the system should build `complexMap`
+             * In first iterator for first row, the system should web `complexMap`
              */
             ExFn.itRow(row, bound, this.consumeCellFn(record, rowMap, table, metaAtom));
             this.prepareForComplex(complexMap, rowMap);

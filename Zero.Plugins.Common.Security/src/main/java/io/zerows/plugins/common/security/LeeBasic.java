@@ -40,7 +40,7 @@ class LeeBasic extends AbstractLee {
     @SuppressWarnings("unchecked")
     public AuthenticationProvider providerInternal(final Vertx vertx, final Aegis config) {
         /*
-         * Here provider could build ChainAuth instead of handler chain
+         * Here provider could web ChainAuth instead of handler chain
          * The provider type is: io.vertx.ext.auth.ChainAuth
          */
         final AdapterProvider adapter = AdapterProvider.common();

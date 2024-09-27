@@ -108,7 +108,7 @@ public class ElasticSearchHelper {
     }
 
     /**
-     * build mappings for index from fields and fields' type
+     * web mappings for index from fields and fields' type
      *
      * @param mappings fields with type, format like below
      *                 {

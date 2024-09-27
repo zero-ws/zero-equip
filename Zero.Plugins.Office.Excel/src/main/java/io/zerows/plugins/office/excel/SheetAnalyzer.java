@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentMap;
 
 /*
  * Wrapper Sheet object to store data, this object could help to
- * build ExTable here.
+ * web ExTable here.
  */
 public class SheetAnalyzer implements Serializable {
     private static final OLog LOGGER = Ut.Log.plugin(SheetAnalyzer.class);
@@ -108,13 +108,13 @@ public class SheetAnalyzer implements Serializable {
     }
 
     /*
-     * Scan sheet from row to cell to build each table.
+     * Scan sheet from row to cell to web each table.
      */
     private ExTable analyzed(final Row row, final Cell cell, final Integer limitation, final HMetaAtom metaAtom) {
         /* Build ExTable */
         final ExTable table = this.create(row, cell);
 
-        /* ExIn build */
+        /* ExIn web */
         final ExIn in;
         if (Objects.nonNull(metaAtom) && metaAtom.isComplex()) {
             in = new ComplexIn(this.sheet).bind(this.evaluator);

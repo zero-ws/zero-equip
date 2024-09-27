@@ -60,7 +60,7 @@ public class ExcelClientImpl implements ExcelClient {
      * 2.1) The input contains two categories:
      * -- 1. InputStream for byte array input, in this mode, you must provide `isXlsx` parameter
      * -- 2. filename of input, the format should be distinguish by file extension `.xls` for 2003, `.xlsx` for 2007
-     * 2.2) The Shape contains `Dynamic` importing in Ox channel or other build `Shape` object, it contains type definition
+     * 2.2) The Shape contains `Dynamic` importing in Ox channel or other web `Shape` object, it contains type definition
      * 2.2) async contains ( Sync, Callback, Future ) three mode
      */
     @Override
@@ -145,7 +145,7 @@ public class ExcelClientImpl implements ExcelClient {
      * 2.1) The input contains two categories:
      * -- 1. InputStream for byte array input, in this mode, you must provide `isXlsx` parameter
      * -- 2. filename of input, the format should be distinguish by file extension `.xls` for 2003, `.xlsx` for 2007
-     * 2.2) The Shape contains `Dynamic` importing in Ox channel or other build `Shape` object, it contains type definition
+     * 2.2) The Shape contains `Dynamic` importing in Ox channel or other web `Shape` object, it contains type definition
      * 2.2) async contains ( Sync, Callback, Future ) three mode
      */
     @Override

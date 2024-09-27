@@ -64,7 +64,7 @@ public interface AuthorizationResource {
         metadata.put(KName.URI_REQUEST, request.path());
         metadata.put(KName.METHOD, request.method().name());
         /*
-         * view parameters for ScRequest to build cache key
+         * view parameters for ScRequest to web cache key
          * It's important
          */
         final String literal = request.getParam(KName.VIEW);
