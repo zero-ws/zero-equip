@@ -57,7 +57,7 @@ public class ExcelEnvConnect implements ExcelEnv<MDConfiguration> {
 
         // 扩展模块初始化，HExtension.initialize();
         final Set<HExtension> extensions = HExtension.initialize();
-        extensions.forEach(HExtension::configure);
+        extensions.forEach(HExtension::connect);
         return configuration;
     }
 
