@@ -37,6 +37,11 @@ public class ExprValue implements ExValue {
                     final String name = paramMap.get(KName.NAME);
                     return Ut.ioPath(pathRoot, name);
                 });
+                // NAME:class
+                this.put(ExConstant.CELL.NAME_CLASS, (pathRoot, paramMap) -> {
+                    final String name = paramMap.get(KName.NAME);
+                    return Ut.ioPath(pathRoot, name);
+                });
                 // CODE:NAME:config
                 this.put(ExConstant.CELL.CODE_NAME_CONFIG, (pathRoot, paramMap) -> {
                     final String code = paramMap.get(KName.CODE);

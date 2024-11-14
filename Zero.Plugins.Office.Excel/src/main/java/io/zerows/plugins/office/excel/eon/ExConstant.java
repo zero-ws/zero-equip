@@ -14,6 +14,7 @@ public interface ExConstant {
         String UUID = "{UUID}";
         String PWD = "PWD";
         String NAME_CONFIG = "NAME:config";
+        String NAME_CLASS = "NAME:class";
         String NAME_ABBR_CONFIG = "NAME_ABBR:config";
         String CODE_CONFIG = "CODE:config";
         String CODE_CLASS = "CODE:class";
