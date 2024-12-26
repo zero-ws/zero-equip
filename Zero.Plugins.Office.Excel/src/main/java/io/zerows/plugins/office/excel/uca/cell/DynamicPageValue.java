@@ -13,6 +13,15 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class DynamicPageValue implements ExValue {
 
+    /*
+     * 格式如下
+     * {
+     *     "__type__": "PAGE",
+     *     "__content__": {
+     *         "path": "<page-uri>"
+     *     }
+     * }
+     */
     @Override
     public Object to(final Object value, final ConcurrentMap<String, String> paramMap) {
         final String[] pathArr = value.toString().split(VString.COLON);
@@ -24,7 +33,10 @@ public class DynamicPageValue implements ExValue {
                 valueJ.put(ExConstant.K_TYPE, ExConstant.CELL.P_PAGE);
 
                 final JsonObject content = new JsonObject();
-                content.put(KName.App.CONTEXT, path);
+                /*
+                 * 解决系统中无法读取配置的问题，针对现有系统进行格式化处理
+                 */
+                content.put(KName.PATH, path);
                 valueJ.put(ExConstant.K_CONTENT, content);
                 literal = valueJ.encodePrettily();
                 this.logger().info("[ Έξοδος ] （ExJson）Page = {0}, Page Value built `{1}`", path, literal);

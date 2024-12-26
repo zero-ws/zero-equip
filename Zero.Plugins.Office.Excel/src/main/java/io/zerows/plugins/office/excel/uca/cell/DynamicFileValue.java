@@ -13,7 +13,15 @@ import java.util.concurrent.ConcurrentMap;
  */
 @SuppressWarnings("all")
 public class DynamicFileValue implements ExValue {
-
+    /*
+     * 格式如下
+     * {
+     *     "__type__": "FILE",
+     *     "__content__": {
+     *         "path": "<page-uri>"
+     *     }
+     * }
+     */
     @Override
     public Object to(final Object value, final ConcurrentMap<String, String> paramMap) {
         final String[] pathArr = value.toString().split(VString.COLON);
@@ -25,7 +33,7 @@ public class DynamicFileValue implements ExValue {
                 valueJ.put(ExConstant.K_TYPE, ExConstant.CELL.P_FILE);
 
                 final JsonObject content = new JsonObject();
-                content.put(KName.App.CONTEXT, path);
+                content.put(KName.PATH, path);
                 valueJ.put(ExConstant.K_CONTENT, content);
                 literal = valueJ.encodePrettily();
                 this.logger().info("[ Έξοδος ] （ExJson）File = {0}, File Value built `{1}`", path, literal);
