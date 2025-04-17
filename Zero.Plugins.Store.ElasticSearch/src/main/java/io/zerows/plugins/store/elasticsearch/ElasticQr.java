@@ -16,6 +16,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentMap;
 
 class ElasticQr {
@@ -50,7 +51,7 @@ class ElasticQr {
                 .put("index", this.options.getString("index"))
                 .put("status", response.status().name())
                 .put("took", response.getTook().seconds())
-                .put("total", response.getHits().getTotalHits().value);
+                .put("total", Objects.requireNonNull(response.getHits().getTotalHits()).value());
             /*
              * Response Building
              */
