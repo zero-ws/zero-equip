@@ -20,7 +20,7 @@
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>aliyun-java-sdk-core</artifactId>
-            <version>4.7.0</version>
+            <version>4.7.6</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-dysmsapi -->
         <dependency>
