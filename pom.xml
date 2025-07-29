@@ -14,29 +14,29 @@
     <name>Zero.Plugins.Infix.POM.${zero.version}</name>
     <modules>
         <!-- Common -->
-        <module>Zero.Plugins.Common.Security</module>
-        <module>Zero.Plugins.Common.Shell</module>
-        <module>Zero.Plugins.Common.Trash</module>
+        <module>zero-plugins-common-security</module>
+        <module>zero-plugins-common-shell</module>
+        <module>zero-plugins-common-trash</module>
 
         <!-- Integration -->
-        <module>Zero.Plugins.Integration.Feign</module>
-        <module>Zero.Plugins.Integration.Git</module>
-        <module>Zero.Plugins.Integration.SMS</module>
-        <module>Zero.Plugins.Integration.Wechat</module>
+        <module>zero-plugins-integration-feign</module>
+        <module>zero-plugins-integration-git</module>
+        <module>zero-plugins-integration-sms</module>
+        <module>zero-plugins-integration-wechat</module>
 
         <!-- Office -->
-        <module>Zero.Plugins.Office.Excel</module>
+        <module>zero-plugins-office-excel</module>
 
         <!-- Store -->
-        <module>Zero.Plugins.Store.ElasticSearch</module>
-        <module>Zero.Plugins.Store.Liquibase</module>
-        <module>Zero.Plugins.Store.Mongo</module>
-        <module>Zero.Plugins.Store.Neo4j</module>
-        <module>Zero.Plugins.Store.Redis</module>
+        <module>zero-plugins-store-elasticsearch</module>
+        <module>zero-plugins-store-liquibase</module>
+        <module>zero-plugins-store-mongo</module>
+        <module>zero-plugins-store-neo4j</module>
+        <module>zero-plugins-store-redis</module>
 
         <!-- Web -->
-        <module>Zero.Plugins.Video.IQIY</module>
-        <module>Zero.Plugins.WebSocket.Stomp</module>
+        <module>zero-plugins-video-iqiy</module>
+        <module>zero-plugins-websocket-stomp</module>
     </modules>
     <dependencies>
     </dependencies>
