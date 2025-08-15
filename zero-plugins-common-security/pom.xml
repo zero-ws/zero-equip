@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>io.zerows</groupId>
-            <artifactId>zero-core-feature-web-utility-x</artifactId>
+            <artifactId>zero-core-unity</artifactId>
         </dependency>
         <!-- JWT -->
         <dependency>

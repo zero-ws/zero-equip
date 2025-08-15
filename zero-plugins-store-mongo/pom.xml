@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>io.zerows</groupId>
-            <artifactId>zero-core-runtime-metadata</artifactId>
+            <artifactId>zero-core-runtime</artifactId>
         </dependency>
         <!-- Mongo Db Client & Provider -->
         <dependency>

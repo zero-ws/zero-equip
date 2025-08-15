@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>io.zerows</groupId>
-            <artifactId>zero-core-feature-unit-testing</artifactId>
+            <artifactId>zero-core-testing</artifactId>
         </dependency>
         <dependency>
             <groupId>org.neo4j.driver</groupId>

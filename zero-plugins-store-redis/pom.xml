@@ -15,15 +15,11 @@
     <dependencies>
         <dependency>
             <groupId>io.zerows</groupId>
-            <artifactId>zero-core-feature-database-cache</artifactId>
+            <artifactId>zero-core-database</artifactId>
         </dependency>
         <dependency>
             <groupId>io.zerows</groupId>
-            <artifactId>zero-core-feature-web-session</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.zerows</groupId>
-            <artifactId>zero-core-runtime-security</artifactId>
+            <artifactId>zero-core-web</artifactId>
         </dependency>
         <!-- Sync -->
         <dependency>

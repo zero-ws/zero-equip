@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>io.zerows</groupId>
-            <artifactId>zero-core-feature-database-jooq</artifactId>
+            <artifactId>zero-core-database</artifactId>
         </dependency>
     </dependencies>
     <build>

@@ -6,10 +6,10 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.json.JsonObject;
 import io.vertx.up.util.Ut;
-import io.zerows.core.feature.database.cache.hit.AlgorithmCollection;
-import io.zerows.core.feature.database.cache.hit.AlgorithmRecord;
-import io.zerows.core.feature.database.cache.hit.L1Algorithm;
-import io.zerows.core.feature.database.cache.l1.L1Config;
+import io.zerows.core.database.cache.hit.AlgorithmCollection;
+import io.zerows.core.database.cache.hit.AlgorithmRecord;
+import io.zerows.core.database.cache.hit.L1Algorithm;
+import io.zerows.core.database.cache.l1.L1Config;
 
 import java.util.Objects;
 import java.util.concurrent.ConcurrentMap;
