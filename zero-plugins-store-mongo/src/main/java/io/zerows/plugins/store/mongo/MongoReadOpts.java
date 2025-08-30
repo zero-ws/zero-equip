@@ -1,9 +1,9 @@
 package io.zerows.plugins.store.mongo;
 
-import io.horizon.uca.qr.Pager;
-import io.horizon.uca.qr.Sorter;
+import io.zerows.core.uca.qr.Pager;
+import io.zerows.core.uca.qr.Sorter;
 import io.vertx.ext.mongo.FindOptions;
-import io.vertx.up.fn.Fn;
+import io.zerows.core.fn.Fn;
 
 /**
  * Build FindOptions for mongo database.

@@ -8,11 +8,11 @@ import io.vertx.ext.auth.authorization.AndAuthorization;
 import io.vertx.ext.auth.authorization.Authorization;
 import io.vertx.ext.auth.authorization.OrAuthorization;
 import io.vertx.ext.web.RoutingContext;
-import io.vertx.up.eon.em.EmSecure;
-import io.vertx.up.fn.Fn;
-import io.vertx.up.util.Ut;
-import io.zerows.core.security.annotations.AuthorizedResource;
-import io.zerows.core.security.atom.Aegis;
+import io.zerows.core.constant.em.EmSecure;
+import io.zerows.core.fn.Fn;
+import io.zerows.core.util.Ut;
+import io.zerows.module.security.annotations.AuthorizedResource;
+import io.zerows.module.security.atom.Aegis;
 import io.zerows.plugins.common.security.profile.PermissionAuthorization;
 
 import java.lang.annotation.Annotation;

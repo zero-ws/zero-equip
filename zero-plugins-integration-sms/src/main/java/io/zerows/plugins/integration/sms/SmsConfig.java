@@ -1,10 +1,10 @@
 package io.zerows.plugins.integration.sms;
 
-import io.horizon.uca.log.Annal;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.fn.Fn;
-import io.vertx.up.util.Ut;
-import io.zerows.core.metadata.zdk.plugins.InfixConfig;
+import io.zerows.core.fn.Fn;
+import io.zerows.core.uca.log.Annal;
+import io.zerows.core.util.Ut;
+import io.zerows.module.metadata.zdk.plugins.InfixConfig;
 
 import java.io.Serializable;
 import java.util.Objects;

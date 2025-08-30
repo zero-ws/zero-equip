@@ -1,7 +1,7 @@
 package io.zerows.plugins.store.redis.cache;
 
-import io.horizon.eon.em.typed.ChangeFlag;
-import io.horizon.uca.log.Annal;
+import io.zerows.agreed.constant.em.typed.ChangeFlag;
+import io.zerows.core.uca.log.Annal;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Promise;

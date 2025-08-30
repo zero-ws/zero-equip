@@ -1,9 +1,9 @@
 package io.zerows.plugins.office.excel.atom;
 
-import io.horizon.eon.VString;
-import io.horizon.specification.typed.TJson;
+import io.zerows.agreed.constant.VString;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.util.Ut;
+import io.zerows.core.util.Ut;
+import io.zerows.specification.atomic.HJson;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
-public class ExRecord implements Serializable, TJson {
+public class ExRecord implements Serializable, HJson {
 
     private final ExTable tableRef;
     private final transient Map<String, Object> data

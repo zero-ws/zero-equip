@@ -1,6 +1,6 @@
 package io.zerows.plugins.office.excel;
 
-import io.modello.specification.meta.HMetaAtom;
+import io.zerows.specification.modeling.metadata.HMetaAtom;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 

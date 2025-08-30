@@ -1,9 +1,9 @@
 package io.zerows.plugins.store.elasticsearch;
 
-import io.horizon.uca.log.Annal;
+import io.zerows.core.uca.log.Annal;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.fn.Fn;
+import io.zerows.core.fn.Fn;
 import io.zerows.plugins.store.elasticsearch.exception._404IndexNameMissingExceptionn;
 import io.zerows.plugins.store.elasticsearch.exception._404SearchTextMissingExceptionn;
 import org.elasticsearch.action.search.SearchRequest;

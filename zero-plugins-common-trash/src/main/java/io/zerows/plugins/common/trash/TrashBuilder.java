@@ -1,11 +1,11 @@
 package io.zerows.plugins.common.trash;
 
-import io.horizon.uca.log.Annal;
+import io.zerows.core.uca.log.Annal;
 import io.vertx.codegen.annotations.Fluent;
 import io.vertx.core.MultiMap;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.util.Ut;
+import io.zerows.core.util.Ut;
 import io.zerows.core.database.jooq.JooqInfix;
 import org.jooq.*;
 import org.jooq.impl.DSL;

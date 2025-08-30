@@ -1,7 +1,5 @@
 package io.zerows.plugins.common.security.authenticate;
 
-import io.horizon.exception.WebException;
-import io.horizon.exception.web._401UnauthorizedException;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
@@ -10,7 +8,9 @@ import io.vertx.ext.auth.User;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
 import io.vertx.ext.auth.authentication.Credentials;
 import io.vertx.ext.auth.authentication.TokenCredentials;
-import io.zerows.core.security.atom.Aegis;
+import io.zerows.core.exception.WebException;
+import io.zerows.core.exception.web._401UnauthorizedException;
+import io.zerows.module.security.atom.Aegis;
 
 /**
  * @author <a href="http://www.origin-x.cn">Lang</a>

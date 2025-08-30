@@ -1,7 +1,7 @@
 package io.zerows.plugins.store.neo4j.refine;
 
-import io.horizon.uca.log.Log;
-import io.horizon.uca.log.LogModule;
+import io.zerows.core.uca.log.Log;
+import io.zerows.core.uca.log.LogModule;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import org.neo4j.driver.Result;

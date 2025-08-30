@@ -9,10 +9,10 @@ import io.vertx.ext.stomp.Frame;
 import io.vertx.ext.stomp.ServerFrame;
 import io.vertx.ext.stomp.StompServerConnection;
 import io.vertx.ext.stomp.StompServerHandler;
-import io.vertx.up.eon.KName;
-import io.vertx.up.util.Ut;
+import io.zerows.core.constant.KName;
+import io.zerows.core.util.Ut;
 import io.zerows.core.web.security.uca.bridge.Bolt;
-import io.zerows.core.security.zdk.Lee;
+import io.zerows.module.security.zdk.Lee;
 import io.zerows.plugins.websocket.stomp.socket.ServerWsHandler;
 import jakarta.ws.rs.core.HttpHeaders;
 
@@ -109,7 +109,7 @@ class FrameConnector extends AbstractFrameHandler {
         // Extract authorization to token
         final Lee lee = Bolt.reference(this.config.getType());
         /*
-         * WebToken String -> Json WebToken Object
+         * WebToken String -> InJson WebToken Object
          * 1. WebToken String must be split with ' ' and get the 1
          * 2. Aegis must be switched to valid value except extension
          */

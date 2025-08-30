@@ -1,10 +1,10 @@
 package io.zerows.plugins.office.excel.uca.cell;
 
-import io.horizon.eon.VString;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.util.Ut;
-import io.zerows.core.metadata.uca.environment.DevEnv;
+import io.zerows.agreed.constant.VString;
+import io.zerows.core.util.Ut;
+import io.zerows.module.metadata.uca.environment.DevEnv;
 
 import java.util.concurrent.ConcurrentMap;
 
@@ -25,7 +25,7 @@ public class PrefixJsonValue implements ExValue {
                 if (Ut.isNotNil(content)) {
                     // 日志级别调整
                     if (DevEnv.devExcelRange()) {
-                        this.logger().info("[ Έξοδος ] （ExJson）File = {0}, Json Value captured `{1}`",
+                        this.logger().info("[ Έξοδος ] （ExJson）File = {0}, InJson Value captured `{1}`",
                             path, content);
                     }
                     if (Ut.isJArray(content)) {

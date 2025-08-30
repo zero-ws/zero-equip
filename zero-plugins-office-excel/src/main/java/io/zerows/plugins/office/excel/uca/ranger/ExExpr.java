@@ -1,6 +1,6 @@
 package io.zerows.plugins.office.excel.uca.ranger;
 
-import io.horizon.uca.cache.Cc;
+import io.zerows.core.uca.cache.Cc;
 import io.vertx.core.json.JsonObject;
 import io.zerows.plugins.office.excel.atom.ExRecord;
 
@@ -12,7 +12,7 @@ import io.zerows.plugins.office.excel.atom.ExRecord;
  *     {UUID}               自动生成 UUID
  *     CODE:class           根据 CODE 加载 {CURRENT}/{code}/{field}.json -> [value]  -> String Java 类名
  *     NAME:config          根据 NAME 加载 {CURRENT}/{name}/{field}.json
- *     CODE:config          根据 CODE 加载 {CURRENT}/{code}/{field}.json -> {} -> Json 格式的配置数据
+ *     CODE:config          根据 CODE 加载 {CURRENT}/{code}/{field}.json -> {} -> InJson 格式的配置数据
  *     CODE:NAME:config     根据 CODE 加载 {CURRENT}/{code}/{name}/{field}.json
  *     PWD                  当前目录       {CURRENT}/{field}.json
  *     外联文件加载

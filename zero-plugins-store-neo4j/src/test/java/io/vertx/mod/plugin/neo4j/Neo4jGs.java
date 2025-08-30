@@ -1,6 +1,6 @@
 package io.vertx.mod.plugin.neo4j;
 
-import io.horizon.eon.VValue;
+import io.zerows.agreed.constant.VValue;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 

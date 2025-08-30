@@ -1,13 +1,13 @@
 package io.zerows.plugins.store.mongo;
 
-import io.horizon.uca.log.Annal;
+import io.zerows.core.uca.log.Annal;
 import io.reactivex.rxjava3.core.Observable;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.mongo.FindOptions;
 import io.vertx.ext.mongo.MongoClient;
-import io.vertx.up.fn.Fn;
+import io.zerows.core.fn.Fn;
 
 import java.util.Objects;
 import java.util.function.BinaryOperator;

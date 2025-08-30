@@ -1,6 +1,6 @@
 package io.zerows.plugins.office.excel.atom;
 
-import io.horizon.eon.VString;
+import io.zerows.agreed.constant.VString;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import java.io.Serializable;

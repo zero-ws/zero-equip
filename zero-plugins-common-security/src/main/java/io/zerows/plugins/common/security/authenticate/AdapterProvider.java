@@ -1,8 +1,8 @@
 package io.zerows.plugins.common.security.authenticate;
 
-import io.horizon.uca.cache.Cc;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
-import io.zerows.core.security.atom.Aegis;
+import io.zerows.core.uca.cache.Cc;
+import io.zerows.module.security.atom.Aegis;
 
 /**
  * @author <a href="http://www.origin-x.cn">Lang</a>

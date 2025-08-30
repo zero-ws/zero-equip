@@ -3,7 +3,7 @@ package io.zerows.plugins.store.neo4j.sync;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.util.Ut;
+import io.zerows.core.util.Ut;
 import io.zerows.plugins.store.neo4j.AbstractN4JSession;
 import io.zerows.plugins.store.neo4j.refine.N4J;
 import org.neo4j.driver.Session;

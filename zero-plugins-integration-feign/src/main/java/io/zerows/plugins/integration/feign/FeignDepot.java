@@ -4,9 +4,9 @@ import feign.Feign;
 import feign.Request;
 import feign.Retryer;
 import feign.codec.ErrorDecoder;
-import io.horizon.uca.cache.Cc;
 import io.vertx.core.json.JsonObject;
-import io.zerows.core.metadata.zdk.plugins.InfixConfig;
+import io.zerows.core.uca.cache.Cc;
+import io.zerows.module.metadata.zdk.plugins.InfixConfig;
 import io.zerows.plugins.integration.feign.codec.JsonObjectDecoder;
 import io.zerows.plugins.integration.feign.codec.JsonObjectEncoder;
 

@@ -4,8 +4,8 @@ import io.vertx.config.ConfigRetriever;
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.ext.web.Router;
-import io.horizon.eon.VValue;
-import io.vertx.up.annotations.Worker;
+import io.zerows.agreed.constant.VValue;
+import io.zerows.core.annotations.Worker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

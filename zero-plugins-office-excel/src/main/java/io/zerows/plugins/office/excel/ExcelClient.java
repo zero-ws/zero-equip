@@ -1,6 +1,5 @@
 package io.zerows.plugins.office.excel;
 
-import io.modello.specification.meta.HMetaAtom;
 import io.vertx.codegen.annotations.Fluent;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
@@ -9,8 +8,9 @@ import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.zerows.core.metadata.zdk.plugins.InfixClient;
+import io.zerows.module.metadata.zdk.plugins.InfixClient;
 import io.zerows.plugins.office.excel.atom.ExTable;
+import io.zerows.specification.modeling.metadata.HMetaAtom;
 
 import java.io.InputStream;
 import java.util.Set;

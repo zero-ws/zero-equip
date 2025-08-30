@@ -5,7 +5,7 @@ import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
-import io.zerows.core.metadata.zdk.plugins.InfixClient;
+import io.zerows.module.metadata.zdk.plugins.InfixClient;
 
 /**
  * QiyClient for app.zero.cloud of http://open.iqiyi.com/

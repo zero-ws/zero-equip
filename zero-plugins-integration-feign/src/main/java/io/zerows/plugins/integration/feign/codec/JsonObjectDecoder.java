@@ -4,7 +4,7 @@ import feign.FeignException;
 import feign.Response;
 import feign.codec.Decoder;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.util.Ut;
+import io.zerows.core.util.Ut;
 
 import java.io.IOException;
 import java.lang.reflect.Type;

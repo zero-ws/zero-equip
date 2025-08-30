@@ -1,12 +1,12 @@
 package io.zerows.plugins.video.iqiy;
 
-import io.horizon.uca.log.Annal;
+import io.zerows.core.uca.log.Annal;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.fn.Fn;
+import io.zerows.core.fn.Fn;
 import io.zerows.plugins.video.iqiy.api.QiyAuthorize;
 import io.zerows.plugins.video.iqiy.api.QiyUpload;
 import io.zerows.plugins.video.iqiy.exception._401QiyTokenException;

@@ -1,8 +1,8 @@
 package io.zerows.plugins.office.excel.util;
 
-import io.modello.specification.meta.HMetaAtom;
+import io.zerows.specification.modeling.metadata.HMetaAtom;
 import io.vertx.core.json.JsonArray;
-import io.vertx.up.util.Ut;
+import io.zerows.core.util.Ut;
 import io.zerows.plugins.office.excel.uca.ranger.ExBound;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;

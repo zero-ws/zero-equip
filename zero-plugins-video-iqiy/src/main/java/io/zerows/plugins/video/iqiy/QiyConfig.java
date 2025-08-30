@@ -1,9 +1,9 @@
 package io.zerows.plugins.video.iqiy;
 
-import io.horizon.uca.log.Annal;
+import io.zerows.core.uca.log.Annal;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.eon.KName;
-import io.vertx.up.fn.Fn;
+import io.zerows.core.constant.KName;
+import io.zerows.core.fn.Fn;
 import io.zerows.plugins.integration.feign.FeignDepot;
 
 import java.io.Serializable;

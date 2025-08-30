@@ -1,6 +1,6 @@
 package io.zerows.plugins.common.shell.exception;
 
-import io.horizon.exception.BootingException;
+import io.zerows.core.exception.BootingException;
 import org.apache.commons.cli.ParseException;
 
 /**

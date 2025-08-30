@@ -1,7 +1,7 @@
 package io.zerows.plugins.store.liquibase.hed;
 
-import io.horizon.atom.common.KPair;
-import io.horizon.spi.cloud.HED;
+import io.zerows.common.program.KPair;
+import io.zerows.core.spi.cloud.HED;
 
 /**
  * @author <a href="http://www.origin-x.cn">Lang</a>

@@ -1,9 +1,9 @@
 package io.zerows.plugins.integration.git;
 
-import io.horizon.uca.cache.Cc;
-import io.macrocosm.atom.boot.KRepo;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
+import io.zerows.core.running.boot.KRepo;
+import io.zerows.core.uca.cache.Cc;
 
 /**
  * GitInfix 不开放 Infusion 结构，源于整个系统中不允许直接和某个 Git 仓库绑定，仓库的应用只局限于

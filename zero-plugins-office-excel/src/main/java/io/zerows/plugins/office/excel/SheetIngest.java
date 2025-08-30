@@ -1,6 +1,6 @@
 package io.zerows.plugins.office.excel;
 
-import io.modello.specification.meta.HMetaAtom;
+import io.zerows.specification.modeling.metadata.HMetaAtom;
 import io.vertx.core.Future;
 import io.zerows.plugins.office.excel.atom.ExTable;
 import io.zerows.plugins.office.excel.atom.ExWorkbook;

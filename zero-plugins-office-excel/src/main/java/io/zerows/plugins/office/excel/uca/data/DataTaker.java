@@ -1,7 +1,7 @@
 package io.zerows.plugins.office.excel.uca.data;
 
-import io.horizon.eon.VString;
-import io.horizon.uca.cache.Cc;
+import io.zerows.agreed.constant.VString;
+import io.zerows.core.uca.cache.Cc;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonArray;
 import io.zerows.plugins.office.excel.atom.ExTenant;

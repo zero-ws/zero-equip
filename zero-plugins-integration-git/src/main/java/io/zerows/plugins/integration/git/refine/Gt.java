@@ -1,7 +1,7 @@
 package io.zerows.plugins.integration.git.refine;
 
-import io.horizon.uca.log.Log;
-import io.horizon.uca.log.LogModule;
+import io.zerows.core.uca.log.Log;
+import io.zerows.core.uca.log.LogModule;
 
 /**
  * @author lang : 2023/4/26

@@ -1,7 +1,7 @@
 package io.zerows.plugins.common.security.authorization;
 
 import io.vertx.ext.web.handler.AuthorizationHandler;
-import io.zerows.core.security.atom.Aegis;
+import io.zerows.module.security.atom.Aegis;
 
 /**
  * @author <a href="http://www.origin-x.cn">Lang</a>

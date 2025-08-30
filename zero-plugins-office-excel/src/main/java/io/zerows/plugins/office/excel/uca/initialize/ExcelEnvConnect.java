@@ -2,14 +2,14 @@ package io.zerows.plugins.office.excel.uca.initialize;
 
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.eon.KName;
-import io.vertx.up.util.Ut;
-import io.zerows.core.metadata.atom.configuration.MDConfiguration;
-import io.zerows.core.metadata.atom.configuration.modeling.MDConnect;
+import io.zerows.core.constant.KName;
+import io.zerows.core.util.Ut;
 import io.zerows.core.web.model.extension.HExtension;
 import io.zerows.core.web.model.store.module.OCacheConfiguration;
 import io.zerows.core.web.model.uca.normalize.EquipAt;
 import io.zerows.core.web.model.uca.normalize.Replacer;
+import io.zerows.module.metadata.atom.configuration.MDConfiguration;
+import io.zerows.module.metadata.atom.configuration.modeling.MDConnect;
 
 import java.util.List;
 import java.util.Objects;

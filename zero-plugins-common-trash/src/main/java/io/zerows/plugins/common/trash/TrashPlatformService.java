@@ -1,9 +1,9 @@
 package io.zerows.plugins.common.trash;
 
-import io.horizon.uca.cache.Cc;
+import io.zerows.core.uca.cache.Cc;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.util.Ut;
+import io.zerows.core.util.Ut;
 
 public class TrashPlatformService implements TrashPlatform {
 

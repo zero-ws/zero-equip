@@ -1,6 +1,6 @@
 package io.zerows.plugins.office.excel;
 
-import io.modello.specification.meta.HMetaAtom;
+import io.zerows.specification.modeling.metadata.HMetaAtom;
 import io.vertx.codegen.annotations.Fluent;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;

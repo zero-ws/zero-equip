@@ -1,12 +1,12 @@
 package io.zerows.plugins.office.excel.util;
 
-import io.horizon.eon.VString;
-import io.horizon.eon.VValue;
-import io.modello.specification.meta.HMetaAtom;
+import io.zerows.agreed.constant.VString;
+import io.zerows.agreed.constant.VValue;
+import io.zerows.specification.modeling.metadata.HMetaAtom;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.fn.Fn;
-import io.vertx.up.util.Ut;
+import io.zerows.core.fn.Fn;
+import io.zerows.core.util.Ut;
 import io.zerows.plugins.office.excel.atom.ExKey;
 import io.zerows.plugins.office.excel.atom.ExPos;
 import org.apache.poi.ss.usermodel.Cell;
@@ -124,7 +124,7 @@ class ExData {
                                    final ExPos pos, final Object value, final Class<?> type) {
         if (value instanceof JsonObject) {
             /*
-             * Json Format
+             * InJson Format
              * {
              *      "cols": "xx",
              *      "rows": "xxx",

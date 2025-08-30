@@ -1,6 +1,6 @@
 package io.zerows.plugins.store.elasticsearch;
 
-import io.horizon.eon.em.typed.ChangeFlag;
+import io.zerows.agreed.constant.em.typed.ChangeFlag;
 import io.vertx.core.json.JsonObject;
 
 import java.util.concurrent.ConcurrentHashMap;

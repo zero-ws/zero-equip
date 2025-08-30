@@ -1,6 +1,5 @@
 package io.zerows.plugins.common.security;
 
-import io.horizon.uca.cache.Cc;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
@@ -9,11 +8,12 @@ import io.vertx.ext.auth.jwt.JWTAuth;
 import io.vertx.ext.auth.jwt.JWTAuthOptions;
 import io.vertx.ext.web.handler.AuthenticationHandler;
 import io.vertx.ext.web.handler.JWTAuthHandler;
-import io.vertx.up.eon.configure.YmlCore;
-import io.vertx.up.unity.Ux;
-import io.vertx.up.util.Ut;
-import io.zerows.core.security.atom.Aegis;
-import io.zerows.core.security.atom.AegisItem;
+import io.zerows.unity.Ux;
+import io.zerows.core.constant.configure.YmlCore;
+import io.zerows.core.uca.cache.Cc;
+import io.zerows.core.util.Ut;
+import io.zerows.module.security.atom.Aegis;
+import io.zerows.module.security.atom.AegisItem;
 import io.zerows.plugins.common.security.authenticate.AdapterProvider;
 
 import java.util.Objects;

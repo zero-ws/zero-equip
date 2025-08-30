@@ -1,16 +1,16 @@
 package io.zerows.plugins.common.security;
 
-import io.horizon.eon.VString;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
 import io.vertx.ext.web.handler.AuthenticationHandler;
 import io.vertx.ext.web.handler.BasicAuthHandler;
-import io.vertx.up.eon.KName;
-import io.vertx.up.eon.configure.YmlCore;
-import io.vertx.up.util.Ut;
-import io.zerows.core.security.atom.Aegis;
-import io.zerows.core.security.atom.AegisItem;
+import io.zerows.agreed.constant.VString;
+import io.zerows.core.constant.KName;
+import io.zerows.core.constant.configure.YmlCore;
+import io.zerows.core.util.Ut;
+import io.zerows.module.security.atom.Aegis;
+import io.zerows.module.security.atom.AegisItem;
 import io.zerows.plugins.common.security.authenticate.AdapterProvider;
 
 /**

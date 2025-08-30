@@ -1,7 +1,7 @@
 package io.zerows.plugins.store.redis.cache;
 
-import io.horizon.uca.log.Annal;
-import io.vertx.up.util.Ut;
+import io.zerows.core.uca.log.Annal;
+import io.zerows.core.util.Ut;
 import io.zerows.plugins.store.redis.RedisInfix;
 import redis.clients.jedis.Jedis;
 

@@ -1,11 +1,11 @@
 package io.zerows.plugins.store.neo4j;
 
-import io.horizon.uca.log.Annal;
+import io.zerows.core.uca.log.Annal;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.util.Ut;
+import io.zerows.core.util.Ut;
 import io.zerows.plugins.store.neo4j.refine.N4J;
 import io.zerows.plugins.store.neo4j.sync.GraphicAnalyzer;
 import io.zerows.plugins.store.neo4j.sync.N4JSession;

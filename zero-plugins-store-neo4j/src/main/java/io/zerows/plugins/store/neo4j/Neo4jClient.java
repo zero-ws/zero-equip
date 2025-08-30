@@ -5,7 +5,7 @@ import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.zerows.core.metadata.zdk.plugins.InfixClient;
+import io.zerows.module.metadata.zdk.plugins.InfixClient;
 
 public interface Neo4jClient extends InfixClient<Neo4jClient> {
 

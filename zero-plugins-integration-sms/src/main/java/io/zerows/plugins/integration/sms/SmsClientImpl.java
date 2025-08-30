@@ -12,8 +12,8 @@ import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.fn.Fn;
-import io.vertx.up.util.Ut;
+import io.zerows.core.fn.Fn;
+import io.zerows.core.util.Ut;
 import io.zerows.plugins.integration.sms.exception._424MessageSendException;
 import io.zerows.plugins.integration.sms.exception._424ProfileEndPointException;
 

@@ -8,11 +8,11 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.User;
 import io.vertx.ext.auth.authorization.Authorization;
 import io.vertx.ext.web.RoutingContext;
-import io.vertx.up.eon.KName;
-import io.vertx.up.eon.KWeb;
-import io.zerows.core.domain.atom.commune.Vis;
-import io.zerows.core.security.atom.Aegis;
+import io.zerows.core.constant.KName;
+import io.zerows.core.constant.KWeb;
 import io.zerows.core.web.model.store.OCacheUri;
+import io.zerows.module.domain.atom.commune.Vis;
+import io.zerows.module.security.atom.Aegis;
 
 import java.util.Objects;
 

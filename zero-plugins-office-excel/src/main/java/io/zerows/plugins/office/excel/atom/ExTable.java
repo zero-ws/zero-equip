@@ -1,13 +1,13 @@
 package io.zerows.plugins.office.excel.atom;
 
-import io.horizon.eon.VString;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.up.fn.Fn;
-import io.vertx.up.unity.Ux;
-import io.vertx.up.util.Ut;
-import io.zerows.core.metadata.atom.configuration.modeling.MDConnect;
+import io.zerows.unity.Ux;
+import io.zerows.agreed.constant.VString;
+import io.zerows.core.fn.Fn;
+import io.zerows.core.util.Ut;
 import io.zerows.core.web.model.uca.normalize.Oneness;
+import io.zerows.module.metadata.atom.configuration.modeling.MDConnect;
 import io.zerows.plugins.office.excel.exception._404ConnectMissingException;
 
 import java.io.Serializable;
@@ -20,7 +20,7 @@ public class ExTable implements Serializable {
     private final transient List<String> fields = new ArrayList<>();
     private final transient List<ExRecord> values = new ArrayList<>();
 
-    /* Metadata Row */
+    /* KMetadata Row */
     private transient final String sheet;
     /* Complex Structure */
     private final transient ConcurrentMap<Integer, String> indexMap = new ConcurrentHashMap<>();

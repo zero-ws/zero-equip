@@ -1,7 +1,7 @@
 package io.zerows.plugins.office.excel.tpl;
 
-import io.horizon.eon.VValue;
-import io.modello.specification.meta.HMetaAtom;
+import io.zerows.agreed.constant.VValue;
+import io.zerows.specification.modeling.metadata.HMetaAtom;
 import io.vertx.codegen.annotations.Fluent;
 import io.zerows.plugins.office.excel.ExTpl;
 import org.apache.poi.ss.usermodel.Cell;
