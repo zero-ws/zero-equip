@@ -1,7 +1,7 @@
 package io.zerows.plugins.office.excel;
 
-import io.zerows.agreed.constant.VPath;
-import io.zerows.agreed.constant.VString;
+import io.zerows.ams.constant.VPath;
+import io.zerows.ams.constant.VString;
 import io.zerows.core.exception.WebException;
 import io.zerows.core.exception.web._500InternalServerException;
 import io.zerows.specification.modeling.metadata.HMetaAtom;

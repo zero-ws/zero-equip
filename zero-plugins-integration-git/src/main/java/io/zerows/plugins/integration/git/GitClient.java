@@ -3,7 +3,7 @@ package io.zerows.plugins.integration.git;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
-import io.zerows.agreed.constant.VString;
+import io.zerows.ams.constant.VString;
 import io.zerows.core.exception.WebException;
 import io.zerows.core.exception.web._500InternalServerException;
 import io.zerows.core.running.boot.KRepo;

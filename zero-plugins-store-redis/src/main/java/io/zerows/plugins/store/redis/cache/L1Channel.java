@@ -1,6 +1,6 @@
 package io.zerows.plugins.store.redis.cache;
 
-import io.zerows.agreed.constant.em.typed.ChangeFlag;
+import io.zerows.ams.constant.em.typed.ChangeFlag;
 import io.vertx.core.Future;
 
 import java.util.concurrent.ConcurrentMap;

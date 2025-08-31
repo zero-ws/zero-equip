@@ -1,6 +1,6 @@
 package io.zerows.plugins.common.shell;
 
-import io.zerows.agreed.constant.VValue;
+import io.zerows.ams.constant.VValue;
 import io.vertx.core.Future;
 import io.zerows.core.util.Ut;
 import io.zerows.plugins.common.shell.atom.CommandAtom;

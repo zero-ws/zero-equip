@@ -10,7 +10,7 @@ import io.vertx.ext.auth.authorization.AuthorizationContext;
 import io.vertx.ext.auth.authorization.AuthorizationProvider;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.AuthorizationHandler;
-import io.zerows.agreed.fn.Actuator;
+import io.zerows.ams.fn.Actuator;
 import io.zerows.core.constant.KName;
 import io.zerows.core.exception.WebException;
 import io.zerows.core.exception.web._403ForbiddenException;

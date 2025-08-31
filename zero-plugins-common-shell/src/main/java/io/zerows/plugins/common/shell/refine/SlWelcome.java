@@ -1,6 +1,6 @@
 package io.zerows.plugins.common.shell.refine;
 
-import io.zerows.agreed.constant.em.Environment;
+import io.zerows.ams.constant.em.Environment;
 import io.vertx.core.json.JsonObject;
 import io.zerows.core.constant.configure.YmlCore;
 import io.zerows.core.util.Ut;

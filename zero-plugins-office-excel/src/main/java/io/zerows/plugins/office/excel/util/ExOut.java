@@ -1,6 +1,6 @@
 package io.zerows.plugins.office.excel.util;
 
-import io.zerows.agreed.constant.VString;
+import io.zerows.ams.constant.VString;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.zerows.core.util.Ut;

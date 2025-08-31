@@ -1,7 +1,7 @@
 package io.zerows.plugins.office.excel.util;
 
-import io.zerows.agreed.constant.VString;
-import io.zerows.agreed.constant.VValue;
+import io.zerows.ams.constant.VString;
+import io.zerows.ams.constant.VValue;
 import io.zerows.specification.modeling.metadata.HMetaAtom;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;

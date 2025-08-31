@@ -1,6 +1,6 @@
 package io.zerows.plugins.store.elasticsearch;
 
-import io.zerows.agreed.constant.em.typed.ChangeFlag;
+import io.zerows.ams.constant.em.typed.ChangeFlag;
 import io.zerows.core.uca.log.Annal;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;

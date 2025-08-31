@@ -1,6 +1,6 @@
 package io.zerows.plugins.store.redis.exception;
 
-import io.zerows.agreed.constant.em.app.HttpStatusCode;
+import io.zerows.ams.constant.em.app.HttpStatusCode;
 import io.zerows.core.exception.WebException;
 
 public class _409SessionVersionException extends WebException {
