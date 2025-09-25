@@ -35,7 +35,7 @@ class BlueDye {
 
     static BlueDye get(final Workbook workbook) {
         return CC_PICKER.pick(() -> new BlueDye(workbook), workbook.hashCode());
-        // Fn.po?l(PICKER_POOL, workbook.hashCode(), () -> new BlueDye(workbook));
+        // Fx.po?l(PICKER_POOL, workbook.hashCode(), () -> new BlueDye(workbook));
     }
 
     /*

@@ -8,7 +8,7 @@ import io.zerows.unity.Ux;
 import io.zerows.ams.constant.em.typed.ChangeFlag;
 import io.zerows.core.database.jooq.operation.UxJooq;
 import io.zerows.core.exception.web._500InternalServerException;
-import io.zerows.core.fn.Fn;
+import io.zerows.core.fn.Fx;
 import io.zerows.core.uca.log.Annal;
 import io.zerows.core.util.Ut;
 import io.zerows.core.web.model.uca.normalize.Oneness;
@@ -192,7 +192,7 @@ class SheetImport {
                 .compose(data -> Ux.future(this.saveEntity(data, table)))
             ));
         /* Set<Tool> handler */
-        return Fn.combineT(futures).compose(result -> {
+        return Fx.combineT(futures).compose(result -> {
             final Set<T> entitySet = new HashSet<>();
             result.forEach(entitySet::addAll);
             return Ux.future(entitySet);

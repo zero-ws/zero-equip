@@ -1,11 +1,12 @@
 package io.zerows.plugins.office.excel;
 
+import io.r2mo.function.Fn;
 import io.r2mo.typed.cc.Cc;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.zerows.ams.constant.VPath;
-import io.zerows.core.fn.Fn;
+import io.zerows.core.fn.Fx;
 import io.zerows.core.uca.log.Annal;
 import io.zerows.core.util.Ut;
 import io.zerows.core.web.model.uca.normalize.Oneness;
@@ -68,13 +69,13 @@ class ExcelHelper {
 
     static ExcelHelper helper(final Class<?> target) {
         return CC_HELPER.pick(() -> new ExcelHelper(target), target.getName());
-        // Fn.po?l(Pool.HELPERS, target.getName(), () -> new ExcelHelper(target));
+        // Fx.po?l(Pool.HELPERS, target.getName(), () -> new ExcelHelper(target));
     }
 
     Future<JsonArray> extract(final Set<ExTable> tables) {
         final List<Future<JsonArray>> futures = new ArrayList<>();
         tables.forEach(table -> futures.add(this.extract(table)));
-        return Fn.compressA(futures);
+        return Fx.compressA(futures);
     }
 
     Future<JsonArray> extract(final ExTable table) {
@@ -103,33 +104,33 @@ class ExcelHelper {
      */
     @SuppressWarnings("all")
     Workbook getWorkbook(final String filename) {
-        Fn.outWeb(null == filename, _404ExcelFileNullException.class, this.target, filename);
+        Fx.outWeb(null == filename, _404ExcelFileNullException.class, this.target, filename);
         /*
          * Here the InputStream directly from
          */
         final InputStream in = Ut.ioStream(filename, getClass());
-        Fn.outWeb(null == in, _404ExcelFileNullException.class, this.target, filename);
+        Fx.outWeb(null == in, _404ExcelFileNullException.class, this.target, filename);
         final Workbook workbook;
         if (filename.endsWith(VPath.SUFFIX.EXCEL_2003)) {
             workbook = CC_WORKBOOK.pick(() -> Fn.jvmOr(() -> new HSSFWorkbook(in)), filename);
-            // Fn.po?l(Pool.WORKBOOKS, filename, () -> Fn.getJvm(() -> new HSSFWorkbook(in)));
+            // Fx.po?l(Pool.WORKBOOKS, filename, () -> Fx.getJvm(() -> new HSSFWorkbook(in)));
         } else {
             workbook = CC_WORKBOOK.pick(() -> Fn.jvmOr(() -> new XSSFWorkbook(in)), filename);
-            // Fn.po?l(Pool.WORKBOOKS, filename, () -> Fn.getJvm(() -> new XSSFWorkbook(in)));
+            // Fx.po?l(Pool.WORKBOOKS, filename, () -> Fx.getJvm(() -> new XSSFWorkbook(in)));
         }
         return workbook;
     }
 
     @SuppressWarnings("all")
     Workbook getWorkbook(final InputStream in, final boolean isXlsx) {
-        Fn.outWeb(null == in, _404ExcelFileNullException.class, this.target, "Stream");
+        Fx.outWeb(null == in, _404ExcelFileNullException.class, this.target, "Stream");
         final Workbook workbook;
         if (isXlsx) {
             workbook = CC_WORKBOOK_STREAM.pick(() -> Fn.jvmOr(() -> new XSSFWorkbook(in)), in.hashCode());
-            // Fn.po?l(Pool.WORKBOOKS_STREAM, in.hashCode(), () -> Fn.getJvm(() -> new XSSFWorkbook(in)));
+            // Fx.po?l(Pool.WORKBOOKS_STREAM, in.hashCode(), () -> Fx.getJvm(() -> new XSSFWorkbook(in)));
         } else {
             workbook = CC_WORKBOOK_STREAM.pick(() -> Fn.jvmOr(() -> new HSSFWorkbook(in)), in.hashCode());
-            // Fn.po?l(Pool.WORKBOOKS_STREAM, in.hashCode(), () -> Fn.getJvm(() -> new HSSFWorkbook(in)));
+            // Fx.po?l(Pool.WORKBOOKS_STREAM, in.hashCode(), () -> Fx.getJvm(() -> new HSSFWorkbook(in)));
         }
         /* Force to recalculation for evaluator */
         workbook.setForceFormulaRecalculation(Boolean.TRUE);

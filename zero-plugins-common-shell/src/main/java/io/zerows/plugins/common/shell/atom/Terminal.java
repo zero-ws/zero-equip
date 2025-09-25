@@ -1,12 +1,12 @@
 package io.zerows.plugins.common.shell.atom;
 
+import io.r2mo.function.Fn;
 import io.r2mo.typed.cc.Cc;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.zerows.core.exception.BootingException;
-import io.zerows.core.fn.Fn;
 import io.zerows.core.util.Ut;
 import io.zerows.plugins.common.shell.exception.BootCommandMissingException;
 
@@ -32,7 +32,7 @@ public class Terminal {
     private Terminal(final Vertx vertx) {
         this.vertx = vertx;
         this.scanner = CC_SCANNER.pick(() -> new Scanner(System.in), vertx.hashCode());
-        // Fn.po?l(POOL_SCANNER, vertx.hashCode(), () -> new Scanner(System.in));
+        // Fx.po?l(POOL_SCANNER, vertx.hashCode(), () -> new Scanner(System.in));
         this.scanner.useDelimiter("\n");
     }
 

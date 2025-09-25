@@ -4,7 +4,7 @@ import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.zerows.unity.Ux;
 import io.zerows.ams.constant.VString;
-import io.zerows.core.fn.Fn;
+import io.zerows.core.fn.Fx;
 import io.zerows.core.util.Ut;
 import io.zerows.core.web.model.uca.normalize.Oneness;
 import io.zerows.module.metadata.atom.configuration.modeling.MDConnect;
@@ -207,7 +207,7 @@ public class ExTable implements Serializable {
     }
 
     public MDConnect getConnect() {
-        Fn.outWeb(null == this.connect, _404ConnectMissingException.class, this.getClass(), this.name);
+        Fx.outWeb(null == this.connect, _404ConnectMissingException.class, this.getClass(), this.name);
         return this.connect;
     }
 

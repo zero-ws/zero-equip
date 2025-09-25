@@ -22,6 +22,6 @@ public class TrashPlatformService implements TrashPlatform {
     @Override
     public TrashClient getClient(final String identifier) {
         return CC_CLIENT.pick(() -> new TrashClientImpl(this.vertxRef, identifier), identifier);
-        // Fn.po?l(Pool.CLIENT_POOL, identifier, () -> new TrashClientImpl(this.vertxRef, identifier));
+        // Fx.po?l(Pool.CLIENT_POOL, identifier, () -> new TrashClientImpl(this.vertxRef, identifier));
     }
 }
