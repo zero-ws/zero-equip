@@ -1,5 +1,6 @@
 package io.zerows.plugins.common.security;
 
+import io.r2mo.function.Fn;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
@@ -8,13 +9,13 @@ import io.vertx.ext.auth.jwt.JWTAuth;
 import io.vertx.ext.auth.jwt.JWTAuthOptions;
 import io.vertx.ext.web.handler.AuthenticationHandler;
 import io.vertx.ext.web.handler.JWTAuthHandler;
-import io.zerows.unity.Ux;
 import io.zerows.core.constant.configure.YmlCore;
 import io.zerows.core.uca.cache.Cc;
 import io.zerows.core.util.Ut;
 import io.zerows.module.security.atom.Aegis;
 import io.zerows.module.security.atom.AegisItem;
 import io.zerows.plugins.common.security.authenticate.AdapterProvider;
+import io.zerows.unity.Ux;
 
 import java.util.Objects;
 
@@ -69,6 +70,6 @@ class LeeJwt extends AbstractLee {
     public JsonObject decode(final String token, final AegisItem config) {
         final JWTAuth provider = this.provider(Ux.nativeVertx(), config);
         final JWT jwt = Ut.field(provider, "jwt");
-        return Objects.isNull(jwt) ? new JsonObject() : jwt.decode(token);
+        return Objects.isNull(jwt) ? new JsonObject() : Fn.jvmOr(() -> jwt.decode(token));
     }
 }

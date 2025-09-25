@@ -12,27 +12,28 @@ import org.slf4j.LoggerFactory;
 @Worker(instances = VValue.SINGLE)
 public class MainVerticle extends AbstractVerticle {
     private static final Logger logger = LoggerFactory.getLogger(MainVerticle.class);
+
     @Override
-    public void start(Promise<Void> startPromise) {
-        final ConfigRetriever retriever = ConfigRetriever.create(vertx);
-        retriever.getConfig(config -> {
+    public void start(final Promise<Void> startPromise) {
+        final ConfigRetriever retriever = ConfigRetriever.create(this.vertx);
+        retriever.getConfig().onComplete(config -> {
             if (config.succeeded()) {
                 final Boolean EnvRocketMq = config.result().getBoolean("Z_ENV_SWAGGER");
                 if (EnvRocketMq) {
-                    Router router = Router.router(vertx);
+                    final Router router = Router.router(this.vertx);
 
                     // 挂载 Swagger 插件
-                    SwaggerPlugin.mount(router, vertx);
+                    SwaggerPlugin.mount(router, this.vertx);
 
-                    vertx.createHttpServer()
-                            .requestHandler(router)
-                            .listen(8888)
-                            .onSuccess(server -> {
-                                logger.info("✅ 服务启动成功: http://localhost:8888/docs/index.html");
-                                startPromise.complete();
-                            })
-                            .onFailure(startPromise::fail);
-                }else {
+                    this.vertx.createHttpServer()
+                        .requestHandler(router)
+                        .listen(8888)
+                        .onSuccess(server -> {
+                            logger.info("✅ 服务启动成功: http://localhost:8888/docs/index.html");
+                            startPromise.complete();
+                        })
+                        .onFailure(startPromise::fail);
+                } else {
                     logger.info("未启动Swagger");
                 }
             }

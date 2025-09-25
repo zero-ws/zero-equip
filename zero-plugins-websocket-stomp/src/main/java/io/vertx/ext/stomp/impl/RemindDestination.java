@@ -1,6 +1,5 @@
 package io.vertx.ext.stomp.impl;
 
-import io.zerows.core.uca.log.Annal;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Handler;
 import io.vertx.core.MultiMap;
@@ -13,6 +12,7 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.bridge.PermittedOptions;
 import io.vertx.ext.stomp.*;
 import io.vertx.ext.stomp.utils.Headers;
+import io.zerows.core.uca.log.Annal;
 import io.zerows.core.util.Ut;
 import io.zerows.core.web.websocket.router.SockGrid;
 import io.zerows.plugins.websocket.stomp.handler.StompBridgeOptions;
@@ -192,8 +192,9 @@ public class RemindDestination extends Topic {
             addressEvent = address;
         }
         if (this.options.isPointToPoint()) {
+
             this.vertx.eventBus().request(addressEvent, frame.getBody(),
-                new DeliveryOptions().setHeaders(this.toMultimap(frame.getHeaders())), replyHandler);
+                new DeliveryOptions().setHeaders(this.toMultimap(frame.getHeaders()))).onComplete(replyHandler);
         } else {
             // the reply handler is ignored in non point to point interaction.
             this.vertx.eventBus().publish(addressEvent, frame.getBody(),

@@ -34,6 +34,10 @@ public class AuthorizationBuiltInProvider implements AuthorizationProvider {
     }
 
     @Override
+    public Future<Void> getAuthorizations(final User user) {
+        return null;
+    }
+
     @SuppressWarnings("all")
     public void getAuthorizations(final User user, final Handler<AsyncResult<Void>> handler) {
         final Method method = this.aegis.getAuthorizer().getAuthorization();
@@ -46,7 +50,7 @@ public class AuthorizationBuiltInProvider implements AuthorizationProvider {
                 if (res.succeeded()) {
                     final Set<String> permissionSet = res.result();
                     final Authorization authorization = PermissionAuthorization.create(permissionSet);
-                    user.authorizations().add(this.getId(), authorization);
+                    user.authorizations().put(this.getId(), authorization);
                     handler.handle(Future.succeededFuture());
                 } else {
                     final Throwable ex = res.cause();

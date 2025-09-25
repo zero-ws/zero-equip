@@ -155,16 +155,16 @@ public class AuthorizationBuiltInHandler implements AuthorizationHandler {
              * in this situation, continue to next provider to validate, after validated successfully
              * you can call next() method of routing context to pass
              */
-            if (!routingContext.user().authorizations().getProviderIds().contains(provider.getId())) {
-                final User user = routingContext.user();
-                provider.getAuthorizations(user, result -> {
-                    if (result.failed()) {
-                        LOGGER.warn("[ Auth ] Error occurs when getting authorization - providerId: {0}", provider.getId());
-                        LOGGER.fatal(result.cause());
-                    }
-                    this.checkOrFetchAuthorizations(routingContext, resource, authorizationContext, providers);
-                });
-            }
+            //            if (!routingContext.user().authorizations().getProviderIds().contains(provider.getId())) {
+            //                final User user = routingContext.user();
+            //                provider.getAuthorizations(user, result -> {
+            //                    if (result.failed()) {
+            //                        LOGGER.warn("[ Auth ] Error occurs when getting authorization - providerId: {0}", provider.getId());
+            //                        LOGGER.fatal(result.cause());
+            //                    }
+            //                    this.checkOrFetchAuthorizations(routingContext, resource, authorizationContext, providers);
+            //                });
+            //            }
         }
     }
 

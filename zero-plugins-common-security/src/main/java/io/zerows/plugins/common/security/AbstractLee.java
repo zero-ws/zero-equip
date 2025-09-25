@@ -1,8 +1,6 @@
 package io.zerows.plugins.common.security;
 
-import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
-import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.ext.auth.User;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
@@ -72,17 +70,18 @@ public abstract class AbstractLee implements LeeBuiltIn {
         final AuthenticateBuiltInProvider provider = AuthenticateBuiltInProvider.provider(aegis);
         handler.add(new AuthenticationHandlerImpl(provider) {
             @Override
-            public void authenticate(RoutingContext context, Handler<AsyncResult<User>> handler) {
+            public Future<User> authenticate(RoutingContext context) {
                 /*
                  * Current handler is not the first handler, the continue validation will process
                  * the user information, the input parameters came from
                  */
                 final User user = context.user();
                 if (Objects.nonNull(user)) {
-                    this.authProvider.authenticate(user.principal(), handler);
+                    // R2MO
+                    return this.authProvider.authenticate(new TokenCredentials(user.principal()));
                 } else {
                     final WebException error = new _401UnauthorizedException(getClass());
-                    handler.handle(Future.failedFuture(error));
+                    return Future.failedFuture(error);
                 }
             }
         });
@@ -94,14 +93,12 @@ public abstract class AbstractLee implements LeeBuiltIn {
         final String realm = this.option(aegis, "realm");
         return new HTTPAuthorizationHandler<>(standard, type, realm) {
             @Override
-            public void authenticate(RoutingContext context, Handler<AsyncResult<User>> handler) {
-                parseAuthorization(context, parseAuthorization -> {
-                    if (parseAuthorization.failed()) {
-                        handler.handle(Future.failedFuture(parseAuthorization.cause()));
-                        return;
+            public Future<User> authenticate(RoutingContext routingContext) {
+                return parseAuthorization(routingContext).compose(token -> {
+                    if (Objects.isNull(token)) {
+                        return Future.failedFuture(new _401UnauthorizedException(getClass()));
                     }
-                    final String token = parseAuthorization.result();
-                    this.authProvider.authenticate(new TokenCredentials(token), handler);
+                    return this.authProvider.authenticate(new TokenCredentials(token));
                 });
             }
         };

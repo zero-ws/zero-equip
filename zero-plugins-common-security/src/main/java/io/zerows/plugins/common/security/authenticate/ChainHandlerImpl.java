@@ -7,7 +7,6 @@ import io.vertx.ext.auth.User;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.AuthenticationHandler;
-import io.vertx.ext.web.handler.HttpException;
 import io.vertx.ext.web.handler.impl.AuthenticationHandlerImpl;
 import io.vertx.ext.web.handler.impl.AuthenticationHandlerInternal;
 
@@ -49,6 +48,10 @@ public class ChainHandlerImpl extends AuthenticationHandlerImpl<AuthenticationPr
     }
 
     @Override
+    public Future<User> authenticate(final RoutingContext routingContext) {
+        return null;
+    }
+
     public void authenticate(final RoutingContext context, final Handler<AsyncResult<User>> handler) {
         if (this.handlers.isEmpty()) {
             handler.handle(Future.failedFuture("No providers in the auth chain."));
@@ -77,51 +80,51 @@ public class ChainHandlerImpl extends AuthenticationHandlerImpl<AuthenticationPr
 
         // parse the request in order to extract the credentials object
         final AuthenticationHandlerInternal authHandler = this.handlers.get(idx);
-
-        authHandler.authenticate(ctx, res -> {
-            if (res.failed()) {
-                if (this.all) {
-                    /*
-                     * Critical modification that's different from
-                     * io.vertx.ext.web.handler.ChainAuthHandler is that all the handler should be
-                     * in sequence flow, it means that here are the code execution:
-                     *
-                     * Monad<User> -> Monad<User> -> Monad<User> ....
-                     *
-                     * All the handlers will be in sequence and all must be passed, instead of
-                     * stateless here.
-                     */
-                } else {
-                    // any handler can be valid, if the response is within a validation error
-                    // the chain is allowed to proceed, otherwise we must abort.
-                    if (res.cause() instanceof final HttpException ex) {
-                        switch (ex.getStatusCode()) {
-                            case 302, 400, 401, 403 -> {
-                                // try again with next provider since we know what kind of error it is
-                                this.iterate(idx + 1, ctx, null, ex, handler);
-                                return;
-                            }
-                        }
-                    }
-                    // the error is not a validation exception, so we abort regardless
-                }
-                handler.handle(Future.failedFuture(res.cause()));
-                return;
-            }
-
-            if (this.all) {
-                /*
-                 * 「Change Point」Mount result User for next handler processing, it means that you can extract
-                 * User data from previous result here, the condition is:
-                 */
-                ctx.setUser(res.result());
-                // this handler is succeeded, but as we need all, we must continue with
-                // the iteration of the remaining handlers.
-                this.iterate(idx + 1, ctx, res.result(), null, handler);
-            } else {
-                // a single success is enough to signal the end of the validation
-                handler.handle(Future.succeededFuture(res.result()));
-            }
-        });
+        //
+        //        authHandler.authenticate(ctx, res -> {
+        //            if (res.failed()) {
+        //                if (this.all) {
+        //                    /*
+        //                     * Critical modification that's different from
+        //                     * io.vertx.ext.web.handler.ChainAuthHandler is that all the handler should be
+        //                     * in sequence flow, it means that here are the code execution:
+        //                     *
+        //                     * Monad<User> -> Monad<User> -> Monad<User> ....
+        //                     *
+        //                     * All the handlers will be in sequence and all must be passed, instead of
+        //                     * stateless here.
+        //                     */
+        //                } else {
+        //                    // any handler can be valid, if the response is within a validation error
+        //                    // the chain is allowed to proceed, otherwise we must abort.
+        //                    if (res.cause() instanceof final HttpException ex) {
+        //                        switch (ex.getStatusCode()) {
+        //                            case 302, 400, 401, 403 -> {
+        //                                // try again with next provider since we know what kind of error it is
+        //                                this.iterate(idx + 1, ctx, null, ex, handler);
+        //                                return;
+        //                            }
+        //                        }
+        //                    }
+        //                    // the error is not a validation exception, so we abort regardless
+        //                }
+        //                handler.handle(Future.failedFuture(res.cause()));
+        //                return;
+        //            }
+        //
+        //            if (this.all) {
+        //                /*
+        //                 * 「Change Point」Mount result User for next handler processing, it means that you can extract
+        //                 * User data from previous result here, the condition is:
+        //                 */
+        //                ctx.setUser(res.result());
+        //                // this handler is succeeded, but as we need all, we must continue with
+        //                // the iteration of the remaining handlers.
+        //                this.iterate(idx + 1, ctx, res.result(), null, handler);
+        //            } else {
+        //                // a single success is enough to signal the end of the validation
+        //                handler.handle(Future.succeededFuture(res.result()));
+        //            }
+        //        });
     }
 }

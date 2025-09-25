@@ -6,6 +6,7 @@ import io.vertx.core.Handler;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.auth.User;
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
+import io.vertx.ext.auth.authentication.Credentials;
 import io.zerows.core.exception.web._401UnauthorizedException;
 import io.zerows.core.fn.Fn;
 import io.zerows.core.uca.log.Annal;
@@ -37,34 +38,6 @@ public class AuthenticateBuiltInProvider implements AuthenticationProvider {
 
     public static AuthenticateBuiltInProvider provider(final Aegis aegis) {
         return new AuthenticateBuiltInProvider(aegis);
-    }
-
-    @Override
-    public void authenticate(final JsonObject credentials, final Handler<AsyncResult<User>> handler) {
-        /*
-         * 1. Read User information from user cache
-         *    Zero framework provide cache pool to store user logged information to avoid
-         *    duplicated action the code logical in @Wall to simply and speed up the
-         *    401 authenticate.
-         * 2. Here the credentials data structure is as following;
-         *    {
-         *        "access_token": "xxx",
-         *        "session": "vert.x session id",
-         *        "habitus": "the user unique key in zero session pool",
-         *        "user": "user key"
-         *    }
-         */
-        AuthenticateGateway.userCached(credentials,
-
-            /*
-             * The major code logical that has been defined
-             * @Wall class to action your own code here.
-             */
-            () -> this.authenticateInternal(credentials, handler),
-
-            // Build `User`
-            () -> handler.handle(this.buildUser(credentials))
-        );
     }
 
     private void authenticateInternal(final JsonObject credentials, final Handler<AsyncResult<User>> handler) {
@@ -111,5 +84,37 @@ public class AuthenticateBuiltInProvider implements AuthenticationProvider {
         } else {
             return this.userFn.apply(credentials);
         }
+    }
+
+    @Override
+    public Future<User> authenticate(final Credentials credentials) {
+        return null;
+    }
+
+    public void authenticate(final JsonObject credentials, final Handler<AsyncResult<User>> handler) {
+        /*
+         * 1. Read User information from user cache
+         *    Zero framework provide cache pool to store user logged information to avoid
+         *    duplicated action the code logical in @Wall to simply and speed up the
+         *    401 authenticate.
+         * 2. Here the credentials data structure is as following;
+         *    {
+         *        "access_token": "xxx",
+         *        "session": "vert.x session id",
+         *        "habitus": "the user unique key in zero session pool",
+         *        "user": "user key"
+         *    }
+         */
+        AuthenticateGateway.userCached(credentials,
+
+            /*
+             * The major code logical that has been defined
+             * @Wall class to action your own code here.
+             */
+            () -> this.authenticateInternal(credentials, handler),
+
+            // Build `User`
+            () -> handler.handle(this.buildUser(credentials))
+        );
     }
 }

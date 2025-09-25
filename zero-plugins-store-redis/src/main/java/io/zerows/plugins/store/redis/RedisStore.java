@@ -1,8 +1,5 @@
 package io.zerows.plugins.store.redis;
 
-import io.zerows.ams.constant.VValue;
-import io.zerows.core.exception.WebException;
-import io.zerows.core.uca.log.Annal;
 import io.vertx.core.*;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonObject;
@@ -11,6 +8,9 @@ import io.vertx.ext.auth.PRNG;
 import io.vertx.ext.web.Session;
 import io.vertx.ext.web.sstore.SessionStore;
 import io.vertx.redis.client.*;
+import io.zerows.ams.constant.VValue;
+import io.zerows.core.exception.WebException;
+import io.zerows.core.uca.log.Annal;
 import io.zerows.core.util.Ut;
 import io.zerows.plugins.store.redis.exception._409SessionVersionException;
 
@@ -127,7 +127,7 @@ public class RedisStore implements SessionStore {
     public Future<Void> delete(final String id) {
         final Promise<Void> promise = Promise.promise();
         LOGGER.debug(RedisMsg.RS_MESSAGE, id, "delete(String)");
-        this.client.send(Request.cmd(Command.DEL), res -> {
+        this.client.send(Request.cmd(Command.DEL)).onComplete(res -> {
             if (res.succeeded()) {
                 /*
                  * Synced SessionIds

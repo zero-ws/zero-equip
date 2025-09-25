@@ -134,7 +134,7 @@ class FrameConnector extends AbstractFrameHandler {
                                       final Handler<AsyncResult<Void>> remainingActions) {
         final String login = frame.getHeader(Frame.LOGIN);
         final String passcode = frame.getHeader(Frame.PASSCODE);
-        connection.handler().onAuthenticationRequest(connection, login, passcode, ar -> {
+        connection.handler().onAuthenticationRequest(connection, login, passcode).onComplete(ar -> {
             if (ar.result()) {
                 remainingActions.handle(Future.succeededFuture());
             } else {

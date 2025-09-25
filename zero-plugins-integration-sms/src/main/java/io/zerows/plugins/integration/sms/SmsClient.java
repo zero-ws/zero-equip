@@ -39,7 +39,8 @@ public interface SmsClient extends InfixClient<SmsClient> {
 
     default Future<JsonObject> send(final String mobile, final String tplCode, final JsonObject params) {
         final Promise<JsonObject> response = Promise.promise();
-        this.send(mobile, tplCode, params, response);
+        // R2MO / 有问题
+        // this.send(mobile, tplCode, params, response);
         return response.future();
     }
 
