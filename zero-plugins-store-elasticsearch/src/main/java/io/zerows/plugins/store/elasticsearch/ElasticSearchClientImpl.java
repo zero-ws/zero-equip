@@ -1,11 +1,11 @@
 package io.zerows.plugins.store.elasticsearch;
 
-import io.zerows.ams.constant.em.typed.ChangeFlag;
-import io.zerows.core.uca.log.Annal;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import io.zerows.ams.constant.em.typed.ChangeFlag;
 import io.zerows.core.fn.Fn;
+import io.zerows.core.uca.log.Annal;
 import io.zerows.core.util.Ut;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
@@ -52,7 +52,7 @@ public class ElasticSearchClientImpl implements ElasticSearchClient {
     @Override
     public boolean connected() {
         // Check connection
-        return Fn.failOr(Boolean.FALSE, () -> this.getClient().ping(RequestOptions.DEFAULT));
+        return Fn.jvmOr(() -> this.getClient().ping(RequestOptions.DEFAULT));
     }
 
     @Override

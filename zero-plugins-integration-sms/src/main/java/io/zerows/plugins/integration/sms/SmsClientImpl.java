@@ -12,7 +12,6 @@ import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
-import io.zerows.core.fn.Fn;
 import io.zerows.core.util.Ut;
 import io.zerows.plugins.integration.sms.exception._424MessageSendException;
 import io.zerows.plugins.integration.sms.exception._424ProfileEndPointException;
@@ -32,24 +31,22 @@ public class SmsClientImpl implements SmsClient {
     private void initClient() {
         // Extract data from config
         final JsonObject params = this.config.getConfig();
-        Fn.runAt(() -> {
-            // Set default timeout
-            final String connect = params.containsKey(SmsConfig.TIMEOUT_CONN) ?
-                params.getInteger(SmsConfig.TIMEOUT_CONN).toString() : "10000";
-            final String read = params.containsKey(SmsConfig.TIMEOUT_READ) ?
-                params.getInteger(SmsConfig.TIMEOUT_READ).toString() : "10000";
-            System.setProperty("sun.net.client.defaultConnectTimeout", connect);
-            System.setProperty("sun.net.client.defaultReadTimeout", read);
-            // AscClient initialized.
-            final IClientProfile profile = DefaultProfile.getProfile(SmsConfig.DFT_REGION,
-                this.config.getAccessId(), this.config.getAccessSecret());
-            try {
-                DefaultProfile.addEndpoint(SmsConfig.DFT_REGION, SmsConfig.DFT_REGION, SmsConfig.DFT_PRODUCT);
-            } catch (final Throwable ex) {
-                throw Ut.Bnd.failWeb(_424ProfileEndPointException.class, this.getClass(), ex);
-            }
-            this.client = new DefaultAcsClient(profile);
-        }, params);
+        // Set default timeout
+        final String connect = params.containsKey(SmsConfig.TIMEOUT_CONN) ?
+            params.getInteger(SmsConfig.TIMEOUT_CONN).toString() : "10000";
+        final String read = params.containsKey(SmsConfig.TIMEOUT_READ) ?
+            params.getInteger(SmsConfig.TIMEOUT_READ).toString() : "10000";
+        System.setProperty("sun.net.client.defaultConnectTimeout", connect);
+        System.setProperty("sun.net.client.defaultReadTimeout", read);
+        // AscClient initialized.
+        final IClientProfile profile = DefaultProfile.getProfile(SmsConfig.DFT_REGION,
+            this.config.getAccessId(), this.config.getAccessSecret());
+        try {
+            DefaultProfile.addEndpoint(SmsConfig.DFT_REGION, SmsConfig.DFT_REGION, SmsConfig.DFT_PRODUCT);
+        } catch (final Throwable ex) {
+            throw Ut.Bnd.failWeb(_424ProfileEndPointException.class, this.getClass(), ex);
+        }
+        this.client = new DefaultAcsClient(profile);
     }
 
     @Override

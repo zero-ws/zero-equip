@@ -1,8 +1,6 @@
 package io.zerows.plugins.integration.sms;
 
 import io.vertx.core.json.JsonObject;
-import io.zerows.core.fn.Fn;
-import io.zerows.core.uca.log.Annal;
 import io.zerows.core.util.Ut;
 import io.zerows.module.metadata.zdk.plugins.InfixConfig;
 
@@ -75,8 +73,7 @@ public class SmsConfig implements Serializable {
 
     @SuppressWarnings("all")
     public String getTpl(final String key) {
-        return Fn.runOr(null != this.tpl && this.tpl.containsKey(key), Annal.get(this.getClass()),
-            () -> this.tpl.getString(key));
+        return this.tpl.getString(key);
     }
 
     @Override

@@ -111,10 +111,10 @@ class ExcelHelper {
         Fn.outWeb(null == in, _404ExcelFileNullException.class, this.target, filename);
         final Workbook workbook;
         if (filename.endsWith(VPath.SUFFIX.EXCEL_2003)) {
-            workbook = CC_WORKBOOK.pick(() -> Fn.failOr(() -> new HSSFWorkbook(in)), filename);
+            workbook = CC_WORKBOOK.pick(() -> Fn.jvmOr(() -> new HSSFWorkbook(in)), filename);
             // Fn.po?l(Pool.WORKBOOKS, filename, () -> Fn.getJvm(() -> new HSSFWorkbook(in)));
         } else {
-            workbook = CC_WORKBOOK.pick(() -> Fn.failOr(() -> new XSSFWorkbook(in)), filename);
+            workbook = CC_WORKBOOK.pick(() -> Fn.jvmOr(() -> new XSSFWorkbook(in)), filename);
             // Fn.po?l(Pool.WORKBOOKS, filename, () -> Fn.getJvm(() -> new XSSFWorkbook(in)));
         }
         return workbook;
@@ -125,10 +125,10 @@ class ExcelHelper {
         Fn.outWeb(null == in, _404ExcelFileNullException.class, this.target, "Stream");
         final Workbook workbook;
         if (isXlsx) {
-            workbook = CC_WORKBOOK_STREAM.pick(() -> Fn.failOr(() -> new XSSFWorkbook(in)), in.hashCode());
+            workbook = CC_WORKBOOK_STREAM.pick(() -> Fn.jvmOr(() -> new XSSFWorkbook(in)), in.hashCode());
             // Fn.po?l(Pool.WORKBOOKS_STREAM, in.hashCode(), () -> Fn.getJvm(() -> new XSSFWorkbook(in)));
         } else {
-            workbook = CC_WORKBOOK_STREAM.pick(() -> Fn.failOr(() -> new HSSFWorkbook(in)), in.hashCode());
+            workbook = CC_WORKBOOK_STREAM.pick(() -> Fn.jvmOr(() -> new HSSFWorkbook(in)), in.hashCode());
             // Fn.po?l(Pool.WORKBOOKS_STREAM, in.hashCode(), () -> Fn.getJvm(() -> new HSSFWorkbook(in)));
         }
         /* Force to recalculation for evaluator */

@@ -3,8 +3,8 @@ package io.zerows.plugins.integration.git;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
 import io.zerows.core.fn.Fn;
-import io.zerows.core.util.Ut;
 import io.zerows.core.running.boot.KRepo;
+import io.zerows.core.util.Ut;
 import io.zerows.plugins.integration.git.exception._400RepoCommandException;
 import io.zerows.plugins.integration.git.exception._404RepoMissingException;
 import io.zerows.plugins.integration.git.exception._409RepoExistingException;
@@ -131,7 +131,7 @@ public class GitClientImpl implements GitClient {
 
     @Override
     public Status status(final Git git) {
-        return Fn.failOr(() -> git.status().call());
+        return Fn.jvmOr(() -> git.status().call());
     }
 
     @Override

@@ -20,8 +20,8 @@
         <module>zero-plugins-swagger</module>
 
         <!-- Integration -->
-        <module>zero-plugins-integration-feign</module>
-        <module>zero-plugins-integration-git</module>
+        <!--        <module>zero-plugins-integration-feign</module>-->
+        <!--        <module>zero-plugins-integration-git</module>-->
         <module>zero-plugins-integration-sms</module>
         <module>zero-plugins-integration-wechat</module>
 
@@ -32,11 +32,11 @@
         <module>zero-plugins-store-elasticsearch</module>
         <module>zero-plugins-store-liquibase</module>
         <!--        <module>zero-plugins-store-mongo</module>  -->
-        <module>zero-plugins-store-neo4j</module>
+        <!--        <module>zero-plugins-store-neo4j</module>-->
         <!--        <module>zero-plugins-store-redis</module>-->
 
         <!-- Web -->
-        <module>zero-plugins-video-iqiy</module>
+        <!--        <module>zero-plugins-video-iqiy</module>-->
         <module>zero-plugins-websocket-stomp</module>
     </modules>
     <dependencies>

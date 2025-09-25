@@ -1,9 +1,9 @@
 package io.zerows.plugins.video.iqiy;
 
-import io.zerows.core.uca.log.Annal;
 import io.vertx.core.json.JsonObject;
 import io.zerows.core.constant.KName;
 import io.zerows.core.fn.Fn;
+import io.zerows.core.uca.log.Annal;
 import io.zerows.plugins.integration.feign.FeignDepot;
 
 import java.io.Serializable;
@@ -76,15 +76,13 @@ public class QiyConfig implements Serializable {
     }
 
     public void setToken(final JsonObject response) {
-        Fn.runAt(() -> {
-            this.accessToken = response.getString(KName.ACCESS_TOKEN);
-            this.refreshToken = response.getString("refresh_token");
-            // Fix Expire Field issue.
-            this.expires_in = response.getLong("expires_in");
-            if (null == this.expires_in) {
-                this.expires_in = response.getLong("expiresIn");
-            }
-        }, response);
+        this.accessToken = response.getString(KName.ACCESS_TOKEN);
+        this.refreshToken = response.getString("refresh_token");
+        // Fix Expire Field issue.
+        this.expires_in = response.getLong("expires_in");
+        if (null == this.expires_in) {
+            this.expires_in = response.getLong("expiresIn");
+        }
     }
 
     public boolean isValid() {
