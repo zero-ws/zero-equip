@@ -4,7 +4,7 @@ import io.vertx.core.Vertx;
 import io.vertx.ext.mongo.MongoClient;
 import io.zerows.core.annotations.Infusion;
 import io.zerows.core.constant.configure.YmlCore;
-import io.zerows.core.uca.cache.Cc;
+import io.r2mo.typed.cc.Cc;
 import io.zerows.module.metadata.zdk.plugins.Infix;
 
 /**

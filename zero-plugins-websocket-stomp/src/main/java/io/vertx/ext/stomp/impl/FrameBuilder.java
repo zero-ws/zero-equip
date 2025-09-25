@@ -1,6 +1,6 @@
 package io.vertx.ext.stomp.impl;
 
-import io.zerows.core.uca.cache.Cc;
+import io.r2mo.typed.cc.Cc;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.eventbus.Message;
 import io.vertx.core.json.JsonArray;

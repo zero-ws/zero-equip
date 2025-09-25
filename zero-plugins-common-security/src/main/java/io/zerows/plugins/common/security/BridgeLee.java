@@ -6,7 +6,7 @@ import io.vertx.ext.auth.authentication.AuthenticationProvider;
 import io.vertx.ext.web.handler.AuthenticationHandler;
 import io.vertx.ext.web.handler.AuthorizationHandler;
 import io.zerows.core.constant.em.EmSecure;
-import io.zerows.core.uca.cache.Cc;
+import io.r2mo.typed.cc.Cc;
 import io.zerows.module.security.atom.Aegis;
 import io.zerows.module.security.atom.AegisItem;
 import io.zerows.module.security.zdk.Lee;

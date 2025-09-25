@@ -65,7 +65,7 @@ public class RemindDestination extends Topic {
          */
         String addressEvent = SockGrid.configAddress(address);
         if (Ut.isNil(addressEvent)) {
-            // The Map does not store the address
+            // The Map does not get the address
             addressEvent = address;
         }
         if (this.checkMatches(false, address, null)) {
@@ -188,7 +188,7 @@ public class RemindDestination extends Topic {
         // Event Bus Address seeking
         String addressEvent = SockGrid.configAddress(address);
         if (Ut.isNil(addressEvent)) {
-            // The Map dose not store the address
+            // The Map dose not get the address
             addressEvent = address;
         }
         if (this.options.isPointToPoint()) {

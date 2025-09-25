@@ -1,8 +1,8 @@
 package io.zerows.plugins.video.iqiy;
 
+import io.r2mo.typed.cc.Cc;
 import io.vertx.core.Vertx;
 import io.zerows.core.annotations.Infusion;
-import io.zerows.core.uca.cache.Cc;
 import io.zerows.module.metadata.zdk.plugins.Infix;
 
 @Infusion
@@ -24,7 +24,7 @@ public class QiyInfix implements Infix {
     }
 
     public static QiyClient getClient() {
-        return CC_CLIENT.store(NAME);
+        return CC_CLIENT.get(NAME);
     }
 
     @Override

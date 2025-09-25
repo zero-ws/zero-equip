@@ -1,6 +1,6 @@
 package io.zerows.plugins.office.excel.uca.ranger;
 
-import io.zerows.core.uca.cache.Cc;
+import io.r2mo.typed.cc.Cc;
 import io.vertx.core.json.JsonObject;
 import io.zerows.plugins.office.excel.atom.ExRecord;
 

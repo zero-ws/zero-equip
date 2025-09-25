@@ -1,9 +1,9 @@
 package io.zerows.plugins.store.elasticsearch;
 
+import io.r2mo.typed.cc.Cc;
 import io.vertx.core.Vertx;
 import io.zerows.core.annotations.Infusion;
 import io.zerows.core.constant.configure.YmlCore;
-import io.zerows.core.uca.cache.Cc;
 import io.zerows.module.metadata.zdk.plugins.Infix;
 
 /**
@@ -28,7 +28,7 @@ public class ElasticSearchInfix implements Infix {
     }
 
     public static ElasticSearchClient getClient() {
-        return CC_CLIENT.store(NAME);
+        return CC_CLIENT.get(NAME);
     }
 
     @Override

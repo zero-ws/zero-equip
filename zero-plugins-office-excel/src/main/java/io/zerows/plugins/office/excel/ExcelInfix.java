@@ -1,11 +1,11 @@
 package io.zerows.plugins.office.excel;
 
+import io.r2mo.typed.cc.Cc;
 import io.vertx.core.Vertx;
-import io.zerows.unity.Ux;
 import io.zerows.core.annotations.Infusion;
 import io.zerows.core.constant.configure.YmlCore;
-import io.zerows.core.uca.cache.Cc;
 import io.zerows.module.metadata.zdk.plugins.Infix;
+import io.zerows.unity.Ux;
 
 @Infusion
 @SuppressWarnings("all")
@@ -26,7 +26,7 @@ public class ExcelInfix implements Infix {
     }
 
     public static ExcelClient getClient() {
-        return CC_CLIENT.store(NAME);
+        return CC_CLIENT.get(NAME);
     }
 
     public static ExcelClient createClient() {

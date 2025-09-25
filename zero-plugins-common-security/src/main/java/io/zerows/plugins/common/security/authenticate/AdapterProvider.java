@@ -1,7 +1,7 @@
 package io.zerows.plugins.common.security.authenticate;
 
 import io.vertx.ext.auth.authentication.AuthenticationProvider;
-import io.zerows.core.uca.cache.Cc;
+import io.r2mo.typed.cc.Cc;
 import io.zerows.module.security.atom.Aegis;
 
 /**

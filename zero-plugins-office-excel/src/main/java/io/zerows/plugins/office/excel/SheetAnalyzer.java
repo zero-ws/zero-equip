@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /*
- * Wrapper Sheet object to store data, this object could help to
+ * Wrapper Sheet object to get data, this object could help to
  * web ExTable here.
  */
 public class SheetAnalyzer implements Serializable {

@@ -1,9 +1,9 @@
 package io.zerows.plugins.office.excel.uca.data;
 
-import io.zerows.ams.constant.VString;
-import io.zerows.core.uca.cache.Cc;
+import io.r2mo.typed.cc.Cc;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonArray;
+import io.zerows.ams.constant.VString;
 import io.zerows.plugins.office.excel.atom.ExTenant;
 
 /**

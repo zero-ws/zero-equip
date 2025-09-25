@@ -1,11 +1,11 @@
 package io.zerows.plugins.common.shell.atom;
 
-import io.zerows.core.exception.BootingException;
-import io.zerows.core.uca.cache.Cc;
+import io.r2mo.typed.cc.Cc;
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
+import io.zerows.core.exception.BootingException;
 import io.zerows.core.fn.Fn;
 import io.zerows.core.util.Ut;
 import io.zerows.plugins.common.shell.exception.BootCommandMissingException;
@@ -59,7 +59,7 @@ public class Terminal {
                  * handler.handle(Future.failedFuture(ERROR_ARG_MISSING));
                  * When click terminal operation here
                  */
-                final ConcurrentMap<Integer, Scanner> cdScanner = CC_SCANNER.store();
+                final ConcurrentMap<Integer, Scanner> cdScanner = CC_SCANNER.get();
                 cdScanner.values().forEach(scanner -> Fn.jvmAt(scanner::close));
                 System.exit(0);
                 // handler.handle(Future.failedFuture(ERROR_ARG_MISSING));

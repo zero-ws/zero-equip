@@ -8,7 +8,7 @@ import io.vertx.ext.auth.oauth2.OAuth2Options;
 import io.vertx.ext.web.handler.AuthenticationHandler;
 import io.vertx.ext.web.handler.OAuth2AuthHandler;
 import io.zerows.core.constant.configure.YmlCore;
-import io.zerows.core.uca.cache.Cc;
+import io.r2mo.typed.cc.Cc;
 import io.zerows.core.util.Ut;
 import io.zerows.module.security.atom.Aegis;
 import io.zerows.module.security.atom.AegisItem;

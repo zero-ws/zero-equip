@@ -1,11 +1,11 @@
 package io.zerows.plugins.store.elasticsearch;
 
-import io.zerows.core.uca.cache.Cc;
-import io.zerows.core.uca.log.Annal;
+import io.r2mo.typed.cc.Cc;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.zerows.core.constant.configure.YmlCore;
 import io.zerows.core.fn.Fn;
+import io.zerows.core.uca.log.Annal;
 import io.zerows.core.util.Ut;
 import io.zerows.plugins.store.elasticsearch.exception._404ConfigurationMissingExceptionn;
 import org.apache.http.HttpHost;

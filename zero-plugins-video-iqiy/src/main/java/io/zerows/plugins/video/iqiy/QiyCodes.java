@@ -7,6 +7,6 @@ public interface QiyCodes {
     String FAILURE = "Q00001";
     // Error
     String ERROR = "A00007";
-    // store: client_id, client_secret error.
+    // get: client_id, client_secret error.
     String A21324 = "A21324";
 }

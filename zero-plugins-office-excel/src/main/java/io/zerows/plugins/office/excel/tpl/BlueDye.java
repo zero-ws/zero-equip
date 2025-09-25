@@ -1,6 +1,6 @@
 package io.zerows.plugins.office.excel.tpl;
 
-import io.zerows.core.uca.cache.Cc;
+import io.r2mo.typed.cc.Cc;
 import io.zerows.core.util.Ut;
 import org.apache.poi.ss.usermodel.*;
 

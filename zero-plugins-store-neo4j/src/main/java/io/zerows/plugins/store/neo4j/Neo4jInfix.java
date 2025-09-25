@@ -1,9 +1,9 @@
 package io.zerows.plugins.store.neo4j;
 
+import io.r2mo.typed.cc.Cc;
 import io.vertx.core.Vertx;
 import io.zerows.core.annotations.Infusion;
 import io.zerows.core.constant.configure.YmlCore;
-import io.zerows.core.uca.cache.Cc;
 import io.zerows.module.metadata.zdk.plugins.Infix;
 
 @Infusion
@@ -24,7 +24,7 @@ public class Neo4jInfix implements Infix {
     }
 
     public static Neo4jClient getClient() {
-        return CC_CLIENT.store(NAME);
+        return CC_CLIENT.get(NAME);
     }
 
     @Override
